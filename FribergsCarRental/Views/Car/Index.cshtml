@@ -13,9 +13,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.IsAvaliable)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Pictures)
             </th>
             <th>
@@ -43,9 +40,6 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsAvaliable)
-                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Pictures)
                 </td>

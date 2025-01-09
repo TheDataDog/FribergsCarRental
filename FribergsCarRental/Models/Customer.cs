@@ -8,7 +8,7 @@ namespace FribergsCarRental.Models
         public int CustomerId { get; set; }
         [Required(ErrorMessage = "Du måste fylla i ditt namn")]
         public string FirstName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Du måste fylla i ditt efternamn")]
         public string LastName { get; set; }
         [Required]
         public DateOnly Birthdate { get; set; }
@@ -22,6 +22,6 @@ namespace FribergsCarRental.Models
         public string Password { get; set; }
         [Required]
         public UserRole UserRole { get; set; }
-        public List<Booking>? Bookings { get; set; }
+        public virtual List<Booking>? Bookings { get; set; }
     }
 }

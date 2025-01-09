@@ -1,4 +1,5 @@
 ﻿using FribergsCarRental.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace FribergsCarRental.Data
 {
@@ -24,7 +25,7 @@ namespace FribergsCarRental.Data
 
         public IEnumerable<Booking> GetAll()
         {
-            return context.Bookings.OrderBy(b => b.Start);
+            return context.Bookings.Include(b => b.Car).Include(b => b.Customer).OrderByDescending(b => b.StartDate);
         }
 
         public Booking GetById(int id)
