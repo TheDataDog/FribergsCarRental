@@ -1,0 +1,76 @@
+﻿@model FribergsCarRental.Models.Car
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Car</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsAvaliable)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsAvaliable)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Pictures)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Pictures)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Brand)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Brand)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Model)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Model)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.YearModel)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.YearModel)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HorsePower)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HorsePower)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FuelConsumption)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FuelConsumption)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PassengerSeats)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PassengerSeats)
+        </dd>
+
+        @foreach (var item in Model.Pictures)
+        {
+            <tr>
+                <td>
+                    <img src="@item" alt="cars" style="width: 100px; height:auto;" />
+                </td>
+            </tr>
+        }
+
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.CarId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

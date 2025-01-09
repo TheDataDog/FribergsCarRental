@@ -1,0 +1,79 @@
+﻿@model IEnumerable<FribergsCarRental.Models.Car>
+
+@{
+    ViewData["Title"] = "IndexAdmin";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IsAvaliable)
+            </th>
+            @* <th>
+            @Html.DisplayNameFor(model => model.Pictures)
+            </th> *@
+            <th>
+                @Html.DisplayNameFor(model => model.Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.YearModel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HorsePower)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FuelConsumption)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PassengerSeats)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsAvaliable)
+                </td>
+                @* <td>
+            @Html.DisplayFor(modelItem => item.Pictures)
+            </td> *@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.YearModel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HorsePower)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FuelConsumption)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PassengerSeats)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.CarId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.CarId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.CarId">Delete</a> |
+                    <a asp-action="Book" asp-route-id="@item.CarId">Book</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
