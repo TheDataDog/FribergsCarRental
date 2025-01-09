@@ -10,11 +10,16 @@ namespace FribergsCarRental.Controllers
     {
         private readonly IBookingRepository bookingRepository;
         private readonly SessionHelper sessionHelper;
+        private readonly ICustomerRepository customerRepository;
+        private readonly ICarRepository carRepository;
 
-        public BookingController(IBookingRepository bookingRepository, SessionHelper sessionHelper)
+        public BookingController(IBookingRepository bookingRepository, SessionHelper sessionHelper
+                                , ICustomerRepository customerRepository, ICarRepository carRepository)
         {
             this.bookingRepository = bookingRepository;
             this.sessionHelper = sessionHelper;
+            this.customerRepository = customerRepository;
+            this.carRepository = carRepository;
         }
         // GET: BookingController
         public ActionResult Index()
@@ -22,24 +27,24 @@ namespace FribergsCarRental.Controllers
             return View(bookingRepository.GetAll());
         }
 
-        public ActionResult GetSessionData()
-        {
-            var carId = sessionHelper.GetCarSession();
-            var (role, customerId) = sessionHelper.GetUserSession();
+        //public ActionResult GetSessionData()
+        //{
+        //    var carId = sessionHelper.GetCarSession();
+        //    var (role, customerId) = sessionHelper.GetUserSession();
 
-            if(role == 1 && customerId != null && carId != null)
-            {
-                //TempData["CustomerId"] = customerId; //Key från session eller Viewbag? Isf UserId
-                //TempData["CarId"] = carId;
-                return RedirectToAction("Create");
-            }
-            else
-            {
-                return RedirectToAction("Login"); //Funkar ej, har ingen Login-Action
-                //returnera felmeddelande??? RedirectTo inlog/register new???
-            }
+        //    if(role == 1 && customerId != null && carId != null)
+        //    {
+        //        //TempData["CustomerId"] = customerId; //Key från session eller Viewbag? Isf UserId
+        //        //TempData["CarId"] = carId;
+        //        return RedirectToAction("Create");
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Login"); //Funkar ej, har ingen Login-Action
+        //        //returnera felmeddelande??? RedirectTo inlog/register new???
+        //    }
 
-        }
+        //}
 
         // GET: BookingController/Details/5
         public ActionResult Details(int id)
@@ -52,22 +57,21 @@ namespace FribergsCarRental.Controllers
         {
             //TempData.Keep("CustomerId");
             //TempData.Keep("CarId");
-            //var carId = sessionHelper.GetCarSession();
+            var carId = sessionHelper.GetCarSession();
             var (role, customerId) = sessionHelper.GetUserSession();
 
             var booking = new Booking
             {
                 //CarId = TempData["CarId"] != null ? (int)TempData["CarId"] : 0,
                 //CustomerId = TempData["CustomerId"] != null ? (int)TempData["CustomerId"] : 0,
-                CarId = (int)sessionHelper.GetCarSession(),
-                CustomerId = (int)customerId //kan skrivas snyggare direkt från GetUserSession?
+                CarId = (int)carId,
+                CustomerId = (int)customerId, //kan skrivas snyggare direkt från GetUserSession?
+                Customer = customerRepository.GetById((int)customerId),
+                Car = carRepository.GetById((int)carId)
 
             };
             return View(booking);
         }
-        //ViewBag.CustomerId = new SelectList()
-        //ViewBag.CustomerId = TempData["CustomerId"];
-        //ViewBag.CarId = TempData["CarId"];
 
         // POST: BookingController/Create
         [HttpPost]
