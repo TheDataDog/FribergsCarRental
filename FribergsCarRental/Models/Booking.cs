@@ -17,5 +17,6 @@ namespace FribergsCarRental.Models
         public int TotalCost { get; set; }
         public Customer Customer { get; set; }
         public Car Car { get; set; }
+        public Status Status { get; set; } = Status.Upcoming;
     }
 }
