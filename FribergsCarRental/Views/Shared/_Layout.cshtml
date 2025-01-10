@@ -46,13 +46,13 @@
                         @if(user.Role == null)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Login">Login</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Login">Logga in</a>
                             </li>
                         }
                         @if(user.Role != null)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Logout">Logout</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Logout">Logga ut</a>
                             </li>
                         }
                     </ul>

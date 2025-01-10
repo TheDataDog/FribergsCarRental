@@ -7,7 +7,6 @@
 <h1>Bilinformation</h1>
 
 <div>
-    <h4>Car</h4>
     <hr />
     <dl class="row">
         @* <dt class = "col-sm-2">
@@ -51,6 +50,18 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.PassengerSeats)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DailyCost)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DailyCost)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
         </dd>
 
         @if(Model.Pictures != null && Model.Pictures.Any())

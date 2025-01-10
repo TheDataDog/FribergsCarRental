@@ -5,6 +5,7 @@ namespace FribergsCarRental.Models
     public class Car
     {
         public int CarId { get; set; }
+        [Display(Name = "Bilder")]
         public virtual List<string>? Pictures { get; set; }
         [Required]
         [Display(Name = "Bilmärke")]
