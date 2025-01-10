@@ -1,4 +1,5 @@
 ﻿using FribergsCarRental.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace FribergsCarRental.Data
 {
@@ -29,7 +30,7 @@ namespace FribergsCarRental.Data
 
         public Car GetById(int id)
         {
-            return context.Cars.FirstOrDefault(c => c.CarId == id);
+            return context.Cars.Include(c => c.Bookings).FirstOrDefault(c => c.CarId == id);
         }
 
         public void Update(Car car)

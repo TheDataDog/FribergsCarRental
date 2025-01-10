@@ -4,18 +4,18 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Bilinformation</h1>
 
 <div>
     <h4>Car</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        @* <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Pictures)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Pictures)
-        </dd>
+        </dd> *@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Brand)
         </dt>
@@ -53,18 +53,29 @@
             @Html.DisplayFor(model => model.PassengerSeats)
         </dd>
 
-        @foreach (var item in Model.Pictures)
+        @if(Model.Pictures != null && Model.Pictures.Any())
+        {
+            @foreach (var item in Model.Pictures)
+            {
+                <tr>
+                    <td>
+                        <img src="@item" alt="car" style="width: 200px; height:auto;" />
+                    </td>
+                </tr>
+            }
+        }
+@*         @foreach (var item in Model.Pictures)
         {
             <tr>
                 <td>
                     <img src="@item" alt="cars" style="width: 100px; height:auto;" />
                 </td>
             </tr>
-        }
+        } *@
 
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.CarId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @* <a asp-action="Edit" asp-route-id="@Model?.CarId"><i class="fa-solid fa-pen-to-square"></i></a> | *@
+    <a asp-action="Index">Tillbaka</a>
 </div>

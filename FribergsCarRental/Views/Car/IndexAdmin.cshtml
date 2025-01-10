@@ -4,10 +4,10 @@
     ViewData["Title"] = "IndexAdmin";
 }
 
-<h1>Index</h1>
+<h1>Bilar</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create"><i class="fa-solid fa-car"></i> Lägg till ny bil</a>
 </p>
 <table class="table">
     <thead>
@@ -62,10 +62,9 @@
                     @Html.DisplayFor(modelItem => item.PassengerSeats)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.CarId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.CarId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.CarId">Delete</a> |
-                    <a asp-action="Book" asp-route-id="@item.CarId">Book</a>
+                    <a asp-action="Edit" asp-route-id="@item.CarId"><i class="fa-solid fa-pen-to-square"></i></a> |
+                    <a asp-action="Details" asp-route-id="@item.CarId"><i class="fa-solid fa-circle-info"></i></a> |
+                    <a asp-action="Delete" asp-route-id="@item.CarId"><i class="fa-solid fa-trash"></i></a>
                 </td>
             </tr>
         }

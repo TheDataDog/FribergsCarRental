@@ -35,7 +35,9 @@ namespace FribergsCarRental.Controllers
         [HttpGet]
         public ActionResult Details(int id)
         {
-            return View(carRepository.GetById(id));
+            var car = carRepository.GetById(id);
+            return View(car);
+            //return View(carRepository.GetById(id));
         }
 
         // GET: CarController/Create

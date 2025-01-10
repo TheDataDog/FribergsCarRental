@@ -37,7 +37,7 @@ namespace FribergsCarRental.Data
         public Customer GetById(int id)
         {
             //return context.Customers.FirstOrDefault(c => c.CustomerId == id);
-            return context.Customers.Include(c => c.Adress).Include(c => c.UserRole).FirstOrDefault(c => c.CustomerId == id);
+            return context.Customers.Include(b=>b.Bookings).Include(c => c.Adress).Include(c => c.UserRole).FirstOrDefault(c => c.CustomerId == id);
         }
 
         public void Update(Customer customer)

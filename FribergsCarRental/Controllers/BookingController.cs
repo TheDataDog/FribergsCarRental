@@ -10,16 +10,16 @@ namespace FribergsCarRental.Controllers
     {
         private readonly IBookingRepository bookingRepository;
         private readonly SessionHelper sessionHelper;
-        //private readonly ICustomerRepository customerRepository;
-        //private readonly ICarRepository carRepository;
+        private readonly ICustomerRepository customerRepository;
+        private readonly ICarRepository carRepository;
 
         public BookingController(IBookingRepository bookingRepository, SessionHelper sessionHelper
-                                /*, ICustomerRepository customerRepository, ICarRepository carRepository*/)
+                                , ICustomerRepository customerRepository, ICarRepository carRepository)
         {
             this.bookingRepository = bookingRepository;
             this.sessionHelper = sessionHelper;
-            //this.customerRepository = customerRepository;
-            //this.carRepository = carRepository;
+            this.customerRepository = customerRepository;
+            this.carRepository = carRepository;
         }
         // GET: BookingController
         [HttpGet]
@@ -75,7 +75,7 @@ namespace FribergsCarRental.Controllers
 
             var booking = new Booking
             {
-                CarId = (int)carId, //kan sätta metoden direkt här
+                CarId = (int)carId, //kan sätta metoden direkt här NULLCHECK???
                 CustomerId = (int)customerId, //kan skrivas snyggare direkt från GetUserSession?
             };
 
@@ -95,6 +95,10 @@ namespace FribergsCarRental.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Booking booking)
         {
+            //lägga i egen metod?
+            var customer = customerRepository.GetById(booking.CustomerId);
+ 
+
             try
             {
                 if (ModelState.IsValid)
