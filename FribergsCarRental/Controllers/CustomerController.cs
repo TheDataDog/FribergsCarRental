@@ -16,18 +16,21 @@ namespace FribergsCarRental.Controllers
             this.sessionHelper = sessionHelper;
         }
         // GET: CustomerController
+        [HttpGet]
         public ActionResult Index()
         {
             return View(customerRepository.GetAll());
         }
 
         // GET: CustomerController/Details/5
+        [HttpGet]
         public ActionResult Details(int id)
         {
             return View(customerRepository.GetById(id));
         }
 
         // GET: CustomerController/Create
+        [HttpGet]
         public ActionResult Create()
         {
             if (sessionHelper.GetCarSession() == null)
@@ -64,9 +67,12 @@ namespace FribergsCarRental.Controllers
         }
 
         // GET: CustomerController/Edit/5
+        [HttpGet]
         public ActionResult Edit(int id)
         {
-            return View(customerRepository.GetById(id));
+            var customer = customerRepository.GetById(id);
+            return View(customer);
+            //return View(customerRepository.GetById(id));
         }
 
         // POST: CustomerController/Edit/5
@@ -89,6 +95,7 @@ namespace FribergsCarRental.Controllers
         }
 
         // GET: CustomerController/Delete/5
+        [HttpGet]
         public ActionResult Delete(int id)
         {
             return View(customerRepository.GetById(id));
@@ -151,12 +158,11 @@ namespace FribergsCarRental.Controllers
             return View();
         }
 
-        public ActionResult SetUserSession(Role role, int id)
+        public void SetUserSession(Role role, int id)
         {
             sessionHelper.SetUserSession(role, id);
-            return Content("Session values set via service");
         }
-
+        [HttpGet]
         public ActionResult Logout()
         {
             sessionHelper.ClearUserSession();

@@ -7,13 +7,16 @@ namespace FribergsCarRental.Models
     {
         public int AdminId { get; set; }
         [Required]
+        [Display(Name = "Förnamn")]
         public string FirstName { get; set; }
         [Required]
+        [Display(Name = "Efternamn")]
         public string LastName { get; set; }
         [Required]
         public string Email { get; set; }
         [Required]
         [DataType(DataType.Password)]
+        [Display(Name = "Lösenord")]
         public string Password { get; set; }
         [Required]
         public UserRole UserRole { get; set; }

@@ -6,12 +6,33 @@
 
 <h1>Index</h1>
 
-<p>
+@* <p>
     <a asp-action="Create">Create New</a>
-</p>
+</p> *@
 <table class="table">
     <thead>
         <tr>
+            @if(ViewBag.User == "Admin")
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.Customer.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Customer.LastName)
+                </th>
+            }
+            @* <th>
+                @Html.DisplayNameFor(model => model.Customer.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer.LastName)
+            </th> *@
+            <th>
+                @Html.DisplayNameFor(model => model.Car.Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car.Model)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.StartDate)
             </th>
@@ -25,23 +46,45 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalCost)
-            </td>
-            <td>
-                @* <a asp-action="Edit" asp-route-id="@item.BookingId">Edit</a> | *@
-                <a asp-action="Details" asp-route-id="@item.BookingId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.BookingId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                @if(ViewBag.User == "Admin")
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Customer.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Customer.LastName)
+                    </td>
+                }
+                @* <td>
+                    @Html.DisplayFor(modelItem => item.Customer.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.LastName)
+                </td> *@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Car.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Car.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalCost)
+                </td>
+                <td>
+                    @* <a asp-action="Edit" asp-route-id="@item.BookingId">Edit</a> | *@
+                    <a asp-action="Details" asp-route-id="@item.BookingId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.BookingId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

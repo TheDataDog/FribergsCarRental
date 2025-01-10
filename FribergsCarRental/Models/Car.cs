@@ -7,20 +7,28 @@ namespace FribergsCarRental.Models
         public int CarId { get; set; }
         public virtual List<string>? Pictures { get; set; }
         [Required]
+        [Display(Name = "Bilmärke")]
         public string Brand { get; set; }
         [Required]
+        [Display(Name = "Modell")]
         public string Model { get; set; }
         [Required]
+        [Display(Name = "Årsmodell")]
         public int YearModel { get; set; }
         [Required]
+        [Display(Name = "Hästkrafter")]
         public int HorsePower { get; set; }
         [Required]
+        [Display(Name = "Bensinförbrukning")]
         public double FuelConsumption { get; set; }
         [Required]
+        [Display(Name = "Dygnskostnad")]
         public int DailyCost { get; set; }
         [Required]
+        [Display(Name = "Passagerarsäten")]
         public int PassengerSeats { get; set; }
         [Required]
+        [Display(Name = "Beskrivning")]
         public string Description { get; set; }
         public virtual List<Booking>? Bookings { get; set; }
     }

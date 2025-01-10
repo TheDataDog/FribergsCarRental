@@ -32,17 +32,5 @@ namespace FribergsCarRental.Data
         {
             return context.Bookings.FirstOrDefault(b => b.BookingId == id);
         }
-
-        //public Booking New(int customerId)
-        //{
-        //    var booking = new Booking
-        //    {
-        //        CarId = (int)sessionHelper.GetCarSession(),
-        //        CustomerId = (int)customerId //kan skrivas snyggare direkt från GetUserSession?
-        //        Customer = context.Customers.
-
-        //    };
-        //    return booking;
-        //}
     }
 }

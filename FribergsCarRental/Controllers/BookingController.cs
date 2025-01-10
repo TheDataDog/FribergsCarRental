@@ -10,20 +10,33 @@ namespace FribergsCarRental.Controllers
     {
         private readonly IBookingRepository bookingRepository;
         private readonly SessionHelper sessionHelper;
-        private readonly ICustomerRepository customerRepository;
-        private readonly ICarRepository carRepository;
+        //private readonly ICustomerRepository customerRepository;
+        //private readonly ICarRepository carRepository;
 
         public BookingController(IBookingRepository bookingRepository, SessionHelper sessionHelper
-                                , ICustomerRepository customerRepository, ICarRepository carRepository)
+                                /*, ICustomerRepository customerRepository, ICarRepository carRepository*/)
         {
             this.bookingRepository = bookingRepository;
             this.sessionHelper = sessionHelper;
-            this.customerRepository = customerRepository;
-            this.carRepository = carRepository;
+            //this.customerRepository = customerRepository;
+            //this.carRepository = carRepository;
         }
         // GET: BookingController
+        [HttpGet]
         public ActionResult Index()
         {
+            ViewBag.User = "Null";
+            var (role, customerId) = sessionHelper.GetUserSession();
+
+            if(role == 0)
+            {
+                ViewBag.User = "Admin";
+            }
+            else if(role == 1)
+            {
+                ViewBag.User = "Customer";
+            }
+
             return View(bookingRepository.GetAll());
         }
 
@@ -47,29 +60,33 @@ namespace FribergsCarRental.Controllers
         //}
 
         // GET: BookingController/Details/5
+        [HttpGet]
         public ActionResult Details(int id)
         {
             return View(bookingRepository.GetById(id));
         }
 
         // GET: BookingController/Create
+        [HttpGet]
         public ActionResult Create()
         {
-            //TempData.Keep("CustomerId");
-            //TempData.Keep("CarId");
             var carId = sessionHelper.GetCarSession();
             var (role, customerId) = sessionHelper.GetUserSession();
 
             var booking = new Booking
             {
-                //CarId = TempData["CarId"] != null ? (int)TempData["CarId"] : 0,
-                //CustomerId = TempData["CustomerId"] != null ? (int)TempData["CustomerId"] : 0,
-                CarId = (int)carId,
+                CarId = (int)carId, //kan sätta metoden direkt här
                 CustomerId = (int)customerId, //kan skrivas snyggare direkt från GetUserSession?
-                Customer = customerRepository.GetById((int)customerId),
-                Car = carRepository.GetById((int)carId)
-
             };
+
+            //var booking = new Booking
+            //{
+            //    CarId = (int)carId,
+            //    CustomerId = (int)customerId, //kan skrivas snyggare direkt från GetUserSession?
+            //    Customer = customerRepository.GetById((int)customerId),
+            //    Car = carRepository.GetById((int)carId)
+
+            //};
             return View(booking);
         }
 
@@ -93,6 +110,7 @@ namespace FribergsCarRental.Controllers
         }
 
         // GET: BookingController/Edit/5
+        [HttpGet]
         public ActionResult Edit(int id)
         {
             return View();
@@ -114,6 +132,7 @@ namespace FribergsCarRental.Controllers
         }
 
         // GET: BookingController/Delete/5
+        [HttpGet]
         public ActionResult Delete(int id)
         {
             return View(bookingRepository.GetById(id));
