@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
 }
 
@@ -19,16 +18,19 @@
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form> *@
-
-<form method="post" action="/Admin/Login">
-    <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" name="email" class="form-control" id="email" required>
+<div class="row">
+    <div class="col-md-3">
+        <form method="post" action="/Admin/Login">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" id="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Lösenord</label>
+                <input type="password" name="password" class="form-control" id="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Logga in</button>
+        </form>
     </div>
-    <div class="mb-3">
-        <label for="password" class="form-label">Lösenord</label>
-        <input type="password" name="password" class="form-control" id="password" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Logga in</button>
-</form>
+</div>
 

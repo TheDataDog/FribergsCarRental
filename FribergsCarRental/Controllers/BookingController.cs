@@ -96,7 +96,7 @@ namespace FribergsCarRental.Controllers
         public ActionResult Create(Booking booking)
         {
             //lägga i egen metod?
-            var customer = customerRepository.GetById(booking.CustomerId);
+            var customer = customerRepository.GetById(booking.CustomerId); // behöver jag ha kvar denna???
  
 
             try
@@ -139,7 +139,18 @@ namespace FribergsCarRental.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            return View(bookingRepository.GetById(id));
+            var booking = bookingRepository.GetById(id);
+
+            if(booking.Status == Status.Upcoming)
+            {
+                return View(booking);
+            }
+            else
+            {
+                return View("Error"); // fixa felmeddelande här
+            }
+
+            //return View(bookingRepository.GetById(id));
         }
 
         // POST: BookingController/Delete/5

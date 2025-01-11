@@ -33,17 +33,26 @@ namespace FribergsCarRental.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            var customer = new Customer
+            {
+                UserRole = new UserRole { Role = (Role.Customer) }
+            };
+
+            ViewBag.User = "Null";
+            var (role, customerId) = sessionHelper.GetUserSession();
+
+            if (role == 0)
+            {
+                ViewBag.User = "Admin";
+            }
+
             if (sessionHelper.GetCarSession() == null)
             {
-                var model = new Customer
-                {
-                    UserRole = new UserRole { Role = (Role.Customer) }
-                };
-                return View(model);
+                return View(customer);
             }
             else
             {
-                return PartialView();
+                return PartialView(customer);
             }
         }
 
