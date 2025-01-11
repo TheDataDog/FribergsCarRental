@@ -1,5 +1,7 @@
 using FribergsCarRental.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace FribergsCarRental
 {
@@ -24,7 +26,11 @@ namespace FribergsCarRental
                 options.IdleTimeout = TimeSpan.FromMinutes(20);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
-            });     
+            });
+
+            var cultureInfo = new CultureInfo("sv-SE");
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
 
             var app = builder.Build();

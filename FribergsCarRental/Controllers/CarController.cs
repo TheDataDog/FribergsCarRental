@@ -96,7 +96,19 @@ namespace FribergsCarRental.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            return View(carRepository.GetById(id));
+            var car = carRepository.GetById(id);
+            if(car.Bookings.Any())
+            {
+                foreach (var booking in car.Bookings)
+                {
+                    if(booking.EndDate > DateTime.Now)
+                    {
+                        return View("Error");  //Lägg till felmeddelande här
+                    }
+                }
+            }
+            return View(car);
+            //return View(carRepository.GetById(id));
         }
 
         // POST: CarController/Delete/5

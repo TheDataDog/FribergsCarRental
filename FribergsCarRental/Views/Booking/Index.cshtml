@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Bokningar</h1>
 
 @* <p>
     <a asp-action="Create">Create New</a>
@@ -34,14 +34,17 @@
                 @Html.DisplayNameFor(model => model.Car.Model)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Car.YearModel)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.StartDate)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EndDate)
             </th>
-            <th>
+            @* <th>
                 @Html.DisplayNameFor(model => model.TotalCost)
-            </th>
+            </th> *@
             <th></th>
         </tr>
     </thead>
@@ -71,18 +74,21 @@
                     @Html.DisplayFor(modelItem => item.Car.Model)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Car.YearModel)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.StartDate)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.EndDate)
                 </td>
-                <td>
+                @* <td>
                     @Html.DisplayFor(modelItem => item.TotalCost)
-                </td>
+                </td> *@
                 <td>
                     @* <a asp-action="Edit" asp-route-id="@item.BookingId">Edit</a> | *@
-                    <a asp-action="Details" asp-route-id="@item.BookingId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.BookingId">Delete</a>
+                    <a asp-action="Details" asp-route-id="@item.BookingId"><i class="fa-solid fa-circle-info"></i></a> |
+                    <a asp-action="Delete" asp-route-id="@item.BookingId"><i class="fa-solid fa-trash"></i></a>
                 </td>
             </tr>
         }
