@@ -1,4 +1,5 @@
-﻿
+﻿@model FribergsCarRental.Models.Customer
+
 @{
     ViewData["Title"] = "LoginOrRegister";
 }
@@ -30,7 +31,7 @@
         <div class="col-md-6">
             <div class="register border p-3">
                 <h2>Registrera dig som kund</h2>
-                @Html.Partial("Create")
+                @Html.Partial("Create", new Customer { UserRole = new UserRole { Role = Role.Customer }})
             </div>
         </div>
     </div>

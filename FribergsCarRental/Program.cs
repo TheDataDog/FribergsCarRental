@@ -29,6 +29,8 @@ namespace FribergsCarRental
             });
 
             var cultureInfo = new CultureInfo("sv-SE");
+            cultureInfo.NumberFormat.NumberDecimalSeparator = ",";
+            cultureInfo.DateTimeFormat.ShortDatePattern = "yyyy-MM-dd";
             CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
             CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
