@@ -57,6 +57,7 @@ namespace FribergsCarRental
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.UseRequestLocalization("sv-SE");
 
             app.Run();
         }

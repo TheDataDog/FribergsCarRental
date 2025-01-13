@@ -75,18 +75,10 @@
                 </tr>
             }
         }
-@*         @foreach (var item in Model.Pictures)
-        {
-            <tr>
-                <td>
-                    <img src="@item" alt="cars" style="width: 100px; height:auto;" />
-                </td>
-            </tr>
-        } *@
 
     </dl>
 </div>
 <div>
-    @* <a asp-action="Edit" asp-route-id="@Model?.CarId"><i class="fa-solid fa-pen-to-square"></i></a> | *@
+    <a asp-action="Edit" asp-route-id="@Model?.CarId"><i class="fa-solid fa-pen-to-square"></i></a> |
     <a asp-action="Index">Tillbaka</a>
 </div>

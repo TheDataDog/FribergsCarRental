@@ -61,13 +61,27 @@ namespace FribergsCarRental.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Customer customer)
         {
+
             try
             {
                 if (ModelState.IsValid)
                 {
-                    customerRepository.Add(customer);
+                    customerRepository.Add(customer); //returnera en customer här för att få customerId?
                 }
-                return RedirectToAction(nameof(Index));
+                customer = customerRepository.GetByEmail(customer.Email);
+                sessionHelper.SetUserSession(customer.UserRole.Role, customer.CustomerId);
+                if(customer.UserRole.Role == Role.Admin)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else if(customer.UserRole.Role == Role.Customer)
+                {
+                    return RedirectToAction("Create", "Booking");
+                }
+                else
+                {
+                    return View("Error"); //Vad vill jag ha här???
+                }
             }
             catch
             {

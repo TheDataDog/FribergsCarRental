@@ -13,11 +13,6 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="CarId" />
             <div class="form-group">
-                <label asp-for="Pictures" class="control-label"></label>
-                <input asp-for="Pictures" class="form-control" />
-                <span asp-validation-for="Pictures" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Brand" class="control-label"></label>
                 <input asp-for="Brand" class="form-control" readonly />
                 <span asp-validation-for="Brand" class="text-danger"></span>
@@ -57,6 +52,39 @@
                 <textarea asp-for="Description" class="form-control" rows="8"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
+            <div class="form-group mb-2">
+                @* <label asp-for="Pictures" class="control-label"></label> *@
+
+                <div id="pictures-container">
+                    <label asp-for="Pictures" class="control-label"></label>
+                </div>
+
+                <span asp-validation-for="Pictures" class="text-danger"></span>
+                <input type="button" value="Lägg till bild" class="btn btn-primary" onclick="addPicture()" />
+            </div>
+            <div class="form-group">
+                @* //Ska det vara en form-group här??? *@
+                <div>
+                    @if (Model.Pictures != null && Model.Pictures.Any())
+                    {
+                        @for (int i = 0; i < Model.Pictures.Count; i++)
+                        {
+
+                            <tr id="row-@i">
+                                <td>
+                                    <img src="@Model.Pictures[i]" id="img-@i" alt="car" style="width: 200px; height:auto;" />
+                                    <input type="hidden" name="Pictures" value="@Model.Pictures[i]" id="hidden-@i" />
+                                    <input type="button" value="Ta bort bild" class="btn btn-danger" id="button-@i" onclick="deletePicture(@i)" />
+                                    <br /> @* //styla på riktigt här *@
+                                    <br />
+                                </td>
+                            </tr>
+
+                        }
+
+                    }
+                </div>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Spara" class="btn btn-primary" />
             </div>
@@ -69,5 +97,41 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        function addPicture() {
+            const container = document.getElementById('pictures-container');
+            const newInput = document.createElement('input');
+            newInput.setAttribute('name', 'Pictures');
+            newInput.setAttribute('class', 'form-control mt-2');
+            container.appendChild(newInput);
+        }
+
+        function deletePicture(index) {
+            const picture = document.getElementById(`img-${index}`);
+            const hiddenInput = document.getElementById(`hidden-${index}`)
+            const row = document.getElementById(`row-${index}`)
+            const button = document.getElementById(`button-${index}`);
+            if (picture) {
+                picture.remove();
+            }
+
+            if (hiddenInput) {
+                hiddenInput.remove();
+            }
+
+            if (row) {
+                roe.remove();
+            }
+
+            if (button) {
+                button.remove();
+            }
+
+
+        }
+    </script>
 }
