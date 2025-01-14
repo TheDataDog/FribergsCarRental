@@ -10,8 +10,8 @@ namespace FribergsCarRental.Controllers
     {
         private readonly IBookingRepository bookingRepository;
         private readonly SessionHelper sessionHelper;
-        private readonly ICustomerRepository customerRepository;
-        private readonly ICarRepository carRepository;
+        private readonly ICustomerRepository customerRepository; //kan jag ta bort?
+        private readonly ICarRepository carRepository; //kan jag ta bort?
 
         public BookingController(IBookingRepository bookingRepository, SessionHelper sessionHelper
                                 , ICustomerRepository customerRepository, ICarRepository carRepository)
@@ -103,14 +103,23 @@ namespace FribergsCarRental.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    bookingRepository.Add(booking);
+                    var confirmBooking = bookingRepository.Add(booking);
+                    return RedirectToAction(nameof(BookingConfirmation), new { id = confirmBooking.BookingId });
+
                 }
-                return RedirectToAction(nameof(Index));
+                return View(); //felmeddelande här?
             }
             catch
             {
+                //lägg till felmeddelande här
                 return View();
             }
+        }
+
+        [HttpGet]
+        public ActionResult BookingConfirmation(int id)
+        {
+            return View(bookingRepository.GetById(id));
         }
 
         // GET: BookingController/Edit/5

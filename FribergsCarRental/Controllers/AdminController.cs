@@ -28,7 +28,7 @@ namespace FribergsCarRental.Controllers
             var admin = adminRepository.GetByEmail(email);
             if(admin == null || admin.Password != password)
             {
-                ModelState.AddModelError("", "Invalid email or password"); //funkar ej
+                ModelState.AddModelError("", "Ogiltig email eller lösenord"); //funkar ej
                 return View("Index");
             }
 

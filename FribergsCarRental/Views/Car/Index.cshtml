@@ -4,17 +4,46 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Bilar</h1>
+<h1>Våra Bilar</h1>
+<div class="container">
+    <div class="row">
+        @*     <div class="col-md-4"> *@
+        @foreach (var item in Model)
+        {
+            if (item.Pictures != null && item.Pictures.Any())
+            {
+                <div class="col-md-4 col-xl-3 col-sm-6 mb-4">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="card" style="width: 18rem;">
+                            <img src="@item.Pictures[0]" class="card-img-top" alt="car">
+                            <div class="card-body">
+                                <h5 class="card-title">@item.Brand @item.Model @item.YearModel</h5>
+                                <p class="card-text">
+                                    <i class="fa-solid fa-user"></i>&nbsp;@item.PassengerSeats &nbsp;&nbsp;&nbsp;
+                                    <i class="fa-solid fa-gas-pump"></i>&nbsp;@item.FuelConsumption l/100km&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <i class="fa-solid fa-horse"></i>&nbsp;@item.HorsePower hk
+                                </p>
+                                <p style="font-size:1.3em; font-weight:bold">
+                                    @item.DailyCost kr/dygn
+                                </p>
+                                @* <a href="#" class="btn btn-primary">Läs mer & boka</a> *@
+                                <a asp-action="ShowCar" asp-route-id="@item.CarId" class="btn btn-primary">Läs mer & boka</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        @*  </div> *@
+    </div>
+</div>
 
-@* <p>
-    <a asp-action="Create"><i class="fa-solid fa-user-plus"></i> Lägg till ny bil</a>
-</p> *@
-<table class="table">
+@* <table class="table">
     <thead>
         <tr>
             @* <th>
                 @Html.DisplayNameFor(model => model.Pictures)
-            </th> *@
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Brand)
             </th>
@@ -42,7 +71,7 @@
             <tr>
                 @* <td>
                     @Html.DisplayFor(modelItem => item.Pictures)
-                </td> *@
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Brand)
                 </td>
@@ -62,12 +91,12 @@
                     @Html.DisplayFor(modelItem => item.PassengerSeats)
                 </td>
                 <td>
-                    @* <a asp-action="Edit" asp-route-id="@item.CarId">Edit</a> | *@
+                    @* <a asp-action="Edit" asp-route-id="@item.CarId">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.CarId">Detaljer</a> |
                     <a asp-action="Book" asp-route-id="@item.CarId">Boka</a>
-                    @* <a asp-action="Delete" asp-route-id="@item.CarId">Delete</a> *@
+                    @* <a asp-action="Delete" asp-route-id="@item.CarId">Delete</a>
                 </td>
             </tr>
         }
     </tbody>
-</table>
+</table>*@

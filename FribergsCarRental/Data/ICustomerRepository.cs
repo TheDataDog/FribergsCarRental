@@ -4,7 +4,7 @@ namespace FribergsCarRental.Data
 {
     public interface ICustomerRepository
     {
-        void Add(Customer customer);
+        Customer Add(Customer customer);
         void Update(Customer customer);
         void Delete(Customer customer);
         Customer GetById(int id);

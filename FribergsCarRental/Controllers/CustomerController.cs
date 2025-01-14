@@ -66,7 +66,7 @@ namespace FribergsCarRental.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    customerRepository.Add(customer); //returnera en customer här för att få customerId?
+                    var addedCustomer = customerRepository.Add(customer); //returnera en customer här för att få customerId?
                 }
                 customer = customerRepository.GetByEmail(customer.Email);
                 sessionHelper.SetUserSession(customer.UserRole.Role, customer.CustomerId);
@@ -159,8 +159,8 @@ namespace FribergsCarRental.Controllers
             var customer = customerRepository.GetByEmail(email);
             if (customer == null || customer.Password != password)
             {
-                ModelState.AddModelError("", "Invalid email or password"); //funkar ej?
-                return View("Error");
+                ModelState.AddModelError("", "Ogiltig email eller lösenord"); //funkar ej?
+                return View();
             }
             SetUserSession(customer.UserRole.Role, customer.CustomerId); //Ha kvar som egen metod?
 

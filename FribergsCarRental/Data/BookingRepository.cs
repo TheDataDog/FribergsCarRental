@@ -11,10 +11,11 @@ namespace FribergsCarRental.Data
         {
             this.context = context;
         }
-        public void Add(Booking booking)
+        public Booking Add(Booking booking)
         {
             context.Bookings.Add(booking);
             context.SaveChanges();
+            return booking;
         }
 
         public void Delete(Booking booking)
@@ -25,12 +26,16 @@ namespace FribergsCarRental.Data
 
         public IEnumerable<Booking> GetAll()
         {
-            return context.Bookings.Include(b => b.Car).Include(b => b.Customer).OrderByDescending(b => b.StartDate);
+            return context.Bookings.Include(b => b.Car)
+                                   .Include(b => b.Customer)
+                                   .OrderByDescending(b => b.StartDate);
         }
 
         public Booking GetById(int id)
         {
-            return context.Bookings.FirstOrDefault(b => b.BookingId == id);
+            return context.Bookings.Include(b => b.Car)
+                                   .Include(b => b.Customer)
+                                   .FirstOrDefault(b => b.BookingId == id);
         }
     }
 }

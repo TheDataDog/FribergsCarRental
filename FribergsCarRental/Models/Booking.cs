@@ -11,9 +11,11 @@ namespace FribergsCarRental.Models
         public int CarId { get; set; }
         [Required]
         [Display(Name = "Från")]
+        [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
         [Required]
         [Display(Name = "Till")]
+        [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
         [Required]
         [Display(Name = "Total kostnad")]

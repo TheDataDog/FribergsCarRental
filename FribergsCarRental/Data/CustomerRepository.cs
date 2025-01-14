@@ -11,10 +11,11 @@ namespace FribergsCarRental.Data
         {
             this.context = context;
         }
-        public void Add(Customer customer)
+        public Customer Add(Customer customer)
         {
             context.Customers.Add(customer);
             context.SaveChanges();
+            return customer;
         }
 
         public void Delete(Customer customer)

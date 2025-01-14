@@ -18,6 +18,10 @@
       "provider": "jsdelivr",
       "library": "jquery-validation-globalize@0.1.1",
       "destination": "wwwroot/lib/jquery-validation-globalize/"
+    },
+    {
+      "library": "bootstrap-daterangepicker@3.0.5",
+      "destination": "wwwroot/lib/bootstrap-daterangepicker/"
     }
   ]
 }

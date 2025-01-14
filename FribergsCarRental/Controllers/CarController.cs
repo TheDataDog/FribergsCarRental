@@ -144,6 +144,12 @@ namespace FribergsCarRental.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult ShowCar(int id)
+        {
+            return View(carRepository.GetById(id));
+        }
+
         public void SetCarSession(int id)
         {
             sessionHelper.SetCarSession(id);

@@ -12,6 +12,7 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="CustomerId" />
+            <input type="hidden" asp-for="Password" />
             @Html.HiddenFor(m => m.UserRole.Role)
             @Html.HiddenFor(m => m.UserRole.UserRoleId)
             <div class="form-group">
@@ -39,11 +40,11 @@
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @* <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
+            </div> *@
             @if(Model.Adress != null)
             {
                 <div class="form-group">
