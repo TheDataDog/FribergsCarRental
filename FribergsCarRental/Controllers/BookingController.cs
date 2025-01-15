@@ -10,23 +10,18 @@ namespace FribergsCarRental.Controllers
     {
         private readonly IBookingRepository bookingRepository;
         private readonly SessionHelper sessionHelper;
-        private readonly ICustomerRepository customerRepository; //kan jag ta bort?
-        private readonly ICarRepository carRepository; //kan jag ta bort?
 
-        public BookingController(IBookingRepository bookingRepository, SessionHelper sessionHelper
-                                , ICustomerRepository customerRepository, ICarRepository carRepository)
+        public BookingController(IBookingRepository bookingRepository, SessionHelper sessionHelper)
         {
             this.bookingRepository = bookingRepository;
             this.sessionHelper = sessionHelper;
-            this.customerRepository = customerRepository;
-            this.carRepository = carRepository;
         }
         // GET: BookingController
         [HttpGet]
         public ActionResult Index()
         {
             ViewBag.User = "Null";
-            var (role, customerId) = sessionHelper.GetUserSession();
+            var (role, userId) = sessionHelper.GetUserSession();
 
             if(role == 0)
             {
@@ -40,25 +35,6 @@ namespace FribergsCarRental.Controllers
             return View(bookingRepository.GetAll());
         }
 
-        //public ActionResult GetSessionData()
-        //{
-        //    var carId = sessionHelper.GetCarSession();
-        //    var (role, customerId) = sessionHelper.GetUserSession();
-
-        //    if(role == 1 && customerId != null && carId != null)
-        //    {
-        //        //TempData["CustomerId"] = customerId; //Key från session eller Viewbag? Isf UserId
-        //        //TempData["CarId"] = carId;
-        //        return RedirectToAction("Create");
-        //    }
-        //    else
-        //    {
-        //        return RedirectToAction("Login"); //Funkar ej, har ingen Login-Action
-        //        //returnera felmeddelande??? RedirectTo inlog/register new???
-        //    }
-
-        //}
-
         // GET: BookingController/Details/5
         [HttpGet]
         public ActionResult Details(int id)
@@ -71,22 +47,19 @@ namespace FribergsCarRental.Controllers
         public ActionResult Create()
         {
             var carId = sessionHelper.GetCarSession();
-            var (role, customerId) = sessionHelper.GetUserSession();
+            var (role, userId) = sessionHelper.GetUserSession();
+
+            if(carId == null || userId == null || role != 1)
+            {
+                return View("Error"); //Lägg till Modelstate eller annan felhantering
+            }
 
             var booking = new Booking
             {
-                CarId = (int)carId, //kan sätta metoden direkt här NULLCHECK???
-                CustomerId = (int)customerId, //kan skrivas snyggare direkt från GetUserSession?
+                CarId = (int)carId,
+                CustomerId = (int)userId,
             };
 
-            //var booking = new Booking
-            //{
-            //    CarId = (int)carId,
-            //    CustomerId = (int)customerId, //kan skrivas snyggare direkt från GetUserSession?
-            //    Customer = customerRepository.GetById((int)customerId),
-            //    Car = carRepository.GetById((int)carId)
-
-            //};
             return View(booking);
         }
 
@@ -95,10 +68,6 @@ namespace FribergsCarRental.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Booking booking)
         {
-            //lägga i egen metod?
-            var customer = customerRepository.GetById(booking.CustomerId); // behöver jag ha kvar denna???
- 
-
             try
             {
                 if (ModelState.IsValid)
@@ -140,6 +109,7 @@ namespace FribergsCarRental.Controllers
             }
             catch
             {
+                //lägg till felhantering här
                 return View();
             }
         }
@@ -158,8 +128,6 @@ namespace FribergsCarRental.Controllers
             {
                 return View("Error"); // fixa felmeddelande här
             }
-
-            //return View(bookingRepository.GetById(id));
         }
 
         // POST: BookingController/Delete/5
@@ -174,6 +142,7 @@ namespace FribergsCarRental.Controllers
             }
             catch
             {
+                //lägg till felmeddelande här
                 return View();
             }
         }

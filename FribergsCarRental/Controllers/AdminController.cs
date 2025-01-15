@@ -2,6 +2,7 @@
 using FribergsCarRental.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace FribergsCarRental.Controllers
 {
@@ -28,19 +29,12 @@ namespace FribergsCarRental.Controllers
             var admin = adminRepository.GetByEmail(email);
             if(admin == null || admin.Password != password)
             {
-                ModelState.AddModelError("", "Ogiltig email eller lösenord"); //funkar ej
+                ModelState.AddModelError("", "Ogiltig email eller lösenord");
                 return View("Index");
             }
+            sessionHelper.SetUserSession(admin.UserRole.Role, admin.AdminId);
 
-            SetUserSession(admin.UserRole.Role, admin.AdminId); //Ha kvar som egen metod?
-
-            return View("~/Views/Home/Index.cshtml");
-            //return RiderictToAction("Index","Home");
-        }
-
-        public void SetUserSession(Role role, int id)
-        {
-            sessionHelper.SetUserSession(role, id);
+            return RedirectToAction("Index","Home");
         }
 
         // GET: AdminController/Details/5

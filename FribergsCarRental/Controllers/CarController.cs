@@ -19,7 +19,7 @@ namespace FribergsCarRental.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var user = sessionHelper.GetUserSession();
+            var user = GetUserSession();
 
             if(user.Role == 0)
             {
@@ -35,9 +35,7 @@ namespace FribergsCarRental.Controllers
         [HttpGet]
         public ActionResult Details(int id)
         {
-            var car = carRepository.GetById(id);
-            return View(car);
-            //return View(carRepository.GetById(id));
+            return View(carRepository.GetById(id));
         }
 
         // GET: CarController/Create
@@ -88,6 +86,7 @@ namespace FribergsCarRental.Controllers
             }
             catch
             {
+                //lägg till felmeddelande här
                 return View();
             }
         }
@@ -97,6 +96,7 @@ namespace FribergsCarRental.Controllers
         public ActionResult Delete(int id)
         {
             var car = carRepository.GetById(id);
+            //nullcheck?
             if(car.Bookings.Any())
             {
                 foreach (var booking in car.Bookings)
@@ -108,7 +108,6 @@ namespace FribergsCarRental.Controllers
                 }
             }
             return View(car);
-            //return View(carRepository.GetById(id));
         }
 
         // POST: CarController/Delete/5
@@ -130,9 +129,9 @@ namespace FribergsCarRental.Controllers
         [HttpGet]
         public ActionResult Book(int id)
         {
-            SetCarSession(id); //spara carId i Session
+            sessionHelper.SetCarSession(id);
 
-            var user = sessionHelper.GetUserSession(); //göra om till egen metod? Används även av Index
+            var user = GetUserSession();
 
             if(user.Role == 1)
             {
@@ -150,16 +149,9 @@ namespace FribergsCarRental.Controllers
             return View(carRepository.GetById(id));
         }
 
-        public void SetCarSession(int id)
+        public (int? Role,int? Id) GetUserSession()
         {
-            sessionHelper.SetCarSession(id);
+            return sessionHelper.GetUserSession();
         }
-
-        //public ActionResult GetUserSession()
-        //{
-        //    var user = sessionHelper.GetUserSession();
-        //    Lägga i ViewBag???
-        //    return Content("Session values get via service");
-        //}
     }
 }

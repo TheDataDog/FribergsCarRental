@@ -39,13 +39,12 @@ namespace FribergsCarRental.Controllers
             };
 
             ViewBag.User = "Null";
-            var (role, customerId) = sessionHelper.GetUserSession();
+            var user = sessionHelper.GetUserSession();
 
-            if (role == 0)
+            if (user.Role == 0)
             {
                 ViewBag.User = "Admin";
             }
-
             if (sessionHelper.GetCarSession() == null)
             {
                 return View(customer);
@@ -67,21 +66,20 @@ namespace FribergsCarRental.Controllers
                 if (ModelState.IsValid)
                 {
                     var addedCustomer = customerRepository.Add(customer); //returnera en customer här för att få customerId?
+                    SetUserSession(addedCustomer.UserRole.Role, addedCustomer.CustomerId);
                 }
-                customer = customerRepository.GetByEmail(customer.Email);
-                sessionHelper.SetUserSession(customer.UserRole.Role, customer.CustomerId);
-                if(customer.UserRole.Role == Role.Admin)
+                if (customer.UserRole.Role == Role.Admin)
                 {
                     return RedirectToAction(nameof(Index));
                 }
-                else if(customer.UserRole.Role == Role.Customer)
+                else //(customer.UserRole.Role == Role.Customer)
                 {
                     return RedirectToAction("Create", "Booking");
                 }
-                else
-                {
-                    return View("Error"); //Vad vill jag ha här???
-                }
+                //else
+                //{
+                //    return View("Error"); //Vad vill jag ha här???
+                //}
             }
             catch
             {
@@ -93,9 +91,7 @@ namespace FribergsCarRental.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var customer = customerRepository.GetById(id);
-            return View(customer);
-            //return View(customerRepository.GetById(id));
+            return View(customerRepository.GetById(id));
         }
 
         // POST: CustomerController/Edit/5
@@ -159,14 +155,14 @@ namespace FribergsCarRental.Controllers
             var customer = customerRepository.GetByEmail(email);
             if (customer == null || customer.Password != password)
             {
-                ModelState.AddModelError("", "Ogiltig email eller lösenord"); //funkar ej?
+                ModelState.AddModelError("", "Ogiltig email eller lösenord");
                 return View();
             }
-            SetUserSession(customer.UserRole.Role, customer.CustomerId); //Ha kvar som egen metod?
+            SetUserSession(customer.UserRole.Role, customer.CustomerId);
 
             if (sessionHelper.GetCarSession() == null)
             {
-                return RedirectToAction("Index", "Home"); //eller till sidan ne var på innan Login? 
+                return RedirectToAction("Index", "Home");
             }
             else
             {
