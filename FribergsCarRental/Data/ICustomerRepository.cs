@@ -10,5 +10,6 @@ namespace FribergsCarRental.Data
         Customer GetById(int id);
         IEnumerable<Customer> GetAll();
         Customer GetByEmail(string email);
+        Customer GetByIdBookings(int id);
     }
 }

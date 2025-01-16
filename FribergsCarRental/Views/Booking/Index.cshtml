@@ -6,91 +6,105 @@
 
 <h1>Bokningar</h1>
 
-@* <p>
-    <a asp-action="Create">Create New</a>
-</p> *@
-<table class="table">
-    <thead>
-        <tr>
-            @if(ViewBag.User == "Admin")
-            {
-                <th>
-                    @Html.DisplayNameFor(model => model.Customer.FirstName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Customer.LastName)
-                </th>
-            }
-            @* <th>
-                @Html.DisplayNameFor(model => model.Customer.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customer.LastName)
-            </th> *@
-            <th>
-                @Html.DisplayNameFor(model => model.Car.Brand)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Car.Model)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Car.YearModel)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </th>
-            @* <th>
-                @Html.DisplayNameFor(model => model.TotalCost)
-            </th> *@
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
+@for(int i = 0; i < 3; i++)
+{
+    Status status;
+    string th;
+    if(i == 0)
+    {
+        status = Status.Upcoming;
+        th = "Kommande bokningar";
+    }
+    else if(i == 1)
+    {
+        status = Status.Ongoing;
+        th = "Pågående bokningar";
+    }
+    else
+    {
+        status = Status.Completed;
+        th = "Avslutade bokningar";
+    }
+    foreach (var booking in Model)
+    {
+        if (booking.Status == status)
         {
-            <tr>
-                @if(ViewBag.User == "Admin")
-                {
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Customer.FirstName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Customer.LastName)
-                    </td>
-                }
-                @* <td>
-                    @Html.DisplayFor(modelItem => item.Customer.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Customer.LastName)
-                </td> *@
-                <td>
-                    @Html.DisplayFor(modelItem => item.Car.Brand)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Car.Model)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Car.YearModel)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StartDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndDate)
-                </td>
-                @* <td>
-                    @Html.DisplayFor(modelItem => item.TotalCost)
-                </td> *@
-                <td>
-                    @* <a asp-action="Edit" asp-route-id="@item.BookingId">Edit</a> | *@
-                    <a asp-action="Details" asp-route-id="@item.BookingId"><i class="fa-solid fa-circle-info"></i></a> |
-                    <a asp-action="Delete" asp-route-id="@item.BookingId"><i class="fa-solid fa-trash"></i></a>
-                </td>
-            </tr>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>@th</th>
+                        @if (ViewBag.User == "Admin")
+                        {
+                            <th>
+                                @Html.DisplayNameFor(model => model.Customer.FirstName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Customer.LastName)
+                            </th>
+                        }
+                        <th>
+                            @Html.DisplayNameFor(model => model.Car.Brand)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Car.Model)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Car.YearModel)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.StartDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EndDate)
+                        </th>
+                        @* <th>
+            @Html.DisplayNameFor(model => model.TotalCost)
+            </th> *@
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            @if (ViewBag.User == "Admin")
+                            {
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Customer.FirstName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Customer.LastName)
+                                </td>
+                            }
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Car.Brand)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Car.Model)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Car.YearModel)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StartDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EndDate)
+                            </td>
+                            @* <td>
+            @Html.DisplayFor(modelItem => item.TotalCost)
+            </td> *@
+                            <td>
+                                @* <a asp-action="Edit" asp-route-id="@item.BookingId">Edit</a> | *@
+                                <a asp-action="Details" asp-route-id="@item.BookingId"><i class="fa-solid fa-circle-info"></i></a> |
+                                <a asp-action="Delete" asp-route-id="@item.BookingId"><i class="fa-solid fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         }
-    </tbody>
-</table>
+    }
+
+}
+

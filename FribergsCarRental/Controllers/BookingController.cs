@@ -11,31 +11,46 @@ namespace FribergsCarRental.Controllers
         private readonly IBookingRepository bookingRepository;
         private readonly SessionHelper sessionHelper;
         private readonly ICarRepository carRepository;
+        private readonly ICustomerRepository customerRepository;
 
         public BookingController(IBookingRepository bookingRepository, SessionHelper sessionHelper
-                                 ,ICarRepository carRepository)
+                                 ,ICarRepository carRepository, ICustomerRepository customerRepository)
         {
             this.bookingRepository = bookingRepository;
             this.sessionHelper = sessionHelper;
             this.carRepository = carRepository;
+            this.customerRepository = customerRepository;
         }
         // GET: BookingController
         [HttpGet]
         public ActionResult Index()
         {
-            ViewBag.User = "Null";
+            //ViewBag.User = "Null"; måste jag ha kvar denna?
             var (role, userId) = sessionHelper.GetUserSession();
 
-            if(role == 0)
+            if(role != null && userId != null)
             {
-                ViewBag.User = "Admin";
-            }
-            else if(role == 1)
-            {
-                ViewBag.User = "Customer";
-            }
+                if (role == 0)
+                {
+                    ViewBag.User = "Admin";
+                    return View(bookingRepository.GetAll());
+                }
+                else if (role == 1)
+                {
+                    ViewBag.User = "Customer";
+                    var customer = customerRepository.GetByIdBookings(userId.Value);
+                    if(customer.Bookings != null && customer.Bookings.Any())
+                    {
+                        return View(customer.Bookings);
+                    }
+                    else
+                    {
+                        return View("Du har inga bokningar"); //Lägg in felhantering här
+                    }
+                }
+            }        
 
-            return View(bookingRepository.GetAll());
+            return View(); //felmeddelande här???
         }
 
         // GET: BookingController/Details/5
@@ -71,6 +86,11 @@ namespace FribergsCarRental.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Booking booking)
         {
+            if(booking.StartDate >= booking.EndDate)
+            {
+                ModelState.AddModelError("", "Slutdatum får inte vara tidigare eller samma dag som startdatum");
+                return View();
+            }
             var car = carRepository.GetById(booking.CarId);
             
             if(car.Bookings != null && car.Bookings.Any())
@@ -82,7 +102,6 @@ namespace FribergsCarRental.Controllers
                     return View();
                 }
             }
-
 
             try
             {
