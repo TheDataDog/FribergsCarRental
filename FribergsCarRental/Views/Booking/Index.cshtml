@@ -13,20 +13,25 @@
 
 }
 
-@for(int i = 0; i < 3; i++)
+@for (int i = 0; i < 3; i++)
 {
-    Status status;
     string th;
+    string buttonText = "";
+    string newStatus = "";
     List<FribergsCarRental.Models.Booking> bookinglist;
-    if(i == 0)
+    if (i == 0)
     {
         bookinglist = upcomingBookings;
         th = "Kommande bokningar";
+        buttonText = "Lämna ut bil";
+        newStatus = "Ongoing";
     }
-    else if(i == 1)
+    else if (i == 1)
     {
         bookinglist = ongoingBookings;
         th = "Pågående bokningar";
+        buttonText = "Lämna in bil";
+        newStatus = "Completed";
     }
     else
     {
@@ -34,82 +39,100 @@
         th = "Avslutade bokningar";
     }
     //foreach (var booking in bookinglist)
-    //{
-            <table class="table">
-                <thead>
-                    <tr>
-                        <p>@th</p>
-                        @if (ViewBag.User == "Admin")
-                        {
-                            <th>
-                                @Html.DisplayNameFor(model => model.Customer.FirstName)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Customer.LastName)
-                            </th>
-                        }
-                        <th>
-                            @Html.DisplayNameFor(model => model.Car.Brand)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Car.Model)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Car.YearModel)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.StartDate)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.EndDate)
-                        </th>
-                        @* <th>
+                //{
+    <table class="table mb-2 mt-2">
+        <thead>
+            <tr>
+                <h3 class="table mt-5">@th</h3>
+                @if (ViewBag.User == "Admin")
+                {
+                    <th>
+                        @Html.DisplayNameFor(model => model.Customer.FirstName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Customer.LastName)
+                    </th>
+                }
+                <th>
+                    @Html.DisplayNameFor(model => model.Car.Brand)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Car.Model)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Car.YearModel)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndDate)
+                </th>
+                @* <th>
             @Html.DisplayNameFor(model => model.TotalCost)
             </th> *@
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in bookinglist)
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in bookinglist)
+            {
+                <tr>
+                    @if (ViewBag.User == "Admin")
                     {
-                        <tr>
-                            @if (ViewBag.User == "Admin")
-                            {
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Customer.FirstName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Customer.LastName)
-                                </td>
-                            }
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Car.Brand)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Car.Model)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Car.YearModel)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.StartDate)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.EndDate)
-                            </td>
-                            @* <td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Customer.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Customer.LastName)
+                        </td>
+                    }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Car.Brand)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Car.Model)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Car.YearModel)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    @* <td>
             @Html.DisplayFor(modelItem => item.TotalCost)
             </td> *@
-                            <td>
-                                @* <a asp-action="Edit" asp-route-id="@item.BookingId">Edit</a> | *@
-                                <a asp-action="Details" asp-route-id="@item.BookingId"><i class="fa-solid fa-circle-info"></i></a> |
-                                <a asp-action="Delete" asp-route-id="@item.BookingId"><i class="fa-solid fa-trash"></i></a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+                    <td>
+                        <div class="d-flex gap-2 align-items-center">
+                            @if (bookinglist == upcomingBookings && ViewBag.User == "Admin" || bookinglist == ongoingBookings && ViewBag.User == "Admin")
+                        {
+                            <form asp-action="ChangeStatus" method="post">
+                                <input type="hidden" name="bookingId" value="@item.BookingId" />
+                                <input type="hidden" name="newStatus" value="@newStatus" />
+                                <button type="submit" class="btn btn-primary">@buttonText</button>
+                            </form>
+                        }
+                        @if (bookinglist == upcomingBookings)
+                        {
+                            <a asp-action="Delete" asp-route-id="@item.BookingId"><i class="fa-solid fa-trash"></i></a>
+                        }
+                        <a asp-action="Details" asp-route-id="@item.BookingId"><i class="fa-solid fa-circle-info"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
     //}
+
+    <script>
+        function changeStatus() {
+            
+        }
+    </script>
 
 }
 

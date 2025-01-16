@@ -3,6 +3,7 @@ using FribergsCarRental.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace FribergsCarRental.Controllers
 {
@@ -51,6 +52,18 @@ namespace FribergsCarRental.Controllers
             }        
 
             return View(); //felmeddelande här???
+        }
+
+        [HttpPost]
+        public ActionResult ChangeStatus(int bookingId, string newStatus)
+        {
+            var booking = bookingRepository.GetById(bookingId);
+            if (booking != null)
+            {
+                booking.Status = Enum.Parse<Status>(newStatus);
+                bookingRepository.Update(booking);
+            }
+            return RedirectToAction("Index");
         }
 
         // GET: BookingController/Details/5

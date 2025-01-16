@@ -37,5 +37,10 @@ namespace FribergsCarRental.Data
                                    .Include(b => b.Customer)
                                    .FirstOrDefault(b => b.BookingId == id);
         }
+        public void Update(Booking booking)
+        {
+            context.Bookings.Update(booking);
+            context.SaveChanges();
+        }
     }
 }
