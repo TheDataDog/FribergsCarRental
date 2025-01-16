@@ -39,7 +39,7 @@ namespace FribergsCarRental.Controllers
             };
 
             ViewBag.User = "Null";
-            var user = sessionHelper.GetUserSession();
+            var user = GetUserSession();
 
             if (user.Role == 0)
             {
@@ -60,26 +60,32 @@ namespace FribergsCarRental.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Customer customer)
         {
+            var user = GetUserSession(); //finns metod i controllern?
 
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var addedCustomer = customerRepository.Add(customer); //returnera en customer här för att få customerId?
-                    SetUserSession(addedCustomer.UserRole.Role, addedCustomer.CustomerId);
+                    var addedCustomer = customerRepository.Add(customer);
+                    if(user.Role == null)
+                    {
+                        SetUserSession(addedCustomer.UserRole.Role, addedCustomer.CustomerId);
+                    }
+                    
                 }
-                if (customer.UserRole.Role == Role.Admin)
+                user = GetUserSession();
+                if (user.Role == 0)
                 {
                     return RedirectToAction(nameof(Index));
                 }
-                else //(customer.UserRole.Role == Role.Customer)
+                else if(user.Role == 1)
                 {
                     return RedirectToAction("Create", "Booking");
                 }
-                //else
-                //{
-                //    return View("Error"); //Vad vill jag ha här???
-                //}
+                else
+                {
+                    return View("Error"); //Vad vill jag ha här???
+                }
             }
             catch
             {
@@ -177,15 +183,20 @@ namespace FribergsCarRental.Controllers
             return View();
         }
 
-        public void SetUserSession(Role role, int id)
-        {
-            sessionHelper.SetUserSession(role, id);
-        }
         [HttpGet]
         public ActionResult Logout()
         {
             sessionHelper.ClearUserSession();
             return RedirectToAction("Index", "Home");
+        }
+        public void SetUserSession(Role role, int id)
+        {
+            sessionHelper.SetUserSession(role, id);
+        }
+
+        public (int? Role, int? Id) GetUserSession()
+        {
+            return sessionHelper.GetUserSession();
         }
     }
 }

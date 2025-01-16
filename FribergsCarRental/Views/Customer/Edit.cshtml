@@ -12,7 +12,7 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="CustomerId" />
-            <input type="hidden" asp-for="Password" />
+            <input type="hidden" asp-for="Password" />  @* Ska vara tillgängligt för Customer!!! *@
             @Html.HiddenFor(m => m.UserRole.Role)
             @Html.HiddenFor(m => m.UserRole.UserRoleId)
             <div class="form-group">

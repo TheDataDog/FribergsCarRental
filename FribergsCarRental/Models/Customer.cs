@@ -13,6 +13,7 @@ namespace FribergsCarRental.Models
         [Display(Name = "Efternamn")]
         public string LastName { get; set; }
         [Required]
+        [DataType(DataType.Date)]
         [Display(Name = "Födelsedatum")]
         public DateOnly Birthdate { get; set; }
         public Adress? Adress { get; set; }

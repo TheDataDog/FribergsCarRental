@@ -3,10 +3,18 @@
 @{
     ViewData["Title"] = "Create";
 }
+@* @if (ViewData.ModelState.ContainsKey("") && ViewData.ModelState[""].Errors.Any())
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState[""].Errors)
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+} *@
 
-<h1>Create</h1>
+<h1>Boka bil</h1>
 
-<h4>Booking</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -88,14 +96,9 @@
             $('.datepicker').datepicker({
                 format: 'yyyy-mm-dd', // Swedish date format
                 autoclose: true,     // Close datepicker on selection
-                todayHighlight: true // Highlight today's date
+                todayHighlight: true, // Highlight today's date
+                startDate: '-3d'
             });
-        });
-    </script>
-    <script>
-        $('.datepicker').datepicker({
-            format: 'mm/dd/yyyy',
-            startDate: '-3d'
         });
     </script>
 }

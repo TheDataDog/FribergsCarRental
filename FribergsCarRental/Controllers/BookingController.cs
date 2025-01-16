@@ -10,11 +10,14 @@ namespace FribergsCarRental.Controllers
     {
         private readonly IBookingRepository bookingRepository;
         private readonly SessionHelper sessionHelper;
+        private readonly ICarRepository carRepository;
 
-        public BookingController(IBookingRepository bookingRepository, SessionHelper sessionHelper)
+        public BookingController(IBookingRepository bookingRepository, SessionHelper sessionHelper
+                                 ,ICarRepository carRepository)
         {
             this.bookingRepository = bookingRepository;
             this.sessionHelper = sessionHelper;
+            this.carRepository = carRepository;
         }
         // GET: BookingController
         [HttpGet]
@@ -68,6 +71,19 @@ namespace FribergsCarRental.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Booking booking)
         {
+            var car = carRepository.GetById(booking.CarId);
+            
+            if(car.Bookings != null && car.Bookings.Any())
+            {
+                //bool hasOverlappingBooking = HasOverlappingBooking(car.Bookings, booking.StartDate, booking.EndDate);
+                if(HasOverlappingBooking(car.Bookings, booking.StartDate, booking.EndDate))
+                {
+                    ModelState.AddModelError("", "Vald bil är inte ledig under valda datum");
+                    return View();
+                }
+            }
+
+
             try
             {
                 if (ModelState.IsValid)
@@ -145,6 +161,14 @@ namespace FribergsCarRental.Controllers
                 //lägg till felmeddelande här
                 return View();
             }
+        }
+
+        public bool HasOverlappingBooking(IEnumerable<Booking> existingBookings, DateTime newStartDate, DateTime newEndDate)
+        {
+            return existingBookings.Any(b =>
+            (newStartDate >= b.StartDate && newStartDate <= b.EndDate) ||
+            (newEndDate >= b.StartDate && newEndDate <= b.EndDate) ||
+            (newStartDate <= b.StartDate && newEndDate >= b.EndDate));
         }
     }
 }

@@ -88,7 +88,7 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 
-    <script>
+  @*   <script>
         document.addEventListener("DOMContentLoaded", function () {
             const birthdateInput = document.querySelector("input[name='Birthdate']");
             const errorSpan = document.querySelector("span[data-valmsg-for='Birthdate']");
@@ -100,7 +100,7 @@
                 const isUnder18 = today < new Date(birthdate.setFullYear(birthdate.getFullYear() + 18));
 
                 if (isUnder18) {
-                    errorSpan.textContent = "You must be at least 18 years old.";
+                    errorSpan.textContent = "Du måste vara 18 år";
                     errorSpan.classList.add("text-danger");
                     birthdateInput.setCustomValidity("Invalid age");
                 } else {
@@ -120,11 +120,12 @@
             const isUnder18 = today < new Date(birthdate.setFullYear(birthdate.getFullYear() + 18));
 
             if (isUnder18) {
-                errorSpan.textContent = "You must be at least 18 years old.";
+                errorSpan.textContent = "Du måste vara 18 år";
+                errorSpan.classList.add("text-danger");
                 return false;
             }
 
             return true;
         }
-    </script>
+    </script> *@
 }
