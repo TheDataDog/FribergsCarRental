@@ -24,77 +24,40 @@
             <p>
                 @Model.Description
             </p>
+            <div class="button-price d-flex gap-3">
+                <div>
+                    <p style="font-size:1.5em; font-weight:bold">@Model.DailyCost kr/dygn</p>
+                </div>
+                <div>
+                    <a asp-action="Book" asp-route-id="@Model?.CarId" class="btn btn-primary">Boka</a>
+                </div>
+            </div>
         </div>
         <div class="col-md-7 mb-4">
             @if (Model.Pictures != null && Model.Pictures.Any())
             {
-                <img src="@Model.Pictures[0]" alt="car" style="height:500px; width:auto" />
+                <div id="carouselShosCar" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        @for(int i=0; i < Model.Pictures.Count; i++)
+                        {
+                            if(i == 0)
+                            {
+                                <div class="carousel-item active">
+                                    <img class="d-block w-100" src="@Model.Pictures[i]" alt="Slide">
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="carousel-item">
+                                    <img class="d-block w-100" src="@Model.Pictures[i]" alt="Slide">
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
             }
         </div>
     </div>
-    <a asp-action="Book" asp-route-id="@Model?.CarId" class="btn btn-primary">Boka</a>
 </div>
-<div>
-    <h4>Car</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Pictures)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Pictures)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Brand)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Brand)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Model)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Model)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.YearModel)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.YearModel)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.HorsePower)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.HorsePower)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FuelConsumption)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FuelConsumption)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DailyCost)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DailyCost)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PassengerSeats)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PassengerSeats)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.CarId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Tillbaka</a>
 </div>

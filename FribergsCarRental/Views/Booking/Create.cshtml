@@ -50,17 +50,6 @@
                 @* <select asp-for="CarId" class ="form-control" asp-items="ViewBag.CarId"></select> *@
                 <input type="hidden" asp-for="CarId" />
             </div>
-            @* <div class="form-group">
-                <label asp-for="StartDate" class="control-label"></label>
-                <input type="date" asp-for="StartDate" class="form-control datepicker" data-date-format="yyyy-mm-dd" value="@Model.StartDate" />
-                <span asp-validation-for="StartDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EndDate" class="control-label"></label>
-                <input type="date" asp-for="EndDate" class="form-control datepicker" data-date-format="yyyy-mm-dd" value="@Model.EndDate" />
-                <span asp-validation-for="EndDate" class="text-danger"></span>
-            </div> *@
-
             <div class="form-group">
                 <label asp-for="StartDate" class="control-label"></label>
                 <input type="date" asp-for="StartDate" class="form-control" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
