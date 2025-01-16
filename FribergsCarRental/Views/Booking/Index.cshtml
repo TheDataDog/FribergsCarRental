@@ -6,33 +6,39 @@
 
 <h1>Bokningar</h1>
 
+@{
+    var upcomingBookings = Model.Where(b => b.Status == Status.Upcoming).ToList();
+    var ongoingBookings = Model.Where(b => b.Status == Status.Ongoing).ToList();
+    var completedBookings = Model.Where(b => b.Status == Status.Completed).ToList();
+
+}
+
 @for(int i = 0; i < 3; i++)
 {
     Status status;
     string th;
+    List<FribergsCarRental.Models.Booking> bookinglist;
     if(i == 0)
     {
-        status = Status.Upcoming;
+        bookinglist = upcomingBookings;
         th = "Kommande bokningar";
     }
     else if(i == 1)
     {
-        status = Status.Ongoing;
+        bookinglist = ongoingBookings;
         th = "Pågående bokningar";
     }
     else
     {
-        status = Status.Completed;
+        bookinglist = completedBookings;
         th = "Avslutade bokningar";
     }
-    foreach (var booking in Model)
-    {
-        if (booking.Status == status)
-        {
+    //foreach (var booking in bookinglist)
+    //{
             <table class="table">
                 <thead>
                     <tr>
-                        <th>@th</th>
+                        <p>@th</p>
                         @if (ViewBag.User == "Admin")
                         {
                             <th>
@@ -64,7 +70,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @foreach (var item in bookinglist)
                     {
                         <tr>
                             @if (ViewBag.User == "Admin")
@@ -103,8 +109,7 @@
                     }
                 </tbody>
             </table>
-        }
-    }
+    //}
 
 }
 

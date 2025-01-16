@@ -76,6 +76,8 @@ namespace FribergsCarRental.Controllers
             {
                 CarId = (int)carId,
                 CustomerId = (int)userId,
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now,
             };
 
             return View(booking);
