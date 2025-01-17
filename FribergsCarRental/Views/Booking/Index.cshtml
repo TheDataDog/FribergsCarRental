@@ -30,7 +30,7 @@
     {
         bookinglist = ongoingBookings;
         th = "Pågående bokningar";
-        buttonText = "Lämna in bil";
+        buttonText = "Avsluta bokning";
         newStatus = "Completed";
     }
     else
@@ -115,11 +115,11 @@
                                     <button type="submit" class="btn btn-dark">@buttonText</button>
                             </form>
                         }
+                            <a asp-action="Details" asp-route-id="@item.BookingId"><i class="fa-solid fa-circle-info"></i></a>&nbsp;
                         @if (bookinglist == upcomingBookings)
                         {
                             <a asp-action="Delete" asp-route-id="@item.BookingId"><i class="fa-solid fa-trash"></i></a>
                         }
-                        <a asp-action="Details" asp-route-id="@item.BookingId"><i class="fa-solid fa-circle-info"></i></a>
                         </div>
                     </td>
                 </tr>

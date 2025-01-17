@@ -82,7 +82,8 @@ namespace FribergsCarRental.Controllers
 
             if(carId == null || userId == null || role != 1)
             {
-                return View("Error"); //Lägg till Modelstate eller annan felhantering
+                ModelState.AddModelError("", "Något gick fel, försök igen.");
+                return View(); //Lägg till Modelstate eller annan felhantering
             }
 
             var booking = new Booking

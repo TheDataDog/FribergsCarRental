@@ -97,16 +97,17 @@ namespace FribergsCarRental.Controllers
         {
             var car = carRepository.GetById(id);
             //nullcheck?
-            if(car.Bookings.Any())
-            {
-                foreach (var booking in car.Bookings)
-                {
-                    if(booking.EndDate > DateTime.Now)
-                    {
-                        return View("Error");  //Lägg till felmeddelande här
-                    }
-                }
-            }
+            //if(car.Bookings.Any())
+            //{
+            //    foreach (var booking in car.Bookings)
+            //    {
+            //        if(booking.EndDate > DateTime.Now)
+            //        {
+            //            ModelState.AddModelError("", "Denna bil har kommande bokningar, får ej raderas!");
+            //            return View();  //Lägg till felmeddelande här
+            //        }
+            //    }
+            //}
             return View(car);
         }
 
@@ -115,13 +116,26 @@ namespace FribergsCarRental.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Car car)
         {
+            var actualCar = carRepository.GetById(car.CarId);
+            if (actualCar.Bookings != null && actualCar.Bookings.Any())
+            {
+                foreach (var booking in actualCar.Bookings)
+                {
+                    if (booking.EndDate > DateTime.Now && booking.Status == Status.Upcoming || booking.Status == Status.Ongoing)
+                    {
+                        ModelState.AddModelError("", "Denna bil har kommande bokningar, får ej raderas!");
+                        return View();
+                    }
+                }
+            }
             try
             {
-                carRepository.Delete(car);
+                carRepository.Delete(actualCar);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
+                ModelState.AddModelError("", "Ett fel inträffade vid borttagning av bilen.");
                 return View();
             }
         }

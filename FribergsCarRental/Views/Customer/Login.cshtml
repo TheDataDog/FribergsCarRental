@@ -1,4 +1,6 @@
-﻿@{
+﻿@model FribergsCarRental.ViewModels.LoginViewModel
+
+@{
     ViewData["Title"] = "Login";
 }
 @if (ViewData.ModelState.ContainsKey("") && ViewData.ModelState[""].Errors.Any())
@@ -17,11 +19,13 @@
         <form method="post" action="/Customer/Login">
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" name="email" class="form-control" id="email" required>
+                <input asp-for="Email" type="email" class="form-control">
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Lösenord</label>
-                <input type="password" name="password" class="form-control" id="password" required>
+                <input asp-for="Password" type="password" class="form-control">
+                <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-dark">Logga in</button>
         </form>

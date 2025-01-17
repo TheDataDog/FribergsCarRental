@@ -1,5 +1,6 @@
 ﻿using FribergsCarRental.Data;
 using FribergsCarRental.Models;
+using FribergsCarRental.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -158,12 +159,16 @@ namespace FribergsCarRental.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(string email, string password)
+        public ActionResult Login(LoginViewModel model)
         {
-            var customer = customerRepository.GetByEmail(email);
-            if (customer == null || customer.Password != password)
+            if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Ogiltig email eller lösenord");
+                return View(model);
+            }
+            var customer = customerRepository.GetByEmail(model.Email);
+            if (customer == null || customer.Password != model.Password)
+            {
+                ModelState.AddModelError("", "Fel email eller lösenord");
                 return View();
             }
             SetUserSession(customer.UserRole.Role, customer.CustomerId);
