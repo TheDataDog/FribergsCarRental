@@ -35,10 +35,12 @@ namespace FribergsCarRental.Controllers
         {
             var customer = new Customer
             {
-                UserRole = new UserRole { Role = (Role.Customer) }
+                UserRole = new UserRole { Role = (Role.Customer) },
+                //Birthdate = DateTime.Now,
+                
             };
 
-            ViewBag.User = "Null";
+            ViewBag.User = "Null"; //behöver denna deklareras här???
             var user = GetUserSession();
 
             if (user.Role == 0)

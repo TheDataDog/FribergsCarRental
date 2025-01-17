@@ -29,14 +29,14 @@
                     <p style="font-size:1.5em; font-weight:bold">@Model.DailyCost kr/dygn</p>
                 </div>
                 <div>
-                    <a asp-action="Book" asp-route-id="@Model?.CarId" class="btn btn-primary">Boka</a>
+                    <a asp-action="Book" asp-route-id="@Model?.CarId" class="btn btn-dark">Boka</a>
                 </div>
             </div>
         </div>
         <div class="col-md-7 mb-4">
             @if (Model.Pictures != null && Model.Pictures.Any())
             {
-                <div id="carouselShosCar" class="carousel slide" data-bs-ride="carousel">
+                <div id="carouselShowCar" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         @for(int i=0; i < Model.Pictures.Count; i++)
                         {

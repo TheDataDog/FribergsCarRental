@@ -1,8 +1,68 @@
-﻿@{
+﻿@model IEnumerable<FribergsCarRental.Models.Car>
+
+@{
     ViewData["Title"] = "Home Page";
 }
+@{
+    List<string> pictures = new List<string>(); //Kan jag göra en MOdelView av det här istället, eller metod i controllern?
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    foreach (var item in Model)
+    {
+        if (item.Pictures != null && item.Pictures.Any())
+        {
+            pictures.Add(item.Pictures[0]);
+        }
+    }
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="carousel col-sm p-0">
+            <div id="carouselIndex" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @if (pictures != null && pictures.Any())
+                    {
+                        bool isFirst = true;
+                        @foreach (var url in pictures)
+                        {
+                            <div class="carousel-item @(isFirst ? "active" : "")">
+                                <img class="d-block w-100" src="@url" alt="Slide">
+                            </div>
+                            isFirst = false;
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="quote col-sm d-flex justify-content-center align-items-center" style="background-color:#97A6AD;">
+            <div class="quote-text" style="font-size:3em; font-style:italic; text-align:center">
+                <p>"Hyr lyxen,</p>
+                <p>äg upplevelsen!"</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid m-0 p-0">
+    <div class="background" style="background-color:#E3EBEE">
+        <div class="row">
+            <div class="col-sm">
+            </div>
+            <div class="col-sm-8 text-container">
+                <div class="text-presentation" style="font-size:1.2em; padding-top:4em; padding-bottom:4em;">
+                    <p>
+                        Friberg Car Rentals är en exklusiv biluthyrningsfirma för lyxbilar, grundad år 2020 av Marcus Friberg. Företaget är beläget i den charmiga staden Scriptås och har sedan starten etablerat sig som en ledande aktör inom lyxbilsuthyrning.
+
+                        Hos Friberg Car Rentals finns ett noggrant utvalt utbud av 16 förstklassiga fordon från några av världens mest prestigefyllda bilmärken, inklusive Rolls-Royce, Bentley, Mercedes, och Porsche.
+
+                        Företaget riktar sig till kunder som söker det lilla extra, oavsett om det handlar om att förgylla ett speciellt tillfälle, göra intryck vid affärsmöten eller helt enkelt njuta av känslan av att köra en lyxbil.
+
+                        Med fokus på service i toppklass och en passion för exklusiva fordon strävar Marcus Friberg och hans team efter att ge varje kund en oförglömlig upplevelse. Friberg Car Rentals är det självklara valet för lyx och stil på vägarna.
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm">
+            </div>
+
+        </div>
+    </div>
 </div>

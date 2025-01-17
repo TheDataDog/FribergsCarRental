@@ -16,9 +16,9 @@
         @* <div class="logo container-fluid d-flex justify-content-center align-items-center" style="background-color:#E3EBEE">
             <img src="~/images/FribergCarRental-logo.jpg" alt="logo" style="width: 150px; height:auto; padding-bottom:5px; padding-top:5px;" />
         </div> *@
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow" style="padding:0px">
             <div class="container-fluid" style="background-color:#E3EBEE">
-              <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/FribergCarRental-logo.jpg" alt="logo" style="width: 75px; height:auto;" /></a>
+              <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/FribergCarRental-logo.jpg" alt="logo" style="width: 75px; height:auto; margin:0.3em" /></a>
                   <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Friberg Car Rental</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -82,11 +82,26 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    @{
+        var controllerName = ViewContext.RouteData.Values["controller"]?.ToString();
+        var actionName = ViewContext.RouteData.Values["action"]?.ToString(); 
+    }
+    @if(controllerName == "Home" && actionName == "Index")
+    {
+        <div class="container-fluid p-0 m-0">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+    }
+    else
+    {
+        <div class="container mt-3">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+    }
 
     <footer class="border-top footer text-muted">
         <div class="container">
