@@ -21,6 +21,7 @@ namespace FribergsCarRental.Models
         [Display(Name = "Mobilnummer")]
         public string PhoneNumber { get; set; }
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
         [Required]
         [DataType(DataType.Password)]
