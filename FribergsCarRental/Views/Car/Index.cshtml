@@ -4,10 +4,11 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Våra Bilar</h1>
+<h1 style="text-align:center;">Våra Bilar</h1>
+
+<hr />
 <div class="container">
     <div class="row">
-        @*     <div class="col-md-4"> *@
         @foreach (var item in Model)
         {
             if (item.Pictures != null && item.Pictures.Any())
@@ -26,7 +27,6 @@
                                 <p style="font-size:1.3em; font-weight:bold">
                                     @item.DailyCost kr/dygn
                                 </p>
-                                @* <a href="#" class="btn btn-primary">Läs mer & boka</a> *@
                                 <a asp-action="ShowCar" asp-route-id="@item.CarId" class="btn btn-dark">Läs mer & boka</a>
                             </div>
                         </div>
@@ -34,7 +34,6 @@
                 </div>
             }
         }
-        @*  </div> *@
     </div>
 </div>
 
