@@ -76,31 +76,39 @@
 </style>
 
 @* <div class="container"> *@
-    <div class="row mt-5">
-        @foreach (var item in Model)
+<div class="row mt-5">
+    @foreach (var item in Model)
+    {
+        if (item.Pictures != null && item.Pictures.Any())
         {
-            if (item.Pictures != null && item.Pictures.Any())
-            {
-                <div class="col-md-4 col-xl-3 col-sm-6 mb-4">
-                    <div class="d-flex justify-content-center align-items-center">
-                        <div class="card" style="width: 18rem;">
-                            <img src="@item.Pictures[0]" class="card-img-top" alt="car">
-                            <div class="card-body">
-                                <h5 class="card-title">@item.Brand @item.Model @item.YearModel</h5>
-                                <p class="card-text">
-                                    <i class="fa-solid fa-user"></i>&nbsp;@item.PassengerSeats &nbsp;&nbsp;&nbsp;
-                                    <i class="fa-solid fa-gas-pump"></i>&nbsp;@item.FuelConsumption l/100km&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i class="fa-solid fa-horse"></i>&nbsp;@item.HorsePower hk
+            <div class="col-md-4 col-xl-3 col-sm-6 mb-4">
+                <div class="d-flex justify-content-center align-items-center">
+                    <div class="card" style="width: 18rem;">
+                        <img src="@item.Pictures[0]" class="card-img-top" alt="car">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Brand @item.Model @item.YearModel</h5>
+                            <div class="d-flex justify-content-between mb-2">
+                                <p class="card-text d-flex w-100 justify-content-between">
+                                    <span class="d-flex align-items-center">
+                                        <i class="fa-solid fa-user"></i>&nbsp;@item.PassengerSeats
+                                    </span>
+                                    <span class="d-flex align-items-center">
+                                        <i class="fa-solid fa-gas-pump"></i>&nbsp;@item.FuelConsumption l/100km
+                                    </span>
+                                    <span class="d-flex align-items-center">
+                                        <i class="fa-solid fa-horse"></i>&nbsp;@item.HorsePower hk
+                                    </span>
                                 </p>
-                                <p style="font-size:1.3em; font-weight:bold">
-                                    @item.DailyCost kr/dygn
-                                </p>
-                                <a asp-controller="Car" asp-action="ShowCar" asp-route-id="@item.CarId" class="btn btn-dark">Läs mer & boka</a>
                             </div>
+                            <p style="font-size:1.3em; font-weight:bold">
+                                @item.DailyCost kr/dygn
+                            </p>
+                            <a asp-controller="Car" asp-action="ShowCar" asp-route-id="@item.CarId" class="btn btn-dark">Läs mer & boka</a>
                         </div>
                     </div>
                 </div>
-            }
+            </div>
         }
-    </div>
+    }
+</div>
 @* </div> *@

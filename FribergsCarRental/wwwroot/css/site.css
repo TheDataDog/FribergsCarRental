@@ -22,6 +22,7 @@ body {
 }
 
 .card {
+    height: 400px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
 }
@@ -31,3 +32,9 @@ body {
         cursor: pointer;
         box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
     }
+
+.card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
