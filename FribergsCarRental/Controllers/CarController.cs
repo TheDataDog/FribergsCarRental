@@ -121,9 +121,9 @@ namespace FribergsCarRental.Controllers
             {
                 foreach (var booking in actualCar.Bookings)
                 {
-                    if (booking.EndDate > DateTime.Now && booking.Status == Status.Upcoming || booking.Status == Status.Ongoing)
+                    if (/*booking.EndDate > DateTime.Now &&*/ booking.Status == Status.Upcoming || booking.Status == Status.Ongoing)
                     {
-                        ModelState.AddModelError("", "Denna bil har kommande bokningar, får ej raderas!");
+                        ModelState.AddModelError("", "Denna bil har kommande eller pågående bokningar, får ej raderas!");
                         return View();
                     }
                 }

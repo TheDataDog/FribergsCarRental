@@ -4,6 +4,16 @@
     ViewData["Title"] = "Index";
 }
 
+@if (ViewData.ModelState.ContainsKey("") && ViewData.ModelState[""].Errors.Any())
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState[""].Errors)
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}
+
 <h1>Bokningar</h1>
 
 @{
@@ -38,12 +48,10 @@
         bookinglist = completedBookings;
         th = "Avslutade bokningar";
     }
-    //foreach (var booking in bookinglist)
-                //{
+    <h3 class="table mt-5">@th</h3>
     <table class="table mb-2 mt-2">
-        <thead>
-            <tr>
-                <h3 class="table mt-5">@th</h3>
+        <thead>            
+            <tr>                
                 @if (ViewBag.User == "Admin")
                 {
                     <th>
@@ -68,10 +76,6 @@
                 <th>
                     @Html.DisplayNameFor(model => model.EndDate)
                 </th>
-                @* <th>
-            @Html.DisplayNameFor(model => model.TotalCost)
-            </th> *@
-                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -102,9 +106,6 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.EndDate)
                     </td>
-                    @* <td>
-            @Html.DisplayFor(modelItem => item.TotalCost)
-            </td> *@
                     <td>
                         <div class="d-flex gap-2 align-items-center">
                             @if (bookinglist == upcomingBookings && ViewBag.User == "Admin" || bookinglist == ongoingBookings && ViewBag.User == "Admin")
@@ -126,13 +127,6 @@
             }
         </tbody>
     </table>
-    //}
-
-    <script>
-        function changeStatus() {
-            
-        }
-    </script>
 
 }
 

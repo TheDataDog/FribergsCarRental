@@ -20,7 +20,9 @@ namespace FribergsCarRental.Models
         [Required]
         [Display(Name = "Total kostnad")]
         public int TotalCost { get; set; }
+        [Display(Name = "Kund")]
         public Customer? Customer { get; set; }
+        [Display(Name = "Bil")]
         public Car? Car { get; set; }
         public Status Status { get; set; } = Status.Upcoming;
     }

@@ -46,12 +46,13 @@ namespace FribergsCarRental.Controllers
                     }
                     else
                     {
-                        return View("Du har inga bokningar"); //Lägg in felhantering här
+                        ModelState.AddModelError("", "Du har inga bokningar hos oss.");
+                        return View(customer.Bookings); //Lägg in felhantering här
                     }
                 }
-            }        
-
-            return View(); //felmeddelande här???
+            }
+            ModelState.AddModelError("", "Något gick fel, försök igen.");
+            return View(new List<Booking>()); //felmeddelande här, måste jag skicka med en tom lista???
         }
 
         [HttpPost]
@@ -92,6 +93,7 @@ namespace FribergsCarRental.Controllers
                 CustomerId = (int)userId,
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now,
+                TotalCost = 0
             };
 
             return View(booking);
@@ -102,6 +104,7 @@ namespace FribergsCarRental.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Booking booking)
         {
+
             if(booking.StartDate >= booking.EndDate)
             {
                 ModelState.AddModelError("", "Slutdatum får inte vara tidigare eller samma dag som startdatum");
@@ -118,6 +121,8 @@ namespace FribergsCarRental.Controllers
                     return View();
                 }
             }
+
+            booking.TotalCost = SetTotalCost(booking);
 
             try
             {
@@ -204,6 +209,14 @@ namespace FribergsCarRental.Controllers
             (newStartDate >= b.StartDate && newStartDate <= b.EndDate) ||
             (newEndDate >= b.StartDate && newEndDate <= b.EndDate) ||
             (newStartDate <= b.StartDate && newEndDate >= b.EndDate));
+        }
+
+        public int SetTotalCost(Booking booking)
+        {
+            var car = carRepository.GetById(booking.CarId);
+            int days = (booking.EndDate - booking.StartDate).Days;
+
+            return car.DailyCost * days;
         }
     }
 }

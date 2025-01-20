@@ -44,7 +44,7 @@ namespace FribergsCarRental.Data
 
         public Customer GetByIdBookings(int id)
         {
-            return context.Customers.Include(b => b.Bookings).ThenInclude(b => b.Car)
+            return context.Customers.Include(b => b.Bookings).ThenInclude(b => b.Car) //något fel med den här???
                                     .FirstOrDefault(c => c.CustomerId == id);
         }
 

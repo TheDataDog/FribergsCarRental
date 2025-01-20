@@ -36,9 +36,7 @@ namespace FribergsCarRental.Controllers
         {
             var customer = new Customer
             {
-                UserRole = new UserRole { Role = (Role.Customer) },
-                //Birthdate = DateTime.Now,
-                
+                UserRole = new UserRole { Role = (Role.Customer) }                
             };
 
             ViewBag.User = "Null"; //behöver denna deklareras här???
@@ -48,14 +46,15 @@ namespace FribergsCarRental.Controllers
             {
                 ViewBag.User = "Admin";
             }
-            if (sessionHelper.GetCarSession() == null)
-            {
-                return View(customer);
-            }
-            else
-            {
-                return PartialView(customer);
-            }
+            //if (sessionHelper.GetCarSession() == null)
+            //{
+            //    return View(customer);
+            //}
+            //else
+            //{
+            //    return PartialView(customer);
+            //}
+            return View(customer);
         }
 
         // POST: CustomerController/Create
@@ -148,14 +147,16 @@ namespace FribergsCarRental.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            if(sessionHelper.GetCarSession() == null)
-            {
-                return View();
-            }
-            else
-            {
-                return PartialView();
-            }
+            //if(sessionHelper.GetCarSession() == null)
+            //{
+            //    return View();
+            //}
+            //else
+            //{
+            //    return PartialView();
+            //}
+            return View();
+
         }
 
         [HttpPost]
