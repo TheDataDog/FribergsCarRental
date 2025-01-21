@@ -2,12 +2,12 @@
 
 namespace FribergsCarRental.Data
 {
-    public interface IRepository<T>
+    public interface IRepository<T> where T : class
     {
-        T Add(T entity);
-        T Update(T entity);
-        void Delete(T car);
-        T GetById(int id);
-        IEnumerable<T> GetAll();
+        Task<T> AddAsync(T entity);
+        Task<T> UpdateAsync(T entity);
+        Task DeleteAsync(T entity);
+        Task<T> GetByIdAsync(int id);
+        Task<IEnumerable<T>> GetAllAsync();
     }
 }

@@ -4,6 +4,15 @@
     ViewData["Title"] = "Create";
     string columnClass = ViewBag.User == "Admin" ? "col-md-4" : "col-md-8";
 }
+@if (ViewData.ModelState.ContainsKey("") && ViewData.ModelState[""].Errors.Any())
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState[""].Errors)
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}
 @if (ViewBag.User == "Admin")
 {
     <h1>Lägg till kund</h1>
@@ -84,11 +93,10 @@
 }
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
 
-    <script>
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    @* <script>
         document.addEventListener("DOMContentLoaded", function () {
             const birthdateInput = document.querySelector("input[name='Birthdate']");
             const errorSpan = document.querySelector("span[data-valmsg-for='Birthdate']");
@@ -127,5 +135,6 @@
 
             return true;
         }
-    </script>
-}
+    </script> *@
+    }
+

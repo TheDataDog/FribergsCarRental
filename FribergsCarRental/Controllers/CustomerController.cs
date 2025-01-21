@@ -36,7 +36,7 @@ namespace FribergsCarRental.Controllers
         {
             var customer = new Customer
             {
-                UserRole = new UserRole { Role = (Role.Customer) }                
+                UserRole = new UserRole { Role = (Role.Customer) }
             };
 
             ViewBag.User = "Null"; //behöver denna deklareras här???
@@ -62,31 +62,25 @@ namespace FribergsCarRental.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Customer customer)
         {
-            var user = GetUserSession(); //finns metod i controllern?
+            var user = GetUserSession();
 
             try
             {
                 if (ModelState.IsValid)
                 {
                     var addedCustomer = customerRepository.Add(customer);
-                    if(user.Role == null)
+                    if (user.Role == null)
                     {
                         SetUserSession(addedCustomer.UserRole.Role, addedCustomer.CustomerId);
+                        return RedirectToAction("Create", "Booking");
                     }
-                    
-                }
-                user = GetUserSession();
-                if (user.Role == 0)
-                {
+
                     return RedirectToAction(nameof(Index));
-                }
-                else if(user.Role == 1)
-                {
-                    return RedirectToAction("Create", "Booking");
+
                 }
                 else
                 {
-                    return View("Error"); //Vad vill jag ha här???
+                    return View();
                 }
             }
             catch
