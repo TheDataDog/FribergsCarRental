@@ -9,13 +9,16 @@ namespace FribergsCarRental.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly IAdminRepository adminRepository;
+        private readonly IRepository<Admin> repository;
         private readonly SessionHelper sessionHelper;
+        private readonly IAdminRepository adminRepository;
 
-        public AdminController(IAdminRepository adminRepository, SessionHelper sessionHelper)
+        public AdminController(IRepository<Admin> repository, SessionHelper sessionHelper,
+                                IAdminRepository adminRepository)
         {
-            this.adminRepository = adminRepository;
+            this.repository = repository;
             this.sessionHelper = sessionHelper;
+            this.adminRepository = adminRepository;
         }
         // GET: AdminController
         [HttpGet]
@@ -25,14 +28,14 @@ namespace FribergsCarRental.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(LoginViewModel model)
+        public async Task<ActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View("Index", model);
             }
 
-            var admin = adminRepository.GetByEmail(model.Email);
+            var admin = await adminRepository.GetByEmailAsync(model.Email);
             if(admin == null || admin.Password != model.Password)
             {
                 ModelState.AddModelError("", "Fel email eller lösenord");

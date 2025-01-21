@@ -3,44 +3,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FribergsCarRental.Data
 {
-    public class BookingRepository : IBookingRepository
+    public class BookingRepository : GenericRepository<Booking>
     {
-        private readonly ApplicationDbContext context;
 
-        public BookingRepository(ApplicationDbContext context)
+        public BookingRepository(ApplicationDbContext context) : base(context) { }
+
+        public override async Task<Booking> GetByIdAsync(int id)
         {
-            this.context = context;
-        }
-        public Booking Add(Booking booking)
-        {
-            context.Bookings.Add(booking);
-            context.SaveChanges();
-            return booking;
+            return await context.Bookings.Include(b => b.Car)
+                                         .Include(b => b.Customer)
+                                         .FirstOrDefaultAsync(b => b.BookingId == id);
         }
 
-        public void Delete(Booking booking)
+        public override async Task<IEnumerable<Booking>> GetAllAsync()
         {
-            context.Bookings.Remove(booking);
-            context.SaveChanges();
-        }
-
-        public IEnumerable<Booking> GetAll()
-        {
-            return context.Bookings.Include(b => b.Car)
-                                   .Include(b => b.Customer)
-                                   .OrderByDescending(b => b.StartDate);
-        }
-
-        public Booking GetById(int id)
-        {
-            return context.Bookings.Include(b => b.Car)
-                                   .Include(b => b.Customer)
-                                   .FirstOrDefault(b => b.BookingId == id);
-        }
-        public void Update(Booking booking)
-        {
-            context.Bookings.Update(booking);
-            context.SaveChanges();
+            return await context.Bookings.Include(b => b.Car)
+                                         .Include(b => b.Customer)
+                                         .OrderByDescending(b => b.StartDate)
+                                         .ToListAsync();
         }
     }
 }

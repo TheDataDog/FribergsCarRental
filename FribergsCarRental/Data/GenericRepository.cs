@@ -5,7 +5,7 @@ namespace FribergsCarRental.Data
 {
     public class GenericRepository<T> : IRepository<T> where T : class
     {
-        private readonly ApplicationDbContext context;
+        private protected readonly ApplicationDbContext context;
         private readonly DbSet<T> dbSet;
 
         public GenericRepository(ApplicationDbContext applicationDbContext)
@@ -26,12 +26,12 @@ namespace FribergsCarRental.Data
             await context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public virtual async Task<IEnumerable<T>> GetAllAsync()
         {
             return await dbSet.ToListAsync();
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public virtual async Task<T> GetByIdAsync(int id)
         {
             return await dbSet.FindAsync(id);
         }

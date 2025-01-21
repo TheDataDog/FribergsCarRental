@@ -3,40 +3,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FribergsCarRental.Data
 {
-    public class CarRepository : ICarRepository
+    public class CarRepository : GenericRepository<Car>
     {
-        private readonly ApplicationDbContext context;
 
-        public CarRepository(ApplicationDbContext context)
+        public CarRepository(ApplicationDbContext context) : base(context) { }
+
+        public override async Task<Car> GetByIdAsync(int id)
         {
-            this.context = context;
-        }
-        public void Add(Car car)
-        {
-            context.Cars.Add(car);
-            context.SaveChanges();
+            return await context.Cars.Include(c => c.Bookings)
+                                     .FirstOrDefaultAsync(c => c.CarId == id);
         }
 
-        public void Delete(Car car)
-        {
-            context.Cars.Remove(car);
-            context.SaveChanges();
-        }
-
-        public IEnumerable<Car> GetAll()
-        {
-            return context.Cars.OrderBy(c => c.Brand);
-        }
-
-        public Car GetById(int id)
-        {
-            return context.Cars.Include(c => c.Bookings).FirstOrDefault(c => c.CarId == id);
-        }
-
-        public void Update(Car car)
-        {
-            context.Cars.Update(car);
-            context.SaveChanges();
-        }
     }
 }

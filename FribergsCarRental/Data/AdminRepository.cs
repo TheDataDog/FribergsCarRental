@@ -3,30 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FribergsCarRental.Data
 {
-    public class AdminRepository : IAdminRepository
+    public class AdminRepository : GenericRepository<Admin>, IAdminRepository
     {
-        private readonly ApplicationDbContext context;
+        public AdminRepository(ApplicationDbContext context) : base(context) { }
 
-        public AdminRepository(ApplicationDbContext context)
+        public async Task<Admin> GetByEmailAsync(string email)
         {
-            this.context = context;
-        }
-        public void Add(Admin admin)
-        {
-            context.Admins.Add(admin);
-            context.SaveChanges();
-        }
-
-        public Admin GetByEmail(string email)
-        {
-            //return context.Admins.Include(a => a.UserRole).FirstOrDefault(a => a.Email == email);
-            return context.Admins.Include(a => a.UserRole)
-                                 .FirstOrDefault(a => a.Email == email);
-        }
-
-        public Admin GetById(int id)
-        {
-            return context.Admins.FirstOrDefault(a => a.AdminId == id);
+            return await context.Admins.Include(a => a.UserRole)
+                                        .FirstOrDefaultAsync(a => a.Email == email);
         }
     }
 }
