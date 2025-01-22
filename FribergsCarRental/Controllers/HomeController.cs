@@ -21,7 +21,7 @@ namespace FribergsCarRental.Controllers
 
         public IActionResult Index()
         {
-            return View(carRepository.GetAll());
+            return View(carRepository.GetAllActive());
         }
 
         public IActionResult ErrorPage()

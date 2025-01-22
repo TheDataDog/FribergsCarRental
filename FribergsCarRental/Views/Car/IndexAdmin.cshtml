@@ -62,9 +62,9 @@
                     @Html.DisplayFor(modelItem => item.PassengerSeats)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.CarId"><i class="fa-solid fa-pen-to-square"></i></a> |
-                    <a asp-action="Details" asp-route-id="@item.CarId"><i class="fa-solid fa-circle-info"></i></a> |
-                    <a asp-action="Delete" asp-route-id="@item.CarId"><i class="fa-solid fa-trash"></i></a>
+                    <a asp-action="Edit" asp-route-id="@item.CarId" title="Editera"><i class="fa-solid fa-pen-to-square"></i></a> |
+                    <a asp-action="Details" asp-route-id="@item.CarId" title="Detaljer"><i class="fa-solid fa-circle-info"></i></a> |
+                    <a asp-action="Delete" asp-route-id="@item.CarId" title="Radera"><i class="fa-solid fa-trash"></i></a>
                 </td>
             </tr>
         }

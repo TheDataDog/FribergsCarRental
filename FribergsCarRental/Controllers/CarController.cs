@@ -32,7 +32,7 @@ namespace FribergsCarRental.Controllers
             }
             else
             {
-                return View(carRepository.GetAll());
+                return View(carRepository.GetAllActive());
             }
 
         }
@@ -114,9 +114,14 @@ namespace FribergsCarRental.Controllers
             {
                 foreach (var booking in actualCar.Bookings)
                 {
-                    if (/*booking.EndDate > DateTime.Now &&*/ booking.Status == Status.Upcoming || booking.Status == Status.Ongoing)
+                    if (booking.Status == Status.Upcoming || booking.Status == Status.Ongoing)
                     {
-                        ModelState.AddModelError("", "Denna bil har kommande eller pågående bokningar, får ej raderas!");
+                        ViewBag.ErrorMsg = "Denna bil har kommande eller pågående bokningar, får ej raderas!";
+                        return View();
+                    }
+                    else
+                    {
+                        ViewBag.ErrorMsg = "Denna bil har tidigare bokningar och får ej raderas, gå till editera för att deaktivera bilen.";
                         return View();
                     }
                 }

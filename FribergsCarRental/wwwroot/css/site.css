@@ -38,3 +38,11 @@ body {
     height: 200px;
     object-fit: cover;
 }
+
+.fa-trash {
+    color: red;
+}
+
+.bold {
+    font-weight:bold;
+}

@@ -9,5 +9,6 @@ namespace FribergsCarRental.Data
         void Delete(Car car);
         Car GetById(int id);
         IEnumerable<Car> GetAll();
+        IEnumerable<Car> GetAllActive();
     }
 }

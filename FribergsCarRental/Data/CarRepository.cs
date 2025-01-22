@@ -28,6 +28,11 @@ namespace FribergsCarRental.Data
             return context.Cars.OrderBy(c => c.Brand);
         }
 
+        public IEnumerable<Car> GetAllActive()
+        {
+            return context.Cars.Where(c => c.IsActive == true).OrderBy(c => c.Brand);
+        }
+
         public Car GetById(int id)
         {
             return context.Cars.Include(c => c.Bookings).FirstOrDefault(c => c.CarId == id);

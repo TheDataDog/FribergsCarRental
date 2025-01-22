@@ -33,6 +33,7 @@ namespace FribergsCarRental.Models
         public string Description { get; set; }
         public virtual List<Booking>? Bookings { get; set; }
         [Required]
-        public bool IsActive { get; set; } = true;
+        [Display(Name = "Aktiv")]
+        public bool IsActive { get; set; }
     }
 }

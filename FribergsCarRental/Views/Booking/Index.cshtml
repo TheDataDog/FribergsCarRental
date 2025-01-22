@@ -16,6 +16,7 @@
     {
         string th;
         string buttonText = "";
+        string btn = "";
         string newStatus = "";
         List<FribergsCarRental.Models.Booking> bookinglist;
         if (i == 0)
@@ -23,6 +24,7 @@
             bookinglist = upcomingBookings;
             th = "Kommande bokningar";
             buttonText = "Lämna ut bil";
+            btn = "btn-success";
             newStatus = "Ongoing";
         }
         else if (i == 1)
@@ -30,6 +32,7 @@
             bookinglist = ongoingBookings;
             th = "Pågående bokningar";
             buttonText = "Avsluta bokning";
+            btn = "btn-primary";
             newStatus = "Completed";
         }
         else
@@ -102,13 +105,13 @@
                                     <form asp-action="ChangeStatus" method="post">
                                         <input type="hidden" name="bookingId" value="@item.BookingId" />
                                         <input type="hidden" name="newStatus" value="@newStatus" />
-                                        <button type="submit" class="btn btn-dark">@buttonText</button>
+                                        <button type="submit" class="btn @btn btn-sm">@buttonText</button>
                                     </form>
                                 }
-                                <a asp-action="Details" asp-route-id="@item.BookingId"><i class="fa-solid fa-circle-info"></i></a>&nbsp;
+                                <a asp-action="Details" asp-route-id="@item.BookingId" title="Detaljer"><i class="fa-solid fa-circle-info"></i></a>&nbsp;
                                 @if (bookinglist == upcomingBookings)
                                 {
-                                    <a asp-action="Delete" asp-route-id="@item.BookingId"><i class="fa-solid fa-trash"></i></a>
+                                    <a asp-action="Delete" asp-route-id="@item.BookingId" title="Radera"><i class="fa-solid fa-trash"></i></a>
                                 }
                             </div>
                         </td>
