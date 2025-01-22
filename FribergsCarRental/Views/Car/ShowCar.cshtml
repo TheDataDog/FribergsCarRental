@@ -29,7 +29,8 @@
                     <p style="font-size:1.5em; font-weight:bold">@Model.DailyCost kr/dygn</p>
                 </div>
                 <div>
-                    <a asp-action="Book" asp-route-id="@Model?.CarId" class="btn btn-dark">Boka</a>
+                    <a asp-action="Book" asp-route-id="@Model?.CarId" class="btn btn-success">Boka</a>
+                    <a asp-controller="Car" asp-action="Index" asp-route-returnUrl="@ViewBag.ReturnUrl" class="btn btn-dark">Tillbaka</a>
                 </div>
             </div>
         </div>
@@ -58,7 +59,4 @@
             }
         </div>
     </div>
-</div>
-<div>
-    <a asp-action="Index">Tillbaka</a>
 </div>

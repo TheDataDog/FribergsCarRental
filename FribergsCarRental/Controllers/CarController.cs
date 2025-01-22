@@ -17,8 +17,13 @@ namespace FribergsCarRental.Controllers
         }
         // GET: CarController
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(string returnUrl)
         {
+            if (!string.IsNullOrEmpty(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+
             var user = GetUserSession();
 
             if(user.Role == 0)
@@ -160,7 +165,15 @@ namespace FribergsCarRental.Controllers
         [HttpGet]
         public ActionResult ShowCar(int id)
         {
+            ViewBag.ReturnUrl = Request.Headers["Referer"].ToString();
             return View(carRepository.GetById(id));
+        }
+
+        [HttpGet]
+        public ActionResult ClearCarSessionAndRedirect()
+        {
+            sessionHelper.ClearCarSession();
+            return RedirectToAction("Index");
         }
 
         public (int? Role,int? Id) GetUserSession()

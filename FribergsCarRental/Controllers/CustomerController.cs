@@ -188,7 +188,7 @@ namespace FribergsCarRental.Controllers
         [HttpGet]
         public ActionResult Logout()
         {
-            sessionHelper.ClearUserSession();
+            sessionHelper.ClearSession();
             return RedirectToAction("Index", "Home");
         }
         public void SetUserSession(Role role, int id)

@@ -26,7 +26,6 @@ namespace FribergsCarRental.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            //ViewBag.User = "Null"; måste jag ha kvar denna?
             var (role, userId) = sessionHelper.GetUserSession();
 
             if(role != null && userId != null)
@@ -34,9 +33,10 @@ namespace FribergsCarRental.Controllers
                 if (role == 0)
                 {
                     ViewBag.User = "Admin";
+                    ViewBag.ErrorMsg = "Det finns inga bokningar";                  
                     return View(bookingRepository.GetAll());
                 }
-                else if (role == 1)
+                else //if (role == 1)
                 {
                     ViewBag.User = "Customer";
                     var customer = customerRepository.GetByIdBookings(userId.Value);
@@ -46,13 +46,13 @@ namespace FribergsCarRental.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError("", "Du har inga bokningar hos oss.");
-                        return View(customer.Bookings); //Lägg in felhantering här
+                        ViewBag.ErrorMsg = "Du har inga bokningar.";
+                        return View(customer.Bookings);
                     }
                 }
             }
-            ModelState.AddModelError("", "Något gick fel, försök igen.");
-            return View(new List<Booking>()); //felmeddelande här, måste jag skicka med en tom lista???
+            ViewBag.ErrorMsg = "Något gick fel, försök igen!";
+            return View(new List<Booking>()); //Måste jag skicka en tom lista
         }
 
         [HttpPost]

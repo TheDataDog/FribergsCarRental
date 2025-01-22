@@ -40,9 +40,14 @@ namespace FribergsCarRental
             return id;
         }
 
-        public void ClearUserSession()
+        public void ClearSession()
         {
             httpContextAccesor.HttpContext.Session.Clear();
+        }
+
+        public void ClearCarSession()
+        {
+            httpContextAccesor.HttpContext.Session.Remove("CarId");
         }
     }
 }

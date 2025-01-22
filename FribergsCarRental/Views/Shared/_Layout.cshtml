@@ -1,4 +1,20 @@
 ﻿@inject SessionHelper sessionHelper
+@{
+    var user = sessionHelper.GetUserSession();
+    string bokningar = "Mina bokningar";
+    string bilar = "Våra Bilar";
+
+    if (user.Role == 0)
+    {
+        bokningar = "Bokningar";
+        bilar = "Bilar";
+    }
+
+}
+@{
+    var controllerName = ViewContext.RouteData.Values["controller"]?.ToString();
+    var actionName = ViewContext.RouteData.Values["action"]?.ToString();
+}
 <!DOCTYPE html>
 <html lang="sv-se">
 <head>
@@ -13,9 +29,6 @@
 </head>
 <body>
     <header>
-        @* <div class="logo container-fluid d-flex justify-content-center align-items-center" style="background-color:#E3EBEE">
-            <img src="~/images/FribergCarRental-logo.jpg" alt="logo" style="width: 150px; height:auto; padding-bottom:5px; padding-top:5px;" />
-        </div> *@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow" style="padding:0px">
             <div class="container-fluid" style="background-color:#E3EBEE">
               <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/FribergCarRental-logo.jpg" alt="logo" style="width: 75px; height:auto; margin:0.3em" /></a>
@@ -25,22 +38,8 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    @{
-                        var user = sessionHelper.GetUserSession();
-                        string bokningar = "Mina bokningar";
-                        string bilar = "Våra Bilar";
-
-                        if(user.Role == 0)
-                        {
-                            bokningar = "Bokningar";
-                            bilar = "Bilar";
-                        }
-
-                    }
+                    
                     <ul class="navbar-nav flex-grow-1">
-                        @* <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li> *@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Car" asp-action="Index">@bilar</a>
                         </li>
@@ -82,10 +81,6 @@
             </div>
         </nav>
     </header>
-    @{
-        var controllerName = ViewContext.RouteData.Values["controller"]?.ToString();
-        var actionName = ViewContext.RouteData.Values["action"]?.ToString(); 
-    }
     @if(controllerName == "Home" && actionName == "Index")
     {
         <div class="container-fluid p-0 m-0">
@@ -104,8 +99,8 @@
     }
 
     <footer class="border-top footer text-muted" style="background-color:#E3EBEE;">
-        <div class="container">
-            &copy; 2025 - FribergsCarRental - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="container d-flex justify-content-center">
+            &copy; 2025 - FribergsCarRental - All Rights Reserved
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
