@@ -26,7 +26,7 @@ namespace FribergsCarRental.Controllers
 
             var user = GetUserSession();
 
-            if(user.Role == 0)
+            if (user.Role == 0)
             {
                 return View("IndexAdmin", carRepository.GetAll());
             }
@@ -34,6 +34,7 @@ namespace FribergsCarRental.Controllers
             {
                 return View(carRepository.GetAll());
             }
+
         }
 
         // GET: CarController/Details/5
@@ -57,7 +58,7 @@ namespace FribergsCarRental.Controllers
         {
             try
             {
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     carRepository.Add(car);
                 }
@@ -83,7 +84,7 @@ namespace FribergsCarRental.Controllers
         {
             try
             {
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     carRepository.Update(car);
                 }
@@ -100,20 +101,7 @@ namespace FribergsCarRental.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var car = carRepository.GetById(id);
-            //nullcheck?
-            //if(car.Bookings.Any())
-            //{
-            //    foreach (var booking in car.Bookings)
-            //    {
-            //        if(booking.EndDate > DateTime.Now)
-            //        {
-            //            ModelState.AddModelError("", "Denna bil har kommande bokningar, får ej raderas!");
-            //            return View();  //Lägg till felmeddelande här
-            //        }
-            //    }
-            //}
-            return View(car);
+            return View(carRepository.GetById(id));
         }
 
         // POST: CarController/Delete/5
@@ -152,7 +140,7 @@ namespace FribergsCarRental.Controllers
 
             var user = GetUserSession();
 
-            if(user.Role == 1)
+            if (user.Role == 1)
             {
                 return RedirectToAction("Create", "Booking");
             }
@@ -176,7 +164,7 @@ namespace FribergsCarRental.Controllers
             return RedirectToAction("Index");
         }
 
-        public (int? Role,int? Id) GetUserSession()
+        public (int? Role, int? Id) GetUserSession()
         {
             return sessionHelper.GetUserSession();
         }

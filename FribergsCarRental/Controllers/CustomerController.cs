@@ -39,21 +39,13 @@ namespace FribergsCarRental.Controllers
                 UserRole = new UserRole { Role = (Role.Customer) }
             };
 
-            ViewBag.User = "Null"; //behöver denna deklareras här???
             var user = GetUserSession();
 
             if (user.Role == 0)
             {
                 ViewBag.User = "Admin";
             }
-            //if (sessionHelper.GetCarSession() == null)
-            //{
-            //    return View(customer);
-            //}
-            //else
-            //{
-            //    return PartialView(customer);
-            //}
+
             return View(customer);
         }
 
@@ -141,16 +133,7 @@ namespace FribergsCarRental.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            //if(sessionHelper.GetCarSession() == null)
-            //{
-            //    return View();
-            //}
-            //else
-            //{
-            //    return PartialView();
-            //}
             return View();
-
         }
 
         [HttpPost]

@@ -36,23 +36,17 @@ namespace FribergsCarRental.Controllers
                     ViewBag.ErrorMsg = "Det finns inga bokningar";                  
                     return View(bookingRepository.GetAll());
                 }
-                else //if (role == 1)
+                else
                 {
                     ViewBag.User = "Customer";
+                    ViewBag.ErrorMsg = "Du har inga bokningar.";
                     var customer = customerRepository.GetByIdBookings(userId.Value);
-                    if(customer.Bookings != null && customer.Bookings.Any())
-                    {
-                        return View(customer.Bookings);
-                    }
-                    else
-                    {
-                        ViewBag.ErrorMsg = "Du har inga bokningar.";
-                        return View(customer.Bookings);
-                    }
+                    return View(customer.Bookings);
                 }
             }
-            ViewBag.ErrorMsg = "Något gick fel, försök igen!";
-            return View(new List<Booking>()); //Måste jag skicka en tom lista
+            //ViewBag.ErrorMsg = "Något gick fel, försök igen!";
+            //return View(new List<Booking>()); //Måste jag skicka en tom lista
+            return RedirectToAction("ErrorPage", "Home");
         }
 
         [HttpPost]
@@ -83,8 +77,9 @@ namespace FribergsCarRental.Controllers
 
             if(carId == null || userId == null || role != 1)
             {
-                ModelState.AddModelError("", "Något gick fel, försök igen.");
-                return View(); //Lägg till Modelstate eller annan felhantering
+                //ModelState.AddModelError("", "Något gick fel, försök igen.");
+                //ViewBag.ErrorMsg = "Något gick fel, försök igen.";
+                return RedirectToAction("ErrorPage", "Home");
             }
 
             var booking = new Booking

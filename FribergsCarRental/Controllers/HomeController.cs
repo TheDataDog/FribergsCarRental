@@ -24,10 +24,11 @@ namespace FribergsCarRental.Controllers
             return View(carRepository.GetAll());
         }
 
-        public IActionResult Privacy()
+        public IActionResult ErrorPage()
         {
             return View();
         }
+
 
         public IActionResult Conditions()
         {
