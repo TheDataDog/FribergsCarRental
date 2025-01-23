@@ -11,47 +11,45 @@ namespace FribergsCarRental.Data
         {
             this.context = context;
         }
-        public Customer Add(Customer customer)
+        public async Task<Customer> AddAsync(Customer customer)
         {
-            context.Customers.Add(customer);
-            context.SaveChanges();
+            await context.Customers.AddAsync(customer);
+            await context.SaveChangesAsync();
             return customer;
         }
 
-        public void Delete(Customer customer)
+        public async Task DeleteAsync(Customer customer)
         {
             context.Customers.Remove(customer);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public IEnumerable<Customer> GetAll()
+        public async Task<IEnumerable<Customer>> GetAllAsync()
         {
-            return context.Customers.OrderBy(c => c.LastName);
+            return await context.Customers.OrderBy(c => c.LastName).ToListAsync();
         }
 
-        public Customer GetByEmail(string email)
+        public async Task<Customer> GetByEmailAsync(string email)
         {
-            //return context.Customers.FirstOrDefault(c => c.Email == email);
-            return context.Customers.Include(c => c.UserRole).FirstOrDefault(c => c.Email == email);
+            return await context.Customers.Include(c => c.UserRole).FirstOrDefaultAsync(c => c.Email == email);
         }
 
-        public Customer GetById(int id)
+        public async Task<Customer> GetByIdAsync(int id)
         {
-            //return context.Customers.FirstOrDefault(c => c.CustomerId == id);
-            return context.Customers.Include(b=>b.Bookings).Include(c => c.Adress)
-                                    .Include(c => c.UserRole).FirstOrDefault(c => c.CustomerId == id);
+            return await context.Customers.Include(b=>b.Bookings).Include(c => c.Adress)
+                                    .Include(c => c.UserRole).FirstOrDefaultAsync(c => c.CustomerId == id);
         }
 
-        public Customer GetByIdBookings(int id)
+        public async Task<Customer> GetByIdIncludeBookingsAsync(int id)
         {
-            return context.Customers.Include(b => b.Bookings).ThenInclude(b => b.Car) //något fel med den här???
-                                    .FirstOrDefault(c => c.CustomerId == id);
+            return await context.Customers.Include(b => b.Bookings).ThenInclude(b => b.Car) //något fel med den här???
+                                    .FirstOrDefaultAsync(c => c.CustomerId == id);
         }
 
-        public void Update(Customer customer)
+        public async Task UpdateAsync(Customer customer)
         {
             context.Customers.Update(customer);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }

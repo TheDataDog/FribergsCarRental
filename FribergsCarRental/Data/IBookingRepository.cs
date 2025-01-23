@@ -4,10 +4,10 @@ namespace FribergsCarRental.Data
 {
     public interface IBookingRepository
     {
-        Booking Add(Booking booking);
-        void Delete(Booking booking);
-        IEnumerable<Booking> GetAll();
-        Booking GetById(int id);
-        void Update(Booking booking);
+        Task<Booking> AddAsync(Booking booking);
+        Task DeleteAsync(Booking booking);
+        Task<IEnumerable<Booking>> GetAllAsync();
+        Task<Booking> GetByIdAsync(int id);
+        Task UpdateAsync(Booking booking);
     }
 }

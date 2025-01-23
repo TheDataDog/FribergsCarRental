@@ -25,14 +25,14 @@ namespace FribergsCarRental.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(LoginViewModel model)
+        public async Task<ActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View("Index", model);
             }
 
-            var admin = adminRepository.GetByEmail(model.Email);
+            var admin = await adminRepository.GetByEmailAsync(model.Email);
             if(admin == null || admin.Password != model.Password)
             {
                 ModelState.AddModelError("", "Fel email eller lösenord");

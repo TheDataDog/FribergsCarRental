@@ -18,16 +18,16 @@ namespace FribergsCarRental.Controllers
         }
         // GET: CustomerController
         [HttpGet]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View(customerRepository.GetAll());
+            return View(await customerRepository.GetAllAsync());
         }
 
         // GET: CustomerController/Details/5
         [HttpGet]
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View(customerRepository.GetById(id));
+            return View(await customerRepository.GetByIdAsync(id));
         }
 
         // GET: CustomerController/Create
@@ -52,7 +52,7 @@ namespace FribergsCarRental.Controllers
         // POST: CustomerController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Customer customer)
+        public async Task<ActionResult> Create(Customer customer)
         {
             var user = GetUserSession();
 
@@ -60,7 +60,7 @@ namespace FribergsCarRental.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var addedCustomer = customerRepository.Add(customer);
+                    var addedCustomer = await customerRepository.AddAsync(customer);
                     if (user.Role == null)
                     {
                         SetUserSession(addedCustomer.UserRole.Role, addedCustomer.CustomerId);
@@ -83,21 +83,21 @@ namespace FribergsCarRental.Controllers
 
         // GET: CustomerController/Edit/5
         [HttpGet]
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View(customerRepository.GetById(id));
+            return View(await customerRepository.GetByIdAsync(id));
         }
 
         // POST: CustomerController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Customer customer)
+        public async Task<ActionResult> Edit(Customer customer)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    customerRepository.Update(customer);
+                    await customerRepository.UpdateAsync(customer);
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -109,19 +109,19 @@ namespace FribergsCarRental.Controllers
 
         // GET: CustomerController/Delete/5
         [HttpGet]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View(customerRepository.GetById(id));
+            return View(await customerRepository.GetByIdAsync(id));
         }
 
         // POST: CustomerController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Customer customer)
+        public async Task<ActionResult> Delete(Customer customer)
         {
             try
             {
-                customerRepository.Delete(customer);
+                await customerRepository.DeleteAsync(customer);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -137,13 +137,13 @@ namespace FribergsCarRental.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(LoginViewModel model)
+        public async Task<ActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            var customer = customerRepository.GetByEmail(model.Email);
+            var customer = await customerRepository.GetByEmailAsync(model.Email);
             if (customer == null || customer.Password != model.Password)
             {
                 ModelState.AddModelError("", "Fel email eller lösenord");

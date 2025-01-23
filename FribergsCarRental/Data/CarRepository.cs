@@ -11,37 +11,37 @@ namespace FribergsCarRental.Data
         {
             this.context = context;
         }
-        public void Add(Car car)
+        public async Task AddAsync(Car car)
         {
-            context.Cars.Add(car);
-            context.SaveChanges();
+            await context.Cars.AddAsync(car);
+            await context.SaveChangesAsync();
         }
 
-        public void Delete(Car car)
+        public async Task DeleteAsync(Car car)
         {
             context.Cars.Remove(car);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public IEnumerable<Car> GetAll()
+        public async Task<IEnumerable<Car>> GetAllAsync()
         {
-            return context.Cars.OrderBy(c => c.Brand);
+            return await context.Cars.OrderBy(c => c.Brand).ToListAsync();
         }
 
-        public IEnumerable<Car> GetAllActive()
+        public async Task<IEnumerable<Car>> GetAllActiveAsync()
         {
-            return context.Cars.Where(c => c.IsActive == true).OrderBy(c => c.Brand);
+            return await context.Cars.Where(c => c.IsActive == true).OrderBy(c => c.Brand).ToListAsync();
         }
 
-        public Car GetById(int id)
+        public async Task<Car> GetByIdAsync(int id)
         {
-            return context.Cars.Include(c => c.Bookings).FirstOrDefault(c => c.CarId == id);
+            return await context.Cars.Include(c => c.Bookings).FirstOrDefaultAsync(c => c.CarId == id);
         }
 
-        public void Update(Car car)
+        public async Task UpdateAsync(Car car)
         {
             context.Cars.Update(car);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }

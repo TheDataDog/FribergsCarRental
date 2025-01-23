@@ -19,9 +19,9 @@ namespace FribergsCarRental.Controllers
             this.carRepository = carRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(carRepository.GetAllActive());
+            return View(await carRepository.GetAllActiveAsync());
         }
 
         public IActionResult ErrorPage()

@@ -25,7 +25,7 @@ namespace FribergsCarRental.Controllers
         }
         // GET: BookingController
         [HttpGet]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             var (role, userId) = sessionHelper.GetUserSession();
 
@@ -35,13 +35,13 @@ namespace FribergsCarRental.Controllers
                 {
                     ViewBag.User = "Admin";
                     ViewBag.ErrorMsg = "Det finns inga bokningar";
-                    return View(bookingRepository.GetAll());
+                    return View(await bookingRepository.GetAllAsync());
                 }
                 else
                 {
                     ViewBag.User = "Customer";
                     ViewBag.ErrorMsg = "Du har inga bokningar.";
-                    var customer = customerRepository.GetByIdBookings(userId.Value);
+                    var customer = await customerRepository.GetByIdIncludeBookingsAsync(userId.Value);
                     return View(customer.Bookings);
                 }
             }
@@ -49,22 +49,22 @@ namespace FribergsCarRental.Controllers
         }
 
         [HttpPost]
-        public ActionResult ChangeStatus(int bookingId, string newStatus)
+        public async Task<ActionResult> ChangeStatus(int bookingId, string newStatus)
         {
-            var booking = bookingRepository.GetById(bookingId);
+            var booking = await bookingRepository.GetByIdAsync(bookingId);
             if (booking != null)
             {
                 booking.Status = Enum.Parse<Status>(newStatus);
-                bookingRepository.Update(booking);
+                await bookingRepository.UpdateAsync(booking);
             }
             return RedirectToAction("Index");
         }
 
         // GET: BookingController/Details/5
         [HttpGet]
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View(bookingRepository.GetById(id));
+            return View(await bookingRepository.GetByIdAsync(id));
         }
 
         // GET: BookingController/Create
@@ -99,7 +99,7 @@ namespace FribergsCarRental.Controllers
         // POST: BookingController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(BookingViewModel bookingVM)
+        public async Task<ActionResult> Create(BookingViewModel bookingVM)
         {
 
             if (bookingVM.Booking.StartDate >= bookingVM.Booking.EndDate)
@@ -107,7 +107,7 @@ namespace FribergsCarRental.Controllers
                 ViewBag.ErrorMsg = "Slutdatum får inte vara tidigare eller samma dag som startdatum";
                 return View(bookingVM);
             }
-            var car = carRepository.GetById(bookingVM.Booking.CarId);
+            var car = await carRepository.GetByIdAsync(bookingVM.Booking.CarId);
 
             if (car.Bookings != null && car.Bookings.Any())
             {
@@ -119,13 +119,13 @@ namespace FribergsCarRental.Controllers
                 }
             }
 
-            bookingVM.Booking.TotalCost = SetTotalCost(bookingVM.Booking);
+            bookingVM.Booking.TotalCost = await SetTotalCostAsync(bookingVM.Booking);
 
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var confirmBooking = bookingRepository.Add(bookingVM.Booking);
+                    var confirmBooking = await bookingRepository.AddAsync(bookingVM.Booking);
                     return RedirectToAction(nameof(BookingConfirmation), new { id = confirmBooking.BookingId });
 
                 }
@@ -140,9 +140,9 @@ namespace FribergsCarRental.Controllers
         }
 
         [HttpGet]
-        public ActionResult BookingConfirmation(int id)
+        public async Task<ActionResult> BookingConfirmation(int id)
         {
-            return View(bookingRepository.GetById(id));
+            return View(await bookingRepository.GetByIdAsync(id));
         }
 
         // GET: BookingController/Edit/5
@@ -170,9 +170,9 @@ namespace FribergsCarRental.Controllers
 
         // GET: BookingController/Delete/5
         [HttpGet]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            var booking = bookingRepository.GetById(id);
+            var booking = await bookingRepository.GetByIdAsync(id);
 
             if (booking.Status == Status.Upcoming)
             {
@@ -187,11 +187,11 @@ namespace FribergsCarRental.Controllers
         // POST: BookingController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Booking booking)
+        public async Task<ActionResult> Delete(Booking booking)
         {
             try
             {
-                bookingRepository.Delete(booking);
+                await bookingRepository.DeleteAsync(booking);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -215,9 +215,9 @@ namespace FribergsCarRental.Controllers
             return futureBookings;
         }
 
-        public int SetTotalCost(Booking booking)
+        public async Task<int> SetTotalCostAsync(Booking booking)
         {
-            var car = carRepository.GetById(booking.CarId);
+            var car = await carRepository.GetByIdAsync(booking.CarId);
             int days = (booking.EndDate - booking.StartDate).Days;
 
             return car.DailyCost * days;

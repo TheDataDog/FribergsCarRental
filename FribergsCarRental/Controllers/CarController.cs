@@ -17,7 +17,7 @@ namespace FribergsCarRental.Controllers
         }
         // GET: CarController
         [HttpGet]
-        public ActionResult Index(string returnUrl)
+        public async Task<ActionResult> Index(string returnUrl)
         {
             if (!string.IsNullOrEmpty(returnUrl))
             {
@@ -28,20 +28,20 @@ namespace FribergsCarRental.Controllers
 
             if (user.Role == 0)
             {
-                return View("IndexAdmin", carRepository.GetAll());
+                return View("IndexAdmin", await carRepository.GetAllAsync());
             }
             else
             {
-                return View(carRepository.GetAllActive());
+                return View(await carRepository.GetAllActiveAsync());
             }
 
         }
 
         // GET: CarController/Details/5
         [HttpGet]
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View(carRepository.GetById(id));
+            return View(await carRepository.GetByIdAsync(id));
         }
 
         // GET: CarController/Create
@@ -54,13 +54,13 @@ namespace FribergsCarRental.Controllers
         // POST: CarController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Car car)
+        public async Task<ActionResult> Create(Car car)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    carRepository.Add(car);
+                    await carRepository.AddAsync(car);
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -72,21 +72,21 @@ namespace FribergsCarRental.Controllers
 
         // GET: CarController/Edit/5
         [HttpGet]
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View(carRepository.GetById(id));
+            return View(await carRepository.GetByIdAsync(id));
         }
 
         // POST: CarController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Car car)
+        public async Task<ActionResult> Edit(Car car)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    carRepository.Update(car);
+                    await carRepository.UpdateAsync(car);
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -99,17 +99,17 @@ namespace FribergsCarRental.Controllers
 
         // GET: CarController/Delete/5
         [HttpGet]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View(carRepository.GetById(id));
+            return View(await carRepository.GetByIdAsync(id));
         }
 
         // POST: CarController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Car car)
+        public async Task<ActionResult> Delete(Car car)
         {
-            var actualCar = carRepository.GetById(car.CarId);
+            var actualCar = await carRepository.GetByIdAsync(car.CarId);
             if (actualCar.Bookings != null && actualCar.Bookings.Any())
             {
                 foreach (var booking in actualCar.Bookings)
@@ -128,7 +128,7 @@ namespace FribergsCarRental.Controllers
             }
             try
             {
-                carRepository.Delete(actualCar);
+                await carRepository.DeleteAsync(actualCar);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -156,10 +156,10 @@ namespace FribergsCarRental.Controllers
         }
 
         [HttpGet]
-        public ActionResult ShowCar(int id)
+        public async Task<ActionResult> ShowCar(int id)
         {
             ViewBag.ReturnUrl = Request.Headers["Referer"].ToString();
-            return View(carRepository.GetById(id));
+            return View(await carRepository.GetByIdAsync(id));
         }
 
         [HttpGet]

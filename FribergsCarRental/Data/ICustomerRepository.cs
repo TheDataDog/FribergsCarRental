@@ -4,12 +4,12 @@ namespace FribergsCarRental.Data
 {
     public interface ICustomerRepository
     {
-        Customer Add(Customer customer);
-        void Update(Customer customer);
-        void Delete(Customer customer);
-        Customer GetById(int id);
-        IEnumerable<Customer> GetAll();
-        Customer GetByEmail(string email);
-        Customer GetByIdBookings(int id);
+        Task<Customer> AddAsync(Customer customer);
+        Task UpdateAsync(Customer customer);
+        Task DeleteAsync(Customer customer);
+        Task<Customer> GetByIdAsync(int id);
+        Task<IEnumerable<Customer>> GetAllAsync();
+        Task<Customer> GetByEmailAsync(string email);
+        Task<Customer> GetByIdIncludeBookingsAsync(int id);
     }
 }

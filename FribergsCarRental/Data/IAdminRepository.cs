@@ -4,8 +4,8 @@ namespace FribergsCarRental.Data
 {
     public interface IAdminRepository
     {
-        void Add(Admin admin);
-        Admin GetById(int id);
-        Admin GetByEmail(string email);
+        Task AddAsync(Admin admin);
+        Task<Admin> GetByIdAsync(int id);
+        Task<Admin> GetByEmailAsync(string email);
     }
 }

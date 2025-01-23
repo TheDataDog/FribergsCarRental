@@ -11,36 +11,36 @@ namespace FribergsCarRental.Data
         {
             this.context = context;
         }
-        public Booking Add(Booking booking)
+        public async Task<Booking> AddAsync(Booking booking)
         {
-            context.Bookings.Add(booking);
-            context.SaveChanges();
+            await context.Bookings.AddAsync(booking);
+            await context.SaveChangesAsync();
             return booking;
         }
 
-        public void Delete(Booking booking)
+        public async Task DeleteAsync(Booking booking)
         {
             context.Bookings.Remove(booking);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public IEnumerable<Booking> GetAll()
+        public async Task<IEnumerable<Booking>> GetAllAsync()
         {
-            return context.Bookings.Include(b => b.Car)
+            return await context.Bookings.Include(b => b.Car)
                                    .Include(b => b.Customer)
-                                   .OrderByDescending(b => b.StartDate);
+                                   .OrderByDescending(b => b.StartDate).ToListAsync();
         }
 
-        public Booking GetById(int id)
+        public async Task<Booking> GetByIdAsync(int id)
         {
-            return context.Bookings.Include(b => b.Car)
+            return await context.Bookings.Include(b => b.Car)
                                    .Include(b => b.Customer)
-                                   .FirstOrDefault(b => b.BookingId == id);
+                                   .FirstOrDefaultAsync(b => b.BookingId == id);
         }
-        public void Update(Booking booking)
+        public async Task UpdateAsync(Booking booking)
         {
             context.Bookings.Update(booking);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }

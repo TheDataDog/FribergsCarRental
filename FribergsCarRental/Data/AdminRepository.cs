@@ -11,22 +11,21 @@ namespace FribergsCarRental.Data
         {
             this.context = context;
         }
-        public void Add(Admin admin)
+        public async Task AddAsync(Admin admin)
         {
-            context.Admins.Add(admin);
-            context.SaveChanges();
+            await context.Admins.AddAsync(admin);
+            await context.SaveChangesAsync();
         }
 
-        public Admin GetByEmail(string email)
+        public async Task<Admin> GetByEmailAsync(string email)
         {
-            //return context.Admins.Include(a => a.UserRole).FirstOrDefault(a => a.Email == email);
-            return context.Admins.Include(a => a.UserRole)
-                                 .FirstOrDefault(a => a.Email == email);
+            return await context.Admins.Include(a => a.UserRole)
+                                 .FirstOrDefaultAsync(a => a.Email == email);
         }
 
-        public Admin GetById(int id)
+        public async Task<Admin> GetByIdAsync(int id)
         {
-            return context.Admins.FirstOrDefault(a => a.AdminId == id);
+            return await context.Admins.FirstOrDefaultAsync(a => a.AdminId == id);
         }
     }
 }

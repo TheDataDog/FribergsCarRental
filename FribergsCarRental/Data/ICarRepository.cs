@@ -4,11 +4,11 @@ namespace FribergsCarRental.Data
 {
     public interface ICarRepository
     {
-        void Add(Car car);
-        void Update(Car car);
-        void Delete(Car car);
-        Car GetById(int id);
-        IEnumerable<Car> GetAll();
-        IEnumerable<Car> GetAllActive();
+        Task AddAsync(Car car);
+        Task UpdateAsync(Car car);
+        Task DeleteAsync(Car car);
+        Task<Car> GetByIdAsync(int id);
+        Task<IEnumerable<Car>> GetAllAsync();
+        Task<IEnumerable<Car>> GetAllActiveAsync();
     }
 }
