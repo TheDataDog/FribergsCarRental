@@ -117,12 +117,12 @@ namespace FribergsCarRental.Controllers
                     if (booking.Status == Status.Upcoming || booking.Status == Status.Ongoing)
                     {
                         ViewBag.ErrorMsg = "Denna bil har kommande eller pågående bokningar, får ej raderas!";
-                        return View();
+                        return View(actualCar);
                     }
                     else
                     {
                         ViewBag.ErrorMsg = "Denna bil har tidigare bokningar och får ej raderas, gå till editera för att deaktivera bilen.";
-                        return View();
+                        return View(actualCar);
                     }
                 }
             }

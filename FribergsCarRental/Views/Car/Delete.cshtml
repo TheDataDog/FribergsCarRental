@@ -4,12 +4,12 @@
     ViewData["Title"] = "Delete";
 }
 
-@if (ViewBag.ErrorMsg != null)
+@* @if (ViewBag.ErrorMsg != null)
 {
     <div class="alert alert-danger">
         <p>@ViewBag.ErrorMsg</p>
     </div>
-}
+} *@
 
 <h1>Ta bort</h1>
 
@@ -73,3 +73,26 @@
         <a asp-action="Index">Tillbaka</a>
     </form>
 </div>
+<div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="errorToast">
+    <div class="toast-body">
+        @ViewBag.ErrorMsg
+        <div class="mt-2 pt-2 border-top">
+            <a asp-action="Index" class="btn btn-primary">Editera</a>
+            <a asp-action="Edit" asp-route-id="@Model.CarId" class="btn btn-primary">Editera</a>
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">Stäng</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var errorMsg = '@ViewBag.ErrorMsg';
+            if (errorMsg) {
+                var toastElement = document.getElementById('errorToast');
+                var toast = new bootstrap.Toast(toastElement);
+                toast.show();
+            }
+        });
+    </script>
+}
