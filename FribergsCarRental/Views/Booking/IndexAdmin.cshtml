@@ -1,6 +1,6 @@
 ﻿@model FribergsCarRental.ViewModels.BookingsDisplayViewModel
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "IndexAdmin";
 }
 
 <div class="container mt-5">
@@ -17,7 +17,7 @@
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="completed-tab" data-bs-toggle="tab" data-bs-target="#completed" type="button" role="tab" aria-controls="completed" aria-selected="false">
-                Avslutad
+                Avslutade
             </button>
         </li>
     </ul>
@@ -29,6 +29,12 @@
                 <table class="table mb-2 mt-2">
                     <thead>
                         <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Booking.Customer.FirstName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Booking.Customer.LastName)
+                            </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Booking.Car.Brand)
                             </th>
@@ -51,6 +57,13 @@
                         {
                             <tr>
                                 <td>
+                                    @Html.DisplayFor(modelItem => item.Customer.FirstName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Customer.LastName)
+                                </td>
+
+                                <td>
                                     @Html.DisplayFor(modelItem => item.Car.Brand)
                                 </td>
                                 <td>
@@ -67,7 +80,14 @@
                                 </td>
                                 <td>
                                     <div class="d-flex gap-2 align-items-center">
+                                        <form asp-action="ChangeStatus" method="post">
+                                            <input type="hidden" name="bookingId" value="@item.BookingId" />
+                                            <input type="hidden" name="newStatus" value="Completed" />
+                                            <button type="submit" class="btn btn-primary btn-sm">Avsluta bokning</button>
+                                        </form>
                                         <a asp-action="Details" asp-route-id="@item.BookingId" title="Detaljer"><i class="fa-solid fa-circle-info"></i></a>&nbsp;
+                                        <a asp-action="Delete" asp-route-id="@item.BookingId" title="Radera"><i class="fa-solid fa-trash"></i></a>
+
                                     </div>
                                 </td>
                             </tr>
@@ -87,6 +107,12 @@
                 <table class="table mb-2 mt-2">
                     <thead>
                         <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Booking.Customer.FirstName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Booking.Customer.LastName)
+                            </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Booking.Car.Brand)
                             </th>
@@ -108,6 +134,14 @@
                         @foreach (var item in Model.UpcomingBookings)
                         {
                             <tr>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Customer.FirstName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Customer.LastName)
+                                </td>
+
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Car.Brand)
                                 </td>
@@ -125,6 +159,11 @@
                                 </td>
                                 <td>
                                     <div class="d-flex gap-2 align-items-center">
+                                        <form asp-action="ChangeStatus" method="post">
+                                            <input type="hidden" name="bookingId" value="@item.BookingId" />
+                                            <input type="hidden" name="newStatus" value="Ongoing" />
+                                            <button type="submit" class="btn btn-success btn-sm">Lämna ut bil</button>
+                                        </form>
                                         <a asp-action="Details" asp-route-id="@item.BookingId" title="Detaljer"><i class="fa-solid fa-circle-info"></i></a>&nbsp;
                                         <a asp-action="Delete" asp-route-id="@item.BookingId" title="Radera"><i class="fa-solid fa-trash"></i></a>
 
@@ -148,6 +187,12 @@
                     <thead>
                         <tr>
                             <th>
+                                @Html.DisplayNameFor(model => model.Booking.Customer.FirstName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Booking.Customer.LastName)
+                            </th>
+                            <th>
                                 @Html.DisplayNameFor(model => model.Booking.Car.Brand)
                             </th>
                             <th>
@@ -168,6 +213,14 @@
                         @foreach (var item in Model.CompletedBookings)
                         {
                             <tr>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Customer.FirstName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Customer.LastName)
+                                </td>
+
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Car.Brand)
                                 </td>
@@ -186,6 +239,7 @@
                                 <td>
                                     <div class="d-flex gap-2 align-items-center">
                                         <a asp-action="Details" asp-route-id="@item.BookingId" title="Detaljer"><i class="fa-solid fa-circle-info"></i></a>&nbsp;
+                                        <a asp-action="Delete" asp-route-id="@item.BookingId" title="Radera"><i class="fa-solid fa-trash"></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -200,136 +254,4 @@
         </div>
     </div>
 </div>
-
-@* @model IEnumerable<FribergsCarRental.Models.Booking>
-
-@{
-    ViewData["Title"] = "Index";
-}
-
-<h1>Bokningar</h1>
-
-@if (Model != null && Model.Any())
-{
-    var upcomingBookings = Model.Where(b => b.Status == Status.Upcoming).ToList();
-    var ongoingBookings = Model.Where(b => b.Status == Status.Ongoing).ToList();
-    var completedBookings = Model.Where(b => b.Status == Status.Completed).ToList();
-
-    @for (int i = 0; i < 3; i++)
-    {
-        string th;
-        string buttonText = "";
-        string btn = "";
-        string newStatus = "";
-        List<FribergsCarRental.Models.Booking> bookinglist;
-        if (i == 0)
-        {
-            bookinglist = upcomingBookings;
-            th = "Kommande bokningar";
-            buttonText = "Lämna ut bil";
-            btn = "btn-success";
-            newStatus = "Ongoing";
-        }
-        else if (i == 1)
-        {
-            bookinglist = ongoingBookings;
-            th = "Pågående bokningar";
-            buttonText = "Avsluta bokning";
-            btn = "btn-primary";
-            newStatus = "Completed";
-        }
-        else
-        {
-            bookinglist = completedBookings;
-            th = "Avslutade bokningar";
-        }
-        <h3 class="table mt-5">@th</h3>
-        <table class="table mb-2 mt-2">
-            <thead>
-                <tr>
-                    @if (ViewBag.User == "Admin")
-                    {
-                        <th>
-                            @Html.DisplayNameFor(model => model.Customer.FirstName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Customer.LastName)
-                        </th>
-                    }
-                    <th>
-                        @Html.DisplayNameFor(model => model.Car.Brand)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Car.Model)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Car.YearModel)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.StartDate)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.EndDate)
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in bookinglist)
-                {
-                    <tr>
-                        @if (ViewBag.User == "Admin")
-                        {
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Customer.FirstName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Customer.LastName)
-                            </td>
-                        }
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Car.Brand)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Car.Model)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Car.YearModel)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.StartDate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.EndDate)
-                        </td>
-                        <td>
-                            <div class="d-flex gap-2 align-items-center">
-                                @if (bookinglist == upcomingBookings && ViewBag.User == "Admin" || bookinglist == ongoingBookings && ViewBag.User == "Admin")
-                                {
-                                    <form asp-action="ChangeStatus" method="post">
-                                        <input type="hidden" name="bookingId" value="@item.BookingId" />
-                                        <input type="hidden" name="newStatus" value="@newStatus" />
-                                        <button type="submit" class="btn @btn btn-sm">@buttonText</button>
-                                    </form>
-                                }
-                                <a asp-action="Details" asp-route-id="@item.BookingId" title="Detaljer"><i class="fa-solid fa-circle-info"></i></a>&nbsp;
-                                @if (bookinglist == upcomingBookings)
-                                {
-                                    <a asp-action="Delete" asp-route-id="@item.BookingId" title="Radera"><i class="fa-solid fa-trash"></i></a>
-                                }
-                            </div>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-
-    }
-}
-else
-{
-    <p>@ViewBag.ErrorMsg</p>
-}
- *@
-
-
 

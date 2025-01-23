@@ -33,16 +33,19 @@ namespace FribergsCarRental.Controllers
             {
                 if (role == 0)
                 {
-                    ViewBag.User = "Admin";
-                    ViewBag.ErrorMsg = "Det finns inga bokningar";
-                    return View(await bookingRepository.GetAllAsync());
+                    var bookings = await bookingRepository.GetAllAsync();
+                    BookingsDisplayViewModel bookingDisplayVM = GroupBookings(bookings);
+                    //ViewBag.User = "Admin";
+                    //ViewBag.ErrorMsg = "Det finns inga bokningar";
+                    return View("IndexAdmin", bookingDisplayVM);
                 }
                 else
                 {
-                    ViewBag.User = "Customer";
-                    ViewBag.ErrorMsg = "Du har inga bokningar.";
+                    //ViewBag.User = "Customer";
+                    //ViewBag.ErrorMsg = "Du har inga bokningar.";
                     var customer = await customerRepository.GetByIdIncludeBookingsAsync(userId.Value);
-                    return View(customer.Bookings);
+                    BookingsDisplayViewModel bookingDisplayVM = GroupBookings(customer.Bookings); //nullcheck här!!!
+                    return View(bookingDisplayVM);
                 }
             }
             return RedirectToAction("ErrorPage", "Home");
@@ -213,6 +216,23 @@ namespace FribergsCarRental.Controllers
         {
             List<Booking> futureBookings = bookings.Where(b => b.Status == Status.Upcoming || b.Status == Status.Ongoing).ToList();
             return futureBookings;
+        }
+
+        public BookingsDisplayViewModel GroupBookings(IEnumerable<Booking> bookings)
+        {
+            var ongoing = bookings.Where(b => b.Status == Status.Ongoing).ToList();
+            var completed = bookings.Where(b => b.Status == Status.Completed).ToList();
+            var upcoming = bookings.Where(b => b.Status == Status.Upcoming).ToList();
+
+            var bookingDisplayVM = new BookingsDisplayViewModel
+            {
+                OngoingBookings = ongoing,
+                CompletedBookings = completed,
+                UpcomingBookings = upcoming
+
+            };
+            return bookingDisplayVM;
+
         }
 
         public async Task<int> SetTotalCostAsync(Booking booking)
