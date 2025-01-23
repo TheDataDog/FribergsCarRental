@@ -45,8 +45,6 @@ namespace FribergsCarRental.Controllers
                     return View(customer.Bookings);
                 }
             }
-            //ViewBag.ErrorMsg = "Något gick fel, försök igen!";
-            //return View(new List<Booking>()); //Måste jag skicka en tom lista
             return RedirectToAction("ErrorPage", "Home");
         }
 
@@ -78,8 +76,6 @@ namespace FribergsCarRental.Controllers
 
             if (carId == null || userId == null || role != 1)
             {
-                //ModelState.AddModelError("", "Något gick fel, försök igen.");
-                //ViewBag.ErrorMsg = "Något gick fel, försök igen.";
                 return RedirectToAction("ErrorPage", "Home");
             }
 
@@ -133,7 +129,8 @@ namespace FribergsCarRental.Controllers
                     return RedirectToAction(nameof(BookingConfirmation), new { id = confirmBooking.BookingId });
 
                 }
-                return View(); //felmeddelande här?
+                ViewBag.ErrorMsg = "Något gick fel, försök igen.";
+                return View(bookingVM);
             }
             catch
             {
