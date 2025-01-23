@@ -1,5 +1,6 @@
 ﻿using FribergsCarRental.Data;
 using FribergsCarRental.Models;
+using FribergsCarRental.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,7 +16,7 @@ namespace FribergsCarRental.Controllers
         private readonly ICustomerRepository customerRepository;
 
         public BookingController(IBookingRepository bookingRepository, SessionHelper sessionHelper
-                                 ,ICarRepository carRepository, ICustomerRepository customerRepository)
+                                 , ICarRepository carRepository, ICustomerRepository customerRepository)
         {
             this.bookingRepository = bookingRepository;
             this.sessionHelper = sessionHelper;
@@ -28,12 +29,12 @@ namespace FribergsCarRental.Controllers
         {
             var (role, userId) = sessionHelper.GetUserSession();
 
-            if(role != null && userId != null)
+            if (role != null && userId != null)
             {
                 if (role == 0)
                 {
                     ViewBag.User = "Admin";
-                    ViewBag.ErrorMsg = "Det finns inga bokningar";                  
+                    ViewBag.ErrorMsg = "Det finns inga bokningar";
                     return View(bookingRepository.GetAll());
                 }
                 else
@@ -75,55 +76,60 @@ namespace FribergsCarRental.Controllers
             var carId = sessionHelper.GetCarSession();
             var (role, userId) = sessionHelper.GetUserSession();
 
-            if(carId == null || userId == null || role != 1)
+            if (carId == null || userId == null || role != 1)
             {
                 //ModelState.AddModelError("", "Något gick fel, försök igen.");
                 //ViewBag.ErrorMsg = "Något gick fel, försök igen.";
                 return RedirectToAction("ErrorPage", "Home");
             }
 
-            var booking = new Booking
+            var bookingVM = new BookingViewModel
             {
-                CarId = (int)carId,
-                CustomerId = (int)userId,
-                StartDate = DateTime.Now,
-                EndDate = DateTime.Now,
-                TotalCost = 0
+                Booking = new Booking
+                {
+                    CarId = (int)carId,
+                    CustomerId = (int)userId,
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now,
+                    TotalCost = 0
+                },
+                FutureBookings = new List<Booking>()
+                
             };
 
-            return View(booking);
+            return View(bookingVM);
         }
 
         // POST: BookingController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Booking booking)
+        public ActionResult Create(BookingViewModel bookingVM)
         {
 
-            if(booking.StartDate >= booking.EndDate)
+            if (bookingVM.Booking.StartDate >= bookingVM.Booking.EndDate)
             {
-                ModelState.AddModelError("", "Slutdatum får inte vara tidigare eller samma dag som startdatum");
-                return View();
+                ViewBag.ErrorMsg = "Slutdatum får inte vara tidigare eller samma dag som startdatum";
+                return View(bookingVM);
             }
-            var car = carRepository.GetById(booking.CarId);
-            
-            if(car.Bookings != null && car.Bookings.Any())
+            var car = carRepository.GetById(bookingVM.Booking.CarId);
+
+            if (car.Bookings != null && car.Bookings.Any())
             {
-                //bool hasOverlappingBooking = HasOverlappingBooking(car.Bookings, booking.StartDate, booking.EndDate);
-                if(HasOverlappingBooking(car.Bookings, booking.StartDate, booking.EndDate))
+                if (HasOverlappingBooking(car.Bookings, bookingVM.Booking.StartDate, bookingVM.Booking.EndDate))
                 {
-                    ModelState.AddModelError("", "Vald bil är inte ledig under valda datum");
-                    return View();
+                    ViewBag.ErrorMsg = "Vald bil är bokad följande datum";
+                    bookingVM.FutureBookings = GetFutureBookings(car.Bookings);
+                    return View(bookingVM);
                 }
             }
 
-            booking.TotalCost = SetTotalCost(booking);
+            bookingVM.Booking.TotalCost = SetTotalCost(bookingVM.Booking);
 
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var confirmBooking = bookingRepository.Add(booking);
+                    var confirmBooking = bookingRepository.Add(bookingVM.Booking);
                     return RedirectToAction(nameof(BookingConfirmation), new { id = confirmBooking.BookingId });
 
                 }
@@ -171,7 +177,7 @@ namespace FribergsCarRental.Controllers
         {
             var booking = bookingRepository.GetById(id);
 
-            if(booking.Status == Status.Upcoming)
+            if (booking.Status == Status.Upcoming)
             {
                 return View(booking);
             }
@@ -204,6 +210,12 @@ namespace FribergsCarRental.Controllers
             (newStartDate >= b.StartDate && newStartDate <= b.EndDate) ||
             (newEndDate >= b.StartDate && newEndDate <= b.EndDate) ||
             (newStartDate <= b.StartDate && newEndDate >= b.EndDate));
+        }
+
+        public List<Booking> GetFutureBookings(List<Booking> bookings)
+        {
+            List<Booking> futureBookings = bookings.Where(b => b.Status == Status.Upcoming || b.Status == Status.Ongoing).ToList();
+            return futureBookings;
         }
 
         public int SetTotalCost(Booking booking)

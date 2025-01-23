@@ -1,24 +1,23 @@
-﻿@model FribergsCarRental.Models.Booking
+﻿@model FribergsCarRental.ViewModels.BookingViewModel
 
 @{
     ViewData["Title"] = "Create";
 }
-@* @if (ViewData.ModelState.ContainsKey("") && ViewData.ModelState[""].Errors.Any())
+
+@if (ViewBag.ErrorMsg != null)
 {
     <div class="alert alert-danger">
-        @foreach (var error in ViewData.ModelState[""].Errors)
-        {
-            <p>@error.ErrorMessage</p>
-        }
+        <p>@ViewBag.ErrorMsg</p>
     </div>
-} *@
-@if(ViewBag.ErrorMsg != null)
-{
-    <div class="alert alert-danger">
-        {
-            <p>@ViewBag.ErrorMsg</p>
-        }
-    </div>
+    @if (Model.FutureBookings != null && Model.FutureBookings.Any())
+    {
+        <div class="alert alert-danger">
+            @foreach (var booking in Model.FutureBookings)
+            {
+                <p>@booking.StartDate.ToString("yyyy-MM-dd") - @booking.EndDate.ToString("yyyy-MM-dd")</p>
+            }
+        </div>
+    }
 }
 
 <h1>Boka bil</h1>
@@ -31,7 +30,7 @@
             <div class="form-group">
                 @* <label asp-for="CustomerId" class="control-label"></label> *@
                 @* <select asp-for="CustomerId" class ="form-control" asp-items="ViewBag.CustomerId"></select> *@
-                <input type="hidden" asp-for="CustomerId" />
+                <input type="hidden" asp-for="Booking.CustomerId" />
                 @* @Html.HiddenFor(m => m.Car.CarId)
                 @Html.HiddenFor(m => m.Car.Brand)
                 @Html.HiddenFor(m => m.Car.Model)
@@ -56,21 +55,21 @@
             <div class="form-group">
                 @* <label asp-for="CarId" class="control-label"></label> *@
                 @* <select asp-for="CarId" class ="form-control" asp-items="ViewBag.CarId"></select> *@
-                <input type="hidden" asp-for="CarId" />
+                <input type="hidden" asp-for="Booking.CarId" />
             </div>
             <div class="form-group">
-                <label asp-for="StartDate" class="control-label"></label>
-                <input type="date" asp-for="StartDate" class="form-control" value="@(Model?.StartDate.ToString("yyyy-MM-dd") ?? "")" />
-                <span asp-validation-for="StartDate" class="text-danger"></span>
+                <label asp-for="Booking.StartDate" class="control-label"></label>
+                <input type="date" asp-for="Booking.StartDate" class="form-control" value="@(Model?.Booking.StartDate.ToString("yyyy-MM-dd") ?? "")" />
+                <span asp-validation-for="Booking.StartDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EndDate" class="control-label"></label>
-                <input type="date" asp-for="EndDate" class="form-control" value="@(Model?.EndDate.ToString("yyyy-MM-dd") ?? "")"  />
-                <span asp-validation-for="EndDate" class="text-danger"></span>
+                <label asp-for="Booking.EndDate" class="control-label"></label>
+                <input type="date" asp-for="Booking.EndDate" class="form-control" value="@(Model?.Booking.EndDate.ToString("yyyy-MM-dd") ?? "")" />
+                <span asp-validation-for="Booking.EndDate" class="text-danger"></span>
             </div>
             <div class="form-group mb-2">
                 @* <label asp-for="TotalCost" class="control-label"></label> *@
-                <input type="hidden" asp-for="TotalCost"/>
+                <input type="hidden" asp-for="Booking.TotalCost" />
                 @* <span asp-validation-for="TotalCost" class="text-danger"></span> *@
             </div>
             <div class="form-group">
@@ -82,7 +81,9 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker/dist/locales/bootstrap-datepicker.sv.min.js"></script>
     <script>

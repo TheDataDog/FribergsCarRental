@@ -133,7 +133,7 @@ namespace FribergsCarRental.Controllers
             }
             catch
             {
-                ModelState.AddModelError("", "Ett fel inträffade vid borttagning av bilen.");
+                ViewBag.ErrorMsg = "Ett fel inträffade vid borttagning av bilen.";
                 return View();
             }
         }
