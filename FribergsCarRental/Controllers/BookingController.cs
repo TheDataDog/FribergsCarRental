@@ -44,7 +44,7 @@ namespace FribergsCarRental.Controllers
                     //ViewBag.User = "Customer";
                     //ViewBag.ErrorMsg = "Du har inga bokningar.";
                     var customer = await customerRepository.GetByIdIncludeBookingsAsync(userId.Value);
-                    BookingsDisplayViewModel bookingDisplayVM = GroupBookings(customer.Bookings); //nullcheck här!!!
+                    BookingsDisplayViewModel bookingDisplayVM = GroupBookings(customer.Bookings);
                     return View(bookingDisplayVM);
                 }
             }
