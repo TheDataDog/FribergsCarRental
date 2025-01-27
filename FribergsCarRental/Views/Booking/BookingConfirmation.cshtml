@@ -35,6 +35,12 @@
             @Html.DisplayFor(model => model.Customer.FirstName)
             @Html.DisplayFor(model => model.Customer.LastName)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Customer.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Customer.Email)
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Car)
         </dt>
@@ -46,5 +52,5 @@
     </dl>
 </div>
 <div>
-    <p>Om du har frågor om din bokning, tveka inte att<a asp-controller="Home" asp-action="Contact">kontakta oss</a>.</p>
+    <p>Om du har frågor om din bokning, tveka inte att <a asp-controller="Home" asp-action="Contact">kontakta oss</a>.</p>
 </div>

@@ -35,14 +35,10 @@ namespace FribergsCarRental.Controllers
                 {
                     var bookings = await bookingRepository.GetAllAsync();
                     BookingsDisplayViewModel bookingDisplayVM = GroupBookings(bookings);
-                    //ViewBag.User = "Admin";
-                    //ViewBag.ErrorMsg = "Det finns inga bokningar";
                     return View("IndexAdmin", bookingDisplayVM);
                 }
                 else
                 {
-                    //ViewBag.User = "Customer";
-                    //ViewBag.ErrorMsg = "Du har inga bokningar.";
                     var customer = await customerRepository.GetByIdIncludeBookingsAsync(userId.Value);
                     BookingsDisplayViewModel bookingDisplayVM = GroupBookings(customer.Bookings);
                     return View(bookingDisplayVM);
@@ -176,15 +172,25 @@ namespace FribergsCarRental.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             var booking = await bookingRepository.GetByIdAsync(id);
+            return View(booking);
 
-            if (booking.Status == Status.Upcoming)
-            {
-                return View(booking);
-            }
-            else
-            {
-                return View("Error"); // fixa felmeddelande här
-            }
+            //behöver jag denna då knappen inte finns hos customer
+            //var user = sessionHelper.GetUserSession();
+
+            //if(user.Role != null)
+            //{
+            //    if(user.Role == 0)
+            //    {
+            //        return View(booking);
+            //    }
+            //    if(user.Role == 1 && booking.Status == Status.Upcoming)
+            //    {
+            //        return View(booking);
+            //    }
+
+            //}
+            //return RedirectToAction("ErrorPage", "Home");
+
         }
 
         // POST: BookingController/Delete/5

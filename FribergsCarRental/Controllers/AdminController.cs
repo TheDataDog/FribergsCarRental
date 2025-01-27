@@ -35,7 +35,7 @@ namespace FribergsCarRental.Controllers
             var admin = await adminRepository.GetByEmailAsync(model.Email);
             if(admin == null || admin.Password != model.Password)
             {
-                ModelState.AddModelError("", "Fel email eller lösenord");
+                ViewBag.ErrorMsg = "Fel email eller lösenord";
                 return View("Index");
             }
             sessionHelper.SetUserSession(admin.UserRole.Role, admin.AdminId);

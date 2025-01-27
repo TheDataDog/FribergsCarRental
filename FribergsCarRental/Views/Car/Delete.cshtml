@@ -4,13 +4,6 @@
     ViewData["Title"] = "Delete";
 }
 
-@* @if (ViewBag.ErrorMsg != null)
-{
-    <div class="alert alert-danger">
-        <p>@ViewBag.ErrorMsg</p>
-    </div>
-} *@
-
 <h1>Ta bort</h1>
 
 <h4>Är du säker på att du vill radera denna bilen?</h4>
@@ -69,16 +62,15 @@
 
     <form asp-action="Delete">
         <input type="hidden" asp-for="CarId" />
-        <input type="submit" value="Radera" class="btn btn-danger" /> |
-        <a asp-action="Index">Tillbaka</a>
+        <input type="submit" value="Radera" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-dark">Tillbaka</a>
     </form>
 </div>
-<div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="errorToast">
+<div class="toast" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true" id="errorToast">
     <div class="toast-body">
         @ViewBag.ErrorMsg
         <div class="mt-2 pt-2 border-top">
-            <a asp-action="Index" class="btn btn-primary">Editera</a>
-            <a asp-action="Edit" asp-route-id="@Model.CarId" class="btn btn-primary">Editera</a>
+            <a asp-action="Edit" asp-route-id="@Model.CarId" class="btn btn-dark btn-sm">Editera</a>
             <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">Stäng</button>
         </div>
     </div>

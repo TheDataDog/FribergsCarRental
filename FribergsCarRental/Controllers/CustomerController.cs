@@ -146,8 +146,9 @@ namespace FribergsCarRental.Controllers
             var customer = await customerRepository.GetByEmailAsync(model.Email);
             if (customer == null || customer.Password != model.Password)
             {
-                ModelState.AddModelError("", "Fel email eller lösenord");
+                ViewBag.ErrorMsg = "Fel email eller lösenord";
                 return View();
+                //om blir fel vid loginOrRegister skickas man till login. lägga in senaste url här?
             }
             SetUserSession(customer.UserRole.Role, customer.CustomerId);
 

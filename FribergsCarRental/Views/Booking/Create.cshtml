@@ -27,50 +27,18 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                @* <label asp-for="CustomerId" class="control-label"></label> *@
-                @* <select asp-for="CustomerId" class ="form-control" asp-items="ViewBag.CustomerId"></select> *@
-                <input type="hidden" asp-for="Booking.CustomerId" />
-                @* @Html.HiddenFor(m => m.Car.CarId)
-                @Html.HiddenFor(m => m.Car.Brand)
-                @Html.HiddenFor(m => m.Car.Model)
-                @Html.HiddenFor(m => m.Car.YearModel)
-                @Html.HiddenFor(m => m.Car.HorsePower)
-                @Html.HiddenFor(m => m.Car.FuelConsumption)
-                @Html.HiddenFor(m => m.Car.DailyCost)
-                @Html.HiddenFor(m => m.Car.PassengerSeats)
-                @Html.HiddenFor(m => m.Car.Description)
-
-                @Html.HiddenFor(m => m.Customer.CustomerId)
-                @Html.HiddenFor(m => m.Customer.FirstName)
-                @Html.HiddenFor(m => m.Customer.LastName)
-                @Html.HiddenFor(m => m.Customer.Birthdate)
-                @Html.HiddenFor(m => m.Customer.Adress) @* Kan vara null här *@
-                @* @Html.HiddenFor(m => m.Customer.PhoneNumber)
-                @Html.HiddenFor(m => m.Customer.Email)
-                @Html.HiddenFor(m => m.Customer.Password)
-                @Html.HiddenFor(m => m.Customer.UserRole.Role)
-                @Html.HiddenFor(m => m.Customer.UserRole.UserRoleId) *@
-            </div>
-            <div class="form-group">
-                @* <label asp-for="CarId" class="control-label"></label> *@
-                @* <select asp-for="CarId" class ="form-control" asp-items="ViewBag.CarId"></select> *@
-                <input type="hidden" asp-for="Booking.CarId" />
-            </div>
+            <input type="hidden" asp-for="Booking.CustomerId" />
+            <input type="hidden" asp-for="Booking.CarId" />
+            <input type="hidden" asp-for="Booking.TotalCost" />
             <div class="form-group">
                 <label asp-for="Booking.StartDate" class="control-label"></label>
                 <input type="date" asp-for="Booking.StartDate" class="form-control" value="@(Model?.Booking.StartDate.ToString("yyyy-MM-dd") ?? "")" />
                 <span asp-validation-for="Booking.StartDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-2">
                 <label asp-for="Booking.EndDate" class="control-label"></label>
                 <input type="date" asp-for="Booking.EndDate" class="form-control" value="@(Model?.Booking.EndDate.ToString("yyyy-MM-dd") ?? "")" />
                 <span asp-validation-for="Booking.EndDate" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-2">
-                @* <label asp-for="TotalCost" class="control-label"></label> *@
-                <input type="hidden" asp-for="Booking.TotalCost" />
-                @* <span asp-validation-for="TotalCost" class="text-danger"></span> *@
             </div>
             <div class="form-group">
                 <input type="submit" value="Boka" class="btn btn-dark" />
@@ -85,7 +53,7 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker/dist/locales/bootstrap-datepicker.sv.min.js"></script>
+    @* <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker/dist/locales/bootstrap-datepicker.sv.min.js"></script>
     <script>
         $(document).ready(function () {
             $('.datepicker').datepicker({
@@ -95,5 +63,5 @@
                 startDate: '-3d'
             });
         });
-    </script>
+    </script> *@
 }

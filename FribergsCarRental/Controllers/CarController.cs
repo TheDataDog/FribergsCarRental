@@ -112,19 +112,21 @@ namespace FribergsCarRental.Controllers
             var actualCar = await carRepository.GetByIdAsync(car.CarId);
             if (actualCar.Bookings != null && actualCar.Bookings.Any())
             {
-                foreach (var booking in actualCar.Bookings)
-                {
-                    if (booking.Status == Status.Upcoming || booking.Status == Status.Ongoing)
-                    {
-                        ViewBag.ErrorMsg = "Denna bil har kommande eller pågående bokningar, får ej raderas!";
-                        return View(actualCar);
-                    }
-                    else
-                    {
-                        ViewBag.ErrorMsg = "Denna bil har tidigare bokningar och får ej raderas, gå till editera för att deaktivera bilen.";
-                        return View(actualCar);
-                    }
-                }
+                ViewBag.ErrorMsg = "Denna bil har tidigare eller kommande bokningar och får ej raderas, gå till editera för att avaktivera bilen och förhindra framtida bokningar.";
+                return View(actualCar);
+                //foreach (var booking in actualCar.Bookings)
+                //{
+                //    if (booking.Status == Status.Upcoming || booking.Status == Status.Ongoing)
+                //    {
+                //        ViewBag.ErrorMsg = "Denna bil har kommande eller pågående bokningar, får ej raderas!";
+                //        return View(actualCar);
+                //    }
+                //    else
+                //    {
+                //        ViewBag.ErrorMsg = "Denna bil har tidigare bokningar och får ej raderas, gå till editera för att deaktivera bilen.";
+                //        return View(actualCar);
+                //    }
+                //}
             }
             try
             {
@@ -133,6 +135,7 @@ namespace FribergsCarRental.Controllers
             }
             catch
             {
+                //ha kvar denna eller köra samma på alla?
                 ViewBag.ErrorMsg = "Ett fel inträffade vid borttagning av bilen.";
                 return View();
             }

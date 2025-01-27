@@ -3,13 +3,10 @@
 @{
     ViewData["Title"] = "Login";
 }
-@if (ViewData.ModelState.ContainsKey("") && ViewData.ModelState[""].Errors.Any())
+@if (ViewBag.ErrorMsg != null)
 {
     <div class="alert alert-danger">
-        @foreach (var error in ViewData.ModelState[""].Errors)
-        {
-            <p>@error.ErrorMessage</p>
-        }
+        <p>@ViewBag.ErrorMsg</p>
     </div>
 }
 
