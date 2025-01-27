@@ -53,6 +53,25 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 
+    <script>
+        // Hämta elementen för StartDate och EndDate
+        const startDateInput = document.querySelector('input[name="Booking.StartDate"]');
+        const endDateInput = document.querySelector('input[name="Booking.EndDate"]');
+
+        // Lägg till en event-lyssnare på StartDate
+        startDateInput.addEventListener('change', () => {
+            const startDateValue = new Date(startDateInput.value);
+            if (!isNaN(startDateValue.getTime())) {
+                // Lägg till en dag till StartDate
+                const endDateValue = new Date(startDateValue);
+                endDateValue.setDate(endDateValue.getDate() + 1);
+
+                // Sätt värdet på EndDate
+                endDateInput.value = endDateValue.toISOString().split('T')[0];
+            }
+        });
+    </script>
+
     @* <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker/dist/locales/bootstrap-datepicker.sv.min.js"></script>
     <script>
         $(document).ready(function () {

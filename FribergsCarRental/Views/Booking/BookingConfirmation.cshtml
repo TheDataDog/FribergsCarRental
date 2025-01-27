@@ -54,3 +54,7 @@
 <div>
     <p>Om du har frågor om din bokning, tveka inte att <a asp-controller="Home" asp-action="Contact">kontakta oss</a>.</p>
 </div>
+<div>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-success">Bekräfta bokning</a>
+    <a asp-action="Delete" asp-route-id="@Model.BookingId" class="btn btn-danger">Avbryt bokning</a>
+</div>
