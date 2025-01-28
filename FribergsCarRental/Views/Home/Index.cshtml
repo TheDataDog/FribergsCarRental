@@ -1,9 +1,10 @@
-﻿@model IEnumerable<FribergsCarRental.Models.Car>
+﻿@* @model IEnumerable<FribergsCarRental.Models.Car> *@
+@model FribergsCarRental.ViewModels.HomeIndexDisplayViewModel
 
 @{
     ViewData["Title"] = "Home Page";
 }
-@{
+@* @{
     List<string> pictures = new List<string>(); //Kan jag göra en MOdelView av det här istället, eller metod i controllern?
 
     foreach (var item in Model)
@@ -13,7 +14,7 @@
             pictures.Add(item.Pictures[0]);
         }
     }
-}
+} *@
 
 <style>
     .carousel-item img {
@@ -28,10 +29,10 @@
         <div class="carousel col-sm p-0">
             <div id="carouselIndex" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    @if (pictures != null && pictures.Any())
+                    @if (Model.Pictures != null && Model.Pictures.Any())
                     {
                         bool isFirst = true;
-                        @foreach (var url in pictures)
+                        @foreach (var url in Model.Pictures)
                         {
                             <div class="carousel-item @(isFirst ? "active" : "")">
                                 <img class="d-block w-100" src="@url" alt="Slide">
@@ -73,7 +74,7 @@
 
 @* <div class="container"> *@
 <div class="row mt-5">
-    @foreach (var item in Model)
+    @foreach (var item in Model.Cars)
     {
         if (item.Pictures != null && item.Pictures.Any())
         {

@@ -1,5 +1,6 @@
 using FribergsCarRental.Data;
 using FribergsCarRental.Models;
+using FribergsCarRental.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -21,7 +22,14 @@ namespace FribergsCarRental.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await carRepository.GetAllActiveAsync());
+            var cars = await carRepository.GetAllActiveAsync();
+            var indexDisplayVM = new HomeIndexDisplayViewModel
+            {
+                Cars = cars,
+                Pictures = PopulatePicturesList(cars)
+            };
+            return View(indexDisplayVM);
+            //return View(await carRepository.GetAllActiveAsync());
         }
 
         public IActionResult ErrorPage()
@@ -44,6 +52,20 @@ namespace FribergsCarRental.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public List<string> PopulatePicturesList(IEnumerable<Car> cars)
+        {
+            List<string> pictures = new List<string>();
+            foreach (var item in cars)
+            {
+                if (item.Pictures != null && item.Pictures.Any())
+                {
+                    pictures.Add(item.Pictures[0]);
+                }
+            }
+            return pictures;
+
         }
     }
 }
