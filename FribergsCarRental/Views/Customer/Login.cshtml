@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Login";
+    string columnClass = ViewBag.Layout == "LoginOrRegister" ? "col-md-4" : "col-md-8";
+    
 }
 @if (ViewBag.ErrorMsg != null)
 {
@@ -12,7 +14,7 @@
 
 <h2>Logga in</h2>
 <div class="row">
-    <div class="col-md-6">
+    <div class="@columnClass">
         <form method="post" action="/Customer/Login">
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>

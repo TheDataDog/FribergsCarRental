@@ -4,15 +4,7 @@
     ViewData["Title"] = "Create";
     string columnClass = ViewBag.User == "Admin" ? "col-md-4" : "col-md-8";
 }
-@if (ViewData.ModelState.ContainsKey("") && ViewData.ModelState[""].Errors.Any())
-{
-    <div class="alert alert-danger">
-        @foreach (var error in ViewData.ModelState[""].Errors)
-        {
-            <p>@error.ErrorMessage</p>
-        }
-    </div>
-}
+
 @if (ViewBag.User == "Admin")
 {
     <h1>Lägg till kund</h1>
@@ -24,6 +16,7 @@
     <div class="@columnClass">
         <form asp-action="Create" onsubmit="return validateForm()">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UserRole.Role" />
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
                 <input asp-for="FirstName" class="form-control" />
@@ -69,15 +62,10 @@
                 <input asp-for="Adress.ZipCode" class="form-control" />
                 <span asp-validation-for="Adress.ZipCode" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-2">
                 <label asp-for="Adress.City" class="control-label"></label>
                 <input asp-for="Adress.City" class="form-control" />
                 <span asp-validation-for="Adress.City" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-2">
-                @* <label asp-for="UserRole.Role" class="control-label"></label> *@
-                <input type="hidden" asp-for="UserRole.Role" class="form-control" />
-                @* <span asp-validation-for="UserRole.Role" class="text-danger"></span> *@
             </div>
             <div class="form-group">
                 <input type="submit" value="Registrera" class="btn btn-dark" />
@@ -89,12 +77,6 @@
         </form>
     </div>
 </div>
-@* @if (ViewBag.User == "Admin")
-{
-    <div>
-        <a asp-action="Index" class="btn btn-danger">Avbryt</a>
-    </div>
-} *@
 
 @section Scripts {
 

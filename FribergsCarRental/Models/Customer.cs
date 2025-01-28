@@ -17,6 +17,7 @@ namespace FribergsCarRental.Models
         [Display(Name = "Födelsedatum")]
         [MinAge(18, ErrorMessage = "Du måste vara minst 18 år gammal.")]
         public DateOnly Birthdate { get; set; }
+        [Required]
         public Adress Adress { get; set; }
         [Required(ErrorMessage = "Mobilnummer är obligatoriskt")]
         [Display(Name = "Mobilnummer")]

@@ -22,6 +22,16 @@
     {
       "library": "bootstrap-daterangepicker@3.0.5",
       "destination": "wwwroot/lib/bootstrap-daterangepicker/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "jquery-validate@1.21.0",
+      "destination": "wwwroot/lib/jquery-validate/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "jquery-validation-unobtrusive@4.0.0",
+      "destination": "wwwroot/lib/jquery-validation-unobtrusive/"
     }
   ]
 }

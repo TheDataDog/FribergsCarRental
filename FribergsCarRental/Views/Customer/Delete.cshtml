@@ -3,15 +3,7 @@
 @{
     ViewData["Title"] = "Delete";
 }
-@if (ViewData.ModelState.ContainsKey("") && ViewData.ModelState[""].Errors.Any())
-{
-    <div class="alert alert-danger">
-        @foreach (var error in ViewData.ModelState[""].Errors)
-        {
-            <p>@error.ErrorMessage</p>
-        }
-    </div>
-}
+
 
 <h1>Ta bort</h1>
 
@@ -49,12 +41,6 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Email)
         </dd>
-        @* <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Password)
-        </dd> *@
     </dl>
     
     <form asp-action="Delete">

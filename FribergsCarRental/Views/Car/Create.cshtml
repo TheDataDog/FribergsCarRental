@@ -72,6 +72,10 @@
 </div>
 
 @section Scripts {
+    <script>
+        Globalize.locale("sv-SE");
+    </script>
+
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

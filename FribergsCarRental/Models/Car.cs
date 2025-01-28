@@ -15,12 +15,14 @@ namespace FribergsCarRental.Models
         public string Model { get; set; }
         [Required(ErrorMessage = "Obligatoriskt fält")]
         [Display(Name = "Årsmodell")]
+        
         public int YearModel { get; set; }
         [Required(ErrorMessage = "Obligatoriskt fält")]
         [Display(Name = "Hästkrafter")]
         public int HorsePower { get; set; }
         [Required(ErrorMessage = "Obligatoriskt fält")]
         [Display(Name = "Bensinförbrukning")]
+        [DataType(DataType.Currency)]
         public double FuelConsumption { get; set; }
         [Required(ErrorMessage = "Obligatoriskt fält")]
         [Display(Name = "Dygnskostnad")]
