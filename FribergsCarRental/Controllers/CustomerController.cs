@@ -133,16 +133,6 @@ namespace FribergsCarRental.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            var car = sessionHelper.GetCarSession();
-
-            if (car != null)
-            {
-                ViewBag.Layout = "LoginOrRegister";
-            }
-            else
-            {
-                ViewBag.Layout = "Login";
-            }
             return View();
         }
 
@@ -176,6 +166,9 @@ namespace FribergsCarRental.Controllers
         [HttpGet]
         public ActionResult LoginOrRegister()
         {
+
+            ViewBag.Layout = "LoginOrRegister";
+
             return View();
         }
 
