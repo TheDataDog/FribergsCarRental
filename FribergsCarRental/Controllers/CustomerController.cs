@@ -131,24 +131,31 @@ namespace FribergsCarRental.Controllers
         }
 
         [HttpGet]
-        public ActionResult Login()
+        public ActionResult Login(string returnUrl = null)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         [HttpPost]
-        public async Task<ActionResult> Login(LoginViewModel model)
+        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.ReturnUrl = returnUrl;
                 return View(model);
             }
             var customer = await customerRepository.GetByEmailAsync(model.Email);
             if (customer == null || customer.Password != model.Password)
             {
                 ViewBag.ErrorMsg = "Fel email eller lösenord";
-                return View();
-                //om blir fel vid loginOrRegister skickas man till login. lägga in senaste url här?
+                
+                if(model.ReturnUrl != null)
+                {
+                    ViewBag.Layout = "LoginOrRegister";
+                    return View("LoginOrRegister", model);
+                }
+                return View(model);
             }
             SetUserSession(customer.UserRole.Role, customer.CustomerId);
 
@@ -166,8 +173,8 @@ namespace FribergsCarRental.Controllers
         [HttpGet]
         public ActionResult LoginOrRegister()
         {
-
-            ViewBag.Layout = "LoginOrRegister";
+            ViewBag.ReturnUrl = "/Customer/LoginOrRegister";
+            ViewBag.Layout = "LoginOrRegister";           
 
             return View();
         }

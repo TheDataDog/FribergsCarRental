@@ -1,4 +1,5 @@
-﻿@model FribergsCarRental.Models.Customer
+﻿@using FribergsCarRental.ViewModels
+@* @model FribergsCarRental.Models.Customer *@
 
 @{
     ViewData["Title"] = "LoginOrRegister";
@@ -9,7 +10,7 @@
         <!-- Login Column -->
         <div class="col-md-6">
             <div class="login border p-3">
-                @await Html.PartialAsync("Login")
+                @await Html.PartialAsync("Login", new LoginViewModel { ReturnUrl = ViewBag.ReturnUrl })
             </div>
         </div>
 

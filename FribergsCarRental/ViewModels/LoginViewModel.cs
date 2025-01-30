@@ -11,5 +11,6 @@ namespace FribergsCarRental.ViewModels
         [DataType(DataType.Password)]
         [Display(Name = "Lösenord")]
         public string Password { get; set; }
+        public string? ReturnUrl { get; set; }
     }
 }
