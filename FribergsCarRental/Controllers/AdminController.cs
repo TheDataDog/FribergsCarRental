@@ -29,6 +29,7 @@ namespace FribergsCarRental.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.ErrorMsg = "Något gick fel, försök igen.";
                 return View("Index", model);
             }
 
@@ -36,7 +37,7 @@ namespace FribergsCarRental.Controllers
             if(admin == null || admin.Password != model.Password)
             {
                 ViewBag.ErrorMsg = "Fel email eller lösenord";
-                return View("Index");
+                return View("Index", model);
             }
             sessionHelper.SetUserSession(admin.UserRole.Role, admin.AdminId);
 

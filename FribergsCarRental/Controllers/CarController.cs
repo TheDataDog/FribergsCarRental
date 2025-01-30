@@ -66,7 +66,8 @@ namespace FribergsCarRental.Controllers
             }
             catch
             {
-                return View();
+                ViewBag.ErrorMsg = "Något gick fel vid tilläggning av bilen, försök igen.";
+                return View(car);
             }
         }
 
@@ -92,7 +93,7 @@ namespace FribergsCarRental.Controllers
             }
             catch
             {
-                //lägg till felmeddelande här
+                ViewBag.ErrorMsg = "Något gick fel vid editering bilen, försök igen.";
                 return View();
             }
         }
@@ -135,8 +136,7 @@ namespace FribergsCarRental.Controllers
             }
             catch
             {
-                //ha kvar denna eller köra samma på alla?
-                ViewBag.ErrorMsg = "Ett fel inträffade vid borttagning av bilen.";
+                ViewBag.ErrorMsg = "Något gick fel vid borttagning av bilen, försök igen.";
                 return View();
             }
         }

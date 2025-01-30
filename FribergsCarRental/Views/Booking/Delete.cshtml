@@ -3,6 +3,12 @@
 @{
     ViewData["Title"] = "Delete";
 }
+@if (ViewBag.ErrorMsg != null)
+{
+    <div class="alert alert-danger">
+        <p>@ViewBag.ErrorMsg</p>
+    </div>
+}
 
 <h1>Ta bort</h1>
 

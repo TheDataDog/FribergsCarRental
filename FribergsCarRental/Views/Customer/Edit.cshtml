@@ -3,6 +3,12 @@
 @{
     ViewData["Title"] = "Edit";
 }
+@if (ViewBag.ErrorMsg != null)
+{
+    <div class="alert alert-danger">
+        <p>@ViewBag.ErrorMsg</p>
+    </div>
+}
 
 <h1>Ändra kund</h1>
 
@@ -12,7 +18,7 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="CustomerId" />
-            <input type="hidden" asp-for="Password" />  @* Ska vara tillgängligt för Customer!!! *@
+            <input type="hidden" asp-for="Password" />
             @Html.HiddenFor(m => m.UserRole.Role)
             @Html.HiddenFor(m => m.UserRole.UserRoleId)
             <div class="form-group">

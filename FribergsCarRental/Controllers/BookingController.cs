@@ -112,7 +112,7 @@ namespace FribergsCarRental.Controllers
             {
                 if (HasOverlappingBooking(car.Bookings, bookingVM.Booking.StartDate, bookingVM.Booking.EndDate))
                 {
-                    ViewBag.ErrorMsg = "Vald bil är bokad följande datum";
+                    ViewBag.ErrorMsg = "Vald bil är tyvärr bokad följande datum";
                     bookingVM.FutureBookings = GetFutureBookings(car.Bookings);
                     return View(bookingVM);
                 }
@@ -133,8 +133,8 @@ namespace FribergsCarRental.Controllers
             }
             catch
             {
-                //lägg till felmeddelande här
-                return View();
+                ViewBag.ErrorMsg = "Något gick fel vid bokningen, försök igen.";
+                return View(bookingVM);
             }
         }
 
@@ -145,27 +145,27 @@ namespace FribergsCarRental.Controllers
         }
 
         // GET: BookingController/Edit/5
-        [HttpGet]
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+        //[HttpGet]
+        //public ActionResult Edit(int id)
+        //{
+        //    return View();
+        //}
 
         // POST: BookingController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                //lägg till felhantering här
-                return View();
-            }
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        //lägg till felhantering här
+        //        return View();
+        //    }
+        //}
 
         // GET: BookingController/Delete/5
         [HttpGet]
@@ -205,8 +205,8 @@ namespace FribergsCarRental.Controllers
             }
             catch
             {
-                //lägg till felmeddelande här
-                return View();
+                ViewBag.ErrorMsg = "Något gick fel vid borttagning av bokningen, försök igen.";
+                return View(booking);
             }
         }
 

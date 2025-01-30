@@ -37,7 +37,6 @@ namespace FribergsCarRental.Controllers
             var customerCreateVM = new CustomerCreateViewModel
             {
                 Customer = new Customer {UserRole = new UserRole { Role = Role.Customer} }
-
             };
 
             var user = GetUserSession();
@@ -86,17 +85,13 @@ namespace FribergsCarRental.Controllers
                         return RedirectToAction("Create", "Booking");
                     }
 
-                    return RedirectToAction(nameof(Index));
-
                 }
-                else
-                {
-                    return View();
-                }
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                ViewBag.ErrorMsgCreateCustomer = "Något gick fel vid registreringen, försök igen.";
+                return View(customerCreateVM);
             }
         }
 
@@ -122,7 +117,8 @@ namespace FribergsCarRental.Controllers
             }
             catch
             {
-                return View();
+                ViewBag.ErrorMsg = "Något gick fel vid editeringen av kunden, försök igen.";
+                return View(customer);
             }
         }
 
@@ -145,19 +141,19 @@ namespace FribergsCarRental.Controllers
             }
             catch
             {
-                return View();
+                ViewBag.ErrorMsg = "Något gick fel vid borttagning av kunden, försök igen.";
+                return View(customer);
             }
         }
 
         [HttpGet]
-        public ActionResult Login(/*string returnUrl = null*/)
+        public ActionResult Login()
         {
-            //ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         [HttpPost]
-        public async Task<ActionResult> Login(LoginViewModel model)//, string returnUrl = null)
+        public async Task<ActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
             {
