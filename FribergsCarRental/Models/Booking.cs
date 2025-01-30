@@ -31,6 +31,7 @@ namespace FribergsCarRental.Models
 
         [Display(Name = "Bil")]
         public Car? Car { get; set; }
+
         public Status Status { get; set; } = Status.Upcoming;
     }
 }

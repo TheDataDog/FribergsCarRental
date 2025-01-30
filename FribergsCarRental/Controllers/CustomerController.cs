@@ -131,18 +131,17 @@ namespace FribergsCarRental.Controllers
         }
 
         [HttpGet]
-        public ActionResult Login(string returnUrl = null)
+        public ActionResult Login(/*string returnUrl = null*/)
         {
-            ViewBag.ReturnUrl = returnUrl;
+            //ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         [HttpPost]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl = null)
+        public async Task<ActionResult> Login(LoginViewModel model)//, string returnUrl = null)
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.ReturnUrl = returnUrl;
                 return View(model);
             }
             var customer = await customerRepository.GetByEmailAsync(model.Email);
