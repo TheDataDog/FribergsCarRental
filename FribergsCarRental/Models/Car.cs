@@ -26,9 +26,9 @@ namespace FribergsCarRental.Models
         public int HorsePower { get; set; }
 
         [Required(ErrorMessage = "Obligatoriskt fält")]
+        [RegularExpression(@"^\d+\,?\d*$", ErrorMessage = "Decimaltalet skrivs med kommatecken")]
         [Display(Name = "Bensinförbrukning")]
-        [DataType(DataType.Currency)]
-        public double FuelConsumption { get; set; }
+        public string FuelConsumption { get; set; }
 
         [Required(ErrorMessage = "Obligatoriskt fält")]
         [Display(Name = "Dygnskostnad")]
