@@ -18,7 +18,7 @@
         <div class="col-md-6">
             <div class="register border p-3">
                 <h2>Registrera dig som kund</h2>
-                @await Html.PartialAsync("Create", new Customer { UserRole = new UserRole { Role = Role.Customer }})
+                @await Html.PartialAsync("Create", new CustomerCreateViewModel { Customer = new Customer { UserRole = new UserRole { Role = Role.Customer } }, ReturnUrl = ViewBag.ReturnUrl } /* new Customer { UserRole = new UserRole { Role = Role.Customer }} */)
             </div>
         </div>
     </div>

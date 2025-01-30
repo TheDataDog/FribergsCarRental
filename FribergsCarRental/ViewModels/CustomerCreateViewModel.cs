@@ -6,6 +6,6 @@ namespace FribergsCarRental.ViewModels
     public class CustomerCreateViewModel
     {
         public Customer Customer { get; set; }
-        public string ReturnUrl { get; set; }
+        public string? ReturnUrl { get; set; }
     }
 }

@@ -34,9 +34,10 @@ namespace FribergsCarRental.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            var customer = new Customer
+            var customerCreateVM = new CustomerCreateViewModel
             {
-                UserRole = new UserRole { Role = (Role.Customer) }
+                Customer = new Customer {UserRole = new UserRole { Role = Role.Customer} }
+
             };
 
             var user = GetUserSession();
@@ -46,21 +47,39 @@ namespace FribergsCarRental.Controllers
                 ViewBag.User = "Admin";
             }
 
-            return View(customer);
+            return View(customerCreateVM);
         }
 
         // POST: CustomerController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Customer customer)
+        public async Task<ActionResult> Create(CustomerCreateViewModel customerCreateVM)
         {
             var user = GetUserSession();
+            if(user.Role == 0)
+            {
+                ViewBag.User = "Admin";
+            }
+            var customers = await customerRepository.GetAllAsync();
+            foreach(var customer in customers)
+            {
+                if(customer.Email == customerCreateVM.Customer.Email)
+                {
+                    ViewBag.ErrorMsgCreateCustomer = "Det finns redan en registrerad kund med angiven email";
+                    if (customerCreateVM.ReturnUrl != null)
+                    {
+                        ViewBag.Layout = "LoginOrRegister";
+                        return View("LoginOrRegister", customerCreateVM);
+                    }
+                    return View(customerCreateVM);
+                }
+            }
 
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var addedCustomer = await customerRepository.AddAsync(customer);
+                    var addedCustomer = await customerRepository.AddAsync(customerCreateVM.Customer);
                     if (user.Role == null)
                     {
                         SetUserSession(addedCustomer.UserRole.Role, addedCustomer.CustomerId);

@@ -41,39 +41,39 @@
                     
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Car" asp-action="Index">@bilar</a>
+                            <a class="nav-link text-dark fs-5" asp-area="" asp-controller="Car" asp-action="Index">@bilar</a>
                         </li>
                         @if(user.Role == 0)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Index">Kunder</a>
+                                <a class="nav-link text-dark fs-5" asp-area="" asp-controller="Customer" asp-action="Index">Kunder</a>
                             </li>
                         }
                         @if(user.Role != null)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Booking" asp-action="Index">@bokningar</a>
+                                <a class="nav-link text-dark fs-5" asp-area="" asp-controller="Booking" asp-action="Index">@bokningar</a>
                             </li>
                         }
                         @if (user.Role != 0)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Conditions">Våra villkor</a>
+                                <a class="nav-link text-dark fs-5" asp-area="" asp-controller="Home" asp-action="Conditions">Våra villkor</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Kontakta oss</a>
+                                <a class="nav-link text-dark fs-5" asp-area="" asp-controller="Home" asp-action="Contact">Kontakta oss</a>
                             </li>
                         }
                         @if(user.Role == null)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Login">Logga in</a>
+                                <a class="nav-link text-dark fs-5" asp-area="" asp-controller="Customer" asp-action="Login">Logga in</a>
                             </li>
                         }
                         @if(user.Role != null)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Logout">Logga ut</a>
+                                <a class="nav-link text-dark fs-5" asp-area="" asp-controller="Customer" asp-action="Logout">Logga ut</a>
                             </li>
                         }
                     </ul>
