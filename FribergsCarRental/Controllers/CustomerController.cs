@@ -36,7 +36,7 @@ namespace FribergsCarRental.Controllers
         {
             var customerCreateVM = new CustomerCreateViewModel
             {
-                Customer = new Customer {UserRole = new UserRole { Role = Role.Customer} }
+                Customer = new Customer { UserRole = new UserRole { Role = Role.Customer } }
             };
 
             var user = GetUserSession();
@@ -55,14 +55,14 @@ namespace FribergsCarRental.Controllers
         public async Task<ActionResult> Create(CustomerCreateViewModel customerCreateVM)
         {
             var user = GetUserSession();
-            if(user.Role == 0)
+            if (user.Role == 0)
             {
                 ViewBag.User = "Admin";
             }
             var customers = await customerRepository.GetAllAsync();
-            foreach(var customer in customers)
+            foreach (var customer in customers)
             {
-                if(customer.Email == customerCreateVM.Customer.Email)
+                if (customer.Email == customerCreateVM.Customer.Email)
                 {
                     ViewBag.ErrorMsgCreateCustomer = "Det finns redan en registrerad kund med angiven email";
                     if (customerCreateVM.ReturnUrl != null)
@@ -76,16 +76,22 @@ namespace FribergsCarRental.Controllers
 
             try
             {
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
-                    var addedCustomer = await customerRepository.AddAsync(customerCreateVM.Customer);
-                    if (user.Role == null)
+                    if (customerCreateVM.ReturnUrl != null)
                     {
-                        SetUserSession(addedCustomer.UserRole.Role, addedCustomer.CustomerId);
-                        return RedirectToAction("Create", "Booking");
+                        ViewBag.Layout = "LoginOrRegister";
+                        return View("LoginOrRegister", customerCreateVM);
                     }
-
+                    return View(customerCreateVM);
                 }
+                var addedCustomer = await customerRepository.AddAsync(customerCreateVM.Customer);
+                if (user.Role == null)
+                {
+                    SetUserSession(addedCustomer.UserRole.Role, addedCustomer.CustomerId);
+                    return RedirectToAction("Create", "Booking");
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -163,8 +169,8 @@ namespace FribergsCarRental.Controllers
             if (customer == null || customer.Password != model.Password)
             {
                 ViewBag.ErrorMsg = "Fel email eller lösenord";
-                
-                if(model.ReturnUrl != null)
+
+                if (model.ReturnUrl != null)
                 {
                     ViewBag.Layout = "LoginOrRegister";
                     return View("LoginOrRegister", model);
@@ -188,7 +194,7 @@ namespace FribergsCarRental.Controllers
         public ActionResult LoginOrRegister()
         {
             ViewBag.ReturnUrl = "/Customer/LoginOrRegister";
-            ViewBag.Layout = "LoginOrRegister";           
+            ViewBag.Layout = "LoginOrRegister";
 
             return View();
         }

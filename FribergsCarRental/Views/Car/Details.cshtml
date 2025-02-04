@@ -65,7 +65,7 @@
         </dd>
 
         
-        @if (Model.Pictures != null && Model.Pictures.Any())
+        @if (Model != null && Model.Pictures != null && Model.Pictures.Any())
         {
             @foreach (var item in Model.Pictures)
             {
