@@ -1,28 +1,8 @@
-﻿@* @model IEnumerable<FribergsCarRental.Models.Car> *@
-@model FribergsCarRental.ViewModels.HomeIndexDisplayViewModel
+﻿@model FribergsCarRental.ViewModels.HomeIndexDisplayViewModel
 
 @{
     ViewData["Title"] = "Home Page";
 }
-@* @{
-    List<string> pictures = new List<string>(); //Kan jag göra en MOdelView av det här istället, eller metod i controllern?
-
-    foreach (var item in Model)
-    {
-        if (item.Pictures != null && item.Pictures.Any())
-        {
-            pictures.Add(item.Pictures[0]);
-        }
-    }
-} *@
-
-<style>
-    .carousel-item img {
-        height: 400px;
-        width: 100%;
-        object-fit: cover;
-    }
-</style>
 
 <div class="container-fluid">
     <div class="row">
@@ -72,7 +52,6 @@
     </div>
 </div>
 
-@* <div class="container"> *@
 <div class="row mt-5">
     @foreach (var item in Model.Cars)
     {
@@ -108,4 +87,3 @@
         }
     }
 </div>
-@* </div> *@

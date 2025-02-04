@@ -29,7 +29,6 @@ namespace FribergsCarRental.Controllers
                 Pictures = PopulatePicturesList(cars)
             };
             return View(indexDisplayVM);
-            //return View(await carRepository.GetAllActiveAsync());
         }
 
         public IActionResult ErrorPage()

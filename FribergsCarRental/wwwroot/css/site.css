@@ -39,6 +39,12 @@ body {
     object-fit: cover;
 }
 
+.carousel-item img {
+    height: 400px;
+    width: 100%;
+    object-fit: cover;
+}
+
 .fa-trash {
     color: red;
 }

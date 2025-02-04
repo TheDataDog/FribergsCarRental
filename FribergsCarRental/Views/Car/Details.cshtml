@@ -63,21 +63,20 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
-
-        
-        @if (Model != null && Model.Pictures != null && Model.Pictures.Any())
-        {
-            @foreach (var item in Model.Pictures)
-            {
-                <tr>
-                    <td>
-                        <img src="@item" alt="car" style="width: 200px; height:auto;" />
-                    </td>
-                </tr>
-            }
-        }
-
     </dl>
+
+
+    @if (Model != null && Model.Pictures != null && Model.Pictures.Any())
+    {
+        @foreach (var item in Model.Pictures)
+        {
+            <tr>
+                <td>
+                    <img src="@item" alt="car" style="width: 200px; height:auto;" />
+                </td>
+            </tr>
+        }
+    }
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.CarId"><i class="fa-solid fa-pen-to-square"></i></a> |

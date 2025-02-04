@@ -93,45 +93,5 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 
-    @* <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const birthdateInput = document.querySelector("input[name='Birthdate']");
-            const errorSpan = document.querySelector("span[data-valmsg-for='Birthdate']");
-
-            birthdateInput.addEventListener("change", function () {
-                const birthdate = new Date(birthdateInput.value);
-                const today = new Date();
-                const age = today.getFullYear() - birthdate.getFullYear();
-                const isUnder18 = today < new Date(birthdate.setFullYear(birthdate.getFullYear() + 18));
-
-                if (isUnder18) {
-                    errorSpan.textContent = "Du måste vara 18 år";
-                    errorSpan.classList.add("text-danger");
-                    birthdateInput.setCustomValidity("Invalid age");
-                } else {
-                    errorSpan.textContent = "";
-                    birthdateInput.setCustomValidity("");
-                }
-            });
-        });
-
-        function validateForm() {
-            const birthdateInput = document.querySelector("input[name='Birthdate']");
-            const errorSpan = document.querySelector("span[data-valmsg-for='Birthdate']");
-
-            const birthdate = new Date(birthdateInput.value);
-            const today = new Date();
-            const age = today.getFullYear() - birthdate.getFullYear();
-            const isUnder18 = today < new Date(birthdate.setFullYear(birthdate.getFullYear() + 18));
-
-            if (isUnder18) {
-                errorSpan.textContent = "Du måste vara 18 år";
-                errorSpan.classList.add("text-danger");
-                return false;
-            }
-
-            return true;
-        }
-    </script> *@
 }
 

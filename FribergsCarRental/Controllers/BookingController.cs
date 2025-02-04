@@ -112,7 +112,7 @@ namespace FribergsCarRental.Controllers
             {
                 if (HasOverlappingBooking(car.Bookings, bookingVM.Booking.StartDate, bookingVM.Booking.EndDate))
                 {
-                    ViewBag.ErrorMsg = "Vald bil är tyvärr bokad följande datum";
+                    ViewBag.ErrorMsg = "Vald bil är tyvärr bokad följande datum;";
                     bookingVM.FutureBookings = GetFutureBookings(car.Bookings);
                     return View(bookingVM);
                 }
@@ -124,8 +124,8 @@ namespace FribergsCarRental.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var confirmBooking = await bookingRepository.AddAsync(bookingVM.Booking);
-                    return RedirectToAction(nameof(BookingConfirmation), new { id = confirmBooking.BookingId });
+                    var confirmedBooking = await bookingRepository.AddAsync(bookingVM.Booking);
+                    return RedirectToAction(nameof(BookingConfirmation), new { id = confirmedBooking.BookingId });
 
                 }
                 ViewBag.ErrorMsg = "Något gick fel, försök igen.";
@@ -144,28 +144,6 @@ namespace FribergsCarRental.Controllers
             return View(await bookingRepository.GetByIdAsync(id));
         }
 
-        // GET: BookingController/Edit/5
-        //[HttpGet]
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
-
-        // POST: BookingController/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        //lägg till felhantering här
-        //        return View();
-        //    }
-        //}
 
         // GET: BookingController/Delete/5
         [HttpGet]
@@ -173,23 +151,6 @@ namespace FribergsCarRental.Controllers
         {
             var booking = await bookingRepository.GetByIdAsync(id);
             return View(booking);
-
-            //behöver jag denna då knappen inte finns hos customer
-            //var user = sessionHelper.GetUserSession();
-
-            //if(user.Role != null)
-            //{
-            //    if(user.Role == 0)
-            //    {
-            //        return View(booking);
-            //    }
-            //    if(user.Role == 1 && booking.Status == Status.Upcoming)
-            //    {
-            //        return View(booking);
-            //    }
-
-            //}
-            //return RedirectToAction("ErrorPage", "Home");
 
         }
 

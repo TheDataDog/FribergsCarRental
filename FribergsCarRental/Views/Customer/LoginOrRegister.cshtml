@@ -1,5 +1,4 @@
 ﻿@using FribergsCarRental.ViewModels
-@* @model FribergsCarRental.Models.Customer *@
 
 @{
     ViewData["Title"] = "LoginOrRegister";
@@ -7,18 +6,15 @@
 
 <div class="container">
     <div class="row">
-        <!-- Login Column -->
         <div class="col-md-6">
             <div class="login border p-3">
                 @await Html.PartialAsync("Login", new LoginViewModel { ReturnUrl = ViewBag.ReturnUrl })
             </div>
         </div>
-
-        <!-- Register Column -->
         <div class="col-md-6">
             <div class="register border p-3">
                 <h2>Registrera dig som kund</h2>
-                @await Html.PartialAsync("Create", new CustomerCreateViewModel { Customer = new Customer { UserRole = new UserRole { Role = Role.Customer } }, ReturnUrl = ViewBag.ReturnUrl } /* new Customer { UserRole = new UserRole { Role = Role.Customer }} */)
+                @await Html.PartialAsync("Create", new CustomerCreateViewModel { Customer = new Customer { UserRole = new UserRole { Role = Role.Customer } }, ReturnUrl = ViewBag.ReturnUrl })
             </div>
         </div>
     </div>
