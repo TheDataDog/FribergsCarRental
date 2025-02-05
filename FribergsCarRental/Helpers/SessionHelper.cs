@@ -1,7 +1,7 @@
 ﻿using FribergsCarRental.Models;
 using Microsoft.Identity.Client;
 
-namespace FribergsCarRental
+namespace FribergsCarRental.Helpers
 {
     public class SessionHelper
     {

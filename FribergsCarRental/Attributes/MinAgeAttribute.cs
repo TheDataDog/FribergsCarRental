@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FribergsCarRental
+namespace FribergsCarRental.Attributes
 {
     public class MinAgeAttribute : ValidationAttribute
     {
@@ -13,17 +13,17 @@ namespace FribergsCarRental
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if(value is DateOnly birthdate)
+            if (value is DateOnly birthdate)
             {
                 var today = DateOnly.FromDateTime(DateTime.Today);
                 var age = today.Year - birthdate.Year;
 
-                if(birthdate > today.AddYears(-age))
+                if (birthdate > today.AddYears(-age))
                 {
                     age--;
                 }
 
-                if(age < minAge)
+                if (age < minAge)
                 {
                     return new ValidationResult($"Du måste vara minst {minAge} år gammal för att få boka.");
                 }

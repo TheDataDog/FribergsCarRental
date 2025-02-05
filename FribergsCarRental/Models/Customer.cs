@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using FribergsCarRental.Attributes;
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+
 
 namespace FribergsCarRental.Models
 {
@@ -16,7 +18,6 @@ namespace FribergsCarRental.Models
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Födelsedatum är obligatoriskt")]
-        //[DataType(DataType.Date)]
         [Display(Name = "Födelsedatum")]
         [MinAge(18, ErrorMessage = "Du måste vara minst 18 år gammal.")]
         public DateOnly Birthdate { get; set; }

@@ -2,6 +2,7 @@ using FribergsCarRental.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
+using FribergsCarRental.Helpers;
 
 namespace FribergsCarRental
 {

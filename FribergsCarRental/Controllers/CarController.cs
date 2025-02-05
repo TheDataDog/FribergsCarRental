@@ -1,4 +1,5 @@
 ﻿using FribergsCarRental.Data;
+using FribergsCarRental.Helpers;
 using FribergsCarRental.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
