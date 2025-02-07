@@ -42,7 +42,7 @@ namespace FribergsCarRental.Controllers
             }
             sessionHelper.SetUserSession(admin.UserRole.Role, admin.AdminId);
 
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index","Booking");
         }
     }
 }

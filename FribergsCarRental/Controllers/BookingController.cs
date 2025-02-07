@@ -49,7 +49,7 @@ namespace FribergsCarRental.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> ChangeStatus(int bookingId, string newStatus)
+        public async Task<ActionResult> ChangeStatusAsync(int bookingId, string newStatus)
         {
             var booking = await bookingRepository.GetByIdAsync(bookingId);
             if (booking != null)

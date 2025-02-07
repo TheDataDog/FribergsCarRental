@@ -111,21 +111,21 @@ namespace FribergsCarRental.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(Car car)
         {
-            var actualCar = await carRepository.GetByIdAsync(car.CarId);
-            if (actualCar.Bookings != null && actualCar.Bookings.Any())
+            var carToDelete = await carRepository.GetByIdAsync(car.CarId);
+            if (carToDelete.Bookings != null && carToDelete.Bookings.Any())
             {
                 ViewBag.ErrorMsg = "Denna bil har tidigare eller kommande bokningar och får ej raderas, gå till editera för att avaktivera bilen och förhindra framtida bokningar.";
-                return View(actualCar);
+                return View(carToDelete);
             }
             try
             {
-                await carRepository.DeleteAsync(actualCar);
+                await carRepository.DeleteAsync(carToDelete);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
                 ViewBag.ErrorMsg = "Något gick fel vid borttagning av bilen, försök igen.";
-                return View();
+                return View(carToDelete);
             }
         }
 
