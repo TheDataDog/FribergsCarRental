@@ -3,7 +3,7 @@ using Microsoft.Identity.Client;
 
 namespace FribergsCarRental.Helpers
 {
-    public class SessionHelper
+    public class SessionHelper : ISessionHelper
     {
         private readonly IHttpContextAccessor httpContextAccesor;
 

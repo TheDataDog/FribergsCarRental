@@ -10,10 +10,10 @@ namespace FribergsCarRental.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly SessionHelper sessionHelper;
+        private readonly ISessionHelper sessionHelper;
         private readonly ICarRepository carRepository;
 
-        public HomeController(ILogger<HomeController> logger, SessionHelper sessionHelper
+        public HomeController(ILogger<HomeController> logger, ISessionHelper sessionHelper
                               , ICarRepository carRepository)
         {
             _logger = logger;

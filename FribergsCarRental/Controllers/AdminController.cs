@@ -11,9 +11,9 @@ namespace FribergsCarRental.Controllers
     public class AdminController : Controller
     {
         private readonly IAdminRepository adminRepository;
-        private readonly SessionHelper sessionHelper;
+        private readonly ISessionHelper sessionHelper;
 
-        public AdminController(IAdminRepository adminRepository, SessionHelper sessionHelper)
+        public AdminController(IAdminRepository adminRepository, ISessionHelper sessionHelper)
         {
             this.adminRepository = adminRepository;
             this.sessionHelper = sessionHelper;

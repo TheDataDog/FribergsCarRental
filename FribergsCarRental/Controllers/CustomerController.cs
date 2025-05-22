@@ -10,9 +10,9 @@ namespace FribergsCarRental.Controllers
     public class CustomerController : Controller
     {
         private readonly ICustomerRepository customerRepository;
-        private readonly SessionHelper sessionHelper;
+        private readonly ISessionHelper sessionHelper;
 
-        public CustomerController(ICustomerRepository customerRepository, SessionHelper sessionHelper)
+        public CustomerController(ICustomerRepository customerRepository, ISessionHelper sessionHelper)
         {
             this.customerRepository = customerRepository;
             this.sessionHelper = sessionHelper;

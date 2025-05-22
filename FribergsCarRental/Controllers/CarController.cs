@@ -9,13 +9,13 @@ namespace FribergsCarRental.Controllers
     public class CarController : Controller
     {
         private readonly ICarRepository carRepository;
-        private readonly SessionHelper sessionHelper;
+		private readonly ISessionHelper sessionHelper;
 
-        public CarController(ICarRepository carRepository, SessionHelper sessionHelper)
+		public CarController(ICarRepository carRepository, ISessionHelper sessionHelper)
         {
             this.carRepository = carRepository;
-            this.sessionHelper = sessionHelper;
-        }
+			this.sessionHelper = sessionHelper;
+		}
         // GET: CarController
         [HttpGet]
         public async Task<ActionResult> Index(string returnUrl)

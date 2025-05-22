@@ -12,11 +12,11 @@ namespace FribergsCarRental.Controllers
     public class BookingController : Controller
     {
         private readonly IBookingRepository bookingRepository;
-        private readonly SessionHelper sessionHelper;
+        private readonly ISessionHelper sessionHelper;
         private readonly ICarRepository carRepository;
         private readonly ICustomerRepository customerRepository;
 
-        public BookingController(IBookingRepository bookingRepository, SessionHelper sessionHelper
+        public BookingController(IBookingRepository bookingRepository, ISessionHelper sessionHelper
                                  , ICarRepository carRepository, ICustomerRepository customerRepository)
         {
             this.bookingRepository = bookingRepository;

@@ -24,7 +24,7 @@ namespace FribergsCarRental
             builder.Services.AddTransient<IBookingRepository, BookingRepository>();
             builder.Services.AddTransient<IAdminRepository, AdminRepository>();
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            builder.Services.AddScoped<SessionHelper>();
+            builder.Services.AddScoped<ISessionHelper, SessionHelper>();
 
             builder.Services.AddSession(options =>
             {
